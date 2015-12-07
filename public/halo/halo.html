@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"
+/>
+<!--[if lt IE 9]>
+  <link rel="stylesheet" type="text/css" href="plugins/jquery-ui/jquery.ui.1.10.2.ie.css"
+  />
+<![endif]-->
+<link href="assets/css/main.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/responsive.css" rel="stylesheet" type="text/css"
+/>
+<link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="assets/css/fontawesome/font-awesome.min.css">
+<link rel="stylesheet" href="bootstrap/validator/css/bootstrapValidator.css">
+<!--[if IE 7]>
+  <link rel="stylesheet" href="assets/css/fontawesome/font-awesome-ie7.min.css">
+<![endif]-->
+<!--[if IE 8]>
+  <link href="assets/css/ie8.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<link href='http://fonts.useso.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+<style>
+body {
+	margin:0;
+	padding:0;
+	overflow-x:hidden;
+}
+</style>
+<script src="http://cdn.bootcss.com/require.js/2.1.15/require.js"></script>
+<script src="core/fetch.js"></script>
+</head>
+<body>
+<header id="header" class="header navbar navbar-fixed-top" role="banner">      
+</header>
+<div id="container" class="fixed-header">
+	<div id="sidebar" class="sidebar-fixed"></div>
+	<div id="content"></div>
+  <div id="login"></div>
+</div>
+<script>
+	require.config({
+		baseUrl: '',
+		paths: {
+        	"jquery": "plugins/jquery-1.10.2.min",
+        	"underscore": "plugins/underscore",
+        	"dataTable": "plugins/datatables/jquery.dataTables.min",
+        	"DT_bootstrap": "plugins/datatables/DT_bootstrap",
+        	"select2": "plugins/select2/select2.min",
+        	"uniform": "plugins/uniform/jquery.uniform.min",
+        	"slimscroll": "plugins/slimscroll/jquery.slimscroll.min",
+        	"promise": "core/es6-promise",
+          "validator": "bootstrap/validator/js/bootstrapValidator"
+	    }
+	});
+	require(['main']);     
+</script>
+</body>
+</html>
