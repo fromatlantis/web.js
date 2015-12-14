@@ -1,6 +1,6 @@
 'use strict';
 define(function(require,exports,module){
-	var FormView = require('FormView');
+	var FormView = require('./FormView');
 	function LoginForm(options){
 		var opts=options || {};
 		this.tmplName=opts.tmplName;

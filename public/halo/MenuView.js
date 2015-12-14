@@ -1,8 +1,8 @@
 'use strict';
 define(function(require,exports,module){
-	var View=require('View');
-	var TemplateFromUrl=require('TemplateFromUrl');
-	var slimscroll=require('slimscroll');
+	var View=require('./View');
+	var TemplateFromUrl=require('./TemplateFromUrl');
+	var slimscroll=require('./plugins/slimscroll/jquery.slimscroll.min.js');
 	
 	function MenuView(){
 		_render.call(this);

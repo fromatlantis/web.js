@@ -1,7 +1,7 @@
 'use strict';
 define(function(require,exports,module){
-	var View=require('View');
-	var TemplateFromUrl=require('TemplateFromUrl');
+	var View=require('./View');
+	var TemplateFromUrl=require('./TemplateFromUrl');
 	function HeaderView(options){
 		var opts=options||{};
 		this.tmplName=opts.tmplName;

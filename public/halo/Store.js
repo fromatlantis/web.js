@@ -1,6 +1,6 @@
 'use strict';
 define(function(require,exports,module){
-	var Promise=require('promise').polyfill();
+	var Promise=require('./core/es6-promise.js').polyfill();
 	function Store(options,callback){
 		var opts=options||{};
 		this.urlApi=opts.urlApi;

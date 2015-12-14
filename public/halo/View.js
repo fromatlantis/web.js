@@ -6,7 +6,7 @@ define(function(require,exports,module){
 	}
 	View.prototype.render=function(callback){
 		//var holder=opts.holder;
-		alert('2');
+		//alert('2');
 		var holderEl=document.querySelector(this.holder);
 		holderEl.innerHTML=this.content;
 		if(callback)

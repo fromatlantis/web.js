@@ -41,22 +41,6 @@ body {
 	<div id="content"></div>
   <div id="login"></div>
 </div>
-<script>
-	require.config({
-		baseUrl: '',
-		paths: {
-        	"jquery": "plugins/jquery-1.10.2.min",
-        	"underscore": "plugins/underscore",
-        	"dataTable": "plugins/datatables/jquery.dataTables.min",
-        	"DT_bootstrap": "plugins/datatables/DT_bootstrap",
-        	"select2": "plugins/select2/select2.min",
-        	"uniform": "plugins/uniform/jquery.uniform.min",
-        	"slimscroll": "plugins/slimscroll/jquery.slimscroll.min",
-        	"promise": "core/es6-promise",
-          "validator": "bootstrap/validator/js/bootstrapValidator"
-	    }
-	});
-	require(['main']);     
-</script>
+<script src="/javascripts/bundle.js"></script>
 </body>
 </html>

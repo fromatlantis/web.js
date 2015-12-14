@@ -1,9 +1,10 @@
 'use strict';
 define(function(require,exports,module){
-    var DT_bootstrap=require('DT_bootstrap');
-	var ResponsiveTable=require('ResponsiveTable');
-    var select2=require('select2');
-    var uniform=require('uniform');
+    var dataTable=require('./plugins/datatables/jquery.dataTables.min.js');
+    var DT_bootstrap=require('./plugins/datatables/DT_bootstrap.js');
+	var ResponsiveTable=require('./ResponsiveTable');
+    var select2=require('./plugins/select2/select2.min.js');
+    var uniform=require('./plugins/uniform/jquery.uniform.min.js');
 	function TableHelper(options){
 		_init.call(this);
 		_extendTable.call(this);

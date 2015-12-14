@@ -1,7 +1,7 @@
 //表格响应式设计
 'use strict';
 define(function(require,exports,module){
-	var underscore=require('underscore');
+	var underscore=_=require('./plugins/underscore.js');
 
 	function ResponsiveTable(tableSelector, breakpoints) {
 	    if (typeof tableSelector === 'string') {

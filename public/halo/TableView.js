@@ -1,9 +1,9 @@
 'use strict';
 define(function(require,exports,module){
-	var View=require('View');
-	var dataTable=require('dataTable');
-	var TableHelper=require('TableHelper');
- 	var TemplateFromUrl=require('TemplateFromUrl');
+	var View=require('./View');
+	var dataTable=require('./plugins/datatables/jquery.dataTables.min.js');
+	var TableHelper=require('./TableHelper');
+ 	var TemplateFromUrl=require('./TemplateFromUrl');
 
 	function TableView(options){
 		View.apply(this, arguments);

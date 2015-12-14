@@ -1,8 +1,8 @@
 'use strict';
 define(function(require,exports,module){
-	var validator = require('validator');
-	var View = require('View');
-	var TemplateFromUrl=require('TemplateFromUrl');
+	var validator = require('./bootstrap/validator/js/bootstrapValidator.js');
+	var View = require('./View');
+	var TemplateFromUrl=require('./TemplateFromUrl');
 
 	function FormView(options){
 		var opts=options||{};

@@ -4,7 +4,7 @@
  */
 'use strict';
 define(function(require,exports,module){
-	var underscore=require('underscore');
+	var underscore=_=require('./plugins/underscore.js');
 	/**
 	_.templateSettings = {
 	  interpolate: /\{\{(.+?)\}\}/g

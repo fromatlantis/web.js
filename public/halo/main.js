@@ -1,12 +1,12 @@
 'use strict';
 define(function(require,exports,module){
-	var jquery=require('jquery');
-	var View=require('View');
-	var HeaderView=require('HeaderView');
-	var MenuView=require('MenuView');
-	var TableView=require('TableView');
-	var Store=require('Store');
-	var LoginForm = require('LoginForm');
+	var jquery=jQuery=$=require('./plugins/jquery-1.10.2.min.js');
+	var View=require('./View');
+	var HeaderView=require('./HeaderView');
+	var MenuView=require('./MenuView');
+	var TableView=require('./TableView');
+	var Store=require('./Store');
+	var LoginForm = require('./LoginForm');
 	/**
 	var Promise=require('promise').polyfill();
 	//var fetch=require('fetch');
