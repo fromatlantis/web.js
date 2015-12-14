@@ -14,6 +14,7 @@ Thumbs.db
 .nojekyll
 .project
 .settings/
+bower_components/
 node_modules/
 log/
 *.log
