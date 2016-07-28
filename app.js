@@ -10,6 +10,19 @@ var users = require('./routes/users');
 
 var app = express();
 
+var config = require('./config.json');
+if(config.debug){
+  //热部署，部署到线上时必须gulp pack重新打包
+  var webpack = require('webpack');
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackConfig = require('./webpack.config');
+  var compiler = webpack(webpackConfig);
+  // 为使用nodejs做服务器配置webpack-dev-middleware
+  // 如果需要浏览器自动刷新需要webpack-dev-server中间件
+  app.use(webpackDevMiddleware(compiler,webpackConfig.devServer));
+   // 为实现HMR配置webpack-hot-middleware
+  app.use(require("webpack-hot-middleware")(compiler));
+}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -20,7 +33,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// express.static 可以方便地托管静态文件
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use('/wechat/v4.0', express.static(config.buildPath));//虚拟目录访问
 
 app.use('/', routes);
 app.use('/users', users);
@@ -55,6 +71,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

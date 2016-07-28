@@ -1,5 +1,26 @@
 extends layout
-
 block content
-  h1= title
-  p Welcome to #{title}
+	h1= title
+	p.title Welcome to #{title}
+	table.table.table-striped.table-bordered.table-hover.table-checkable.table-responsive.datatable
+		thead
+			tr
+				th.checkbox-column
+					input.uniform(type="checkbox")
+				th(data-class="expand")
+					|	First Name
+				th
+					|	Last Name
+				th(data-hide="phone")
+					|	Username
+				th(data-hide="phone,tablet")
+					|	Status
+		tbody
+			tr
+				td.checkbox-column
+					input.uniform(type="checkbox")
+				td Alan
+				td Walker
+				td Alan Walker
+				td 
+					span.label.label-warning Suspended

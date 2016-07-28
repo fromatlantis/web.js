@@ -1,0 +1,94 @@
+@font-face {font-family: 'iconfont';
+    src: url('./iconfont/iconfont.eot'); /* IE9*/
+  	src: url('./iconfont/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  	url('./iconfont/iconfont.woff') format('woff'), /* chrome, firefox */
+  	url('./iconfont/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  	url('./iconfont/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.iconfont{
+    font-family:"iconfont" !important;
+	font-style:normal;
+	font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.if-1x{
+	font-size:1rem;
+}
+.if-2x{
+	font-size: 2rem;
+}
+.if-3x{
+	font-size: 3rem;
+}
+.if-5x{
+	font-size:5rem;
+}
+.if-6x{
+	font-size:6rem;
+}
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+body {
+	background: #fff;
+}
+.adPops {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	background: #fff;
+	
+}
+.adPops-container{
+	position: relative;
+	width:450px;
+	height: 278px;
+	border:1px solid #ebebeb;
+	border-radius: 5px;
+}
+.adPops-title {
+	border-bottom: 1px solid #ebebeb;
+	text-align: center;
+}
+.tabs {
+	padding: 10px;
+	cursor: pointer;
+}
+.tabs.active {
+	border-bottom: 2px solid #3F51B5;
+}
+.adPops-title table {
+	width: 100%;
+	border-spacing: 0;
+}
+.adPops-content {
+	padding: 10px;
+}
+.content {
+	display: none;
+}
+.content.active {
+	display: block;
+}
+.adPops-push {
+	position: absolute;
+	width: 30px;
+	height: 100px;
+	background: #fff;
+	border:1px solid #ebebeb;
+	left: -30px;
+	top:0px;
+	text-align: center;
+	padding-top: 10px;
+	color:#3F51B5;
+	cursor: pointer;
+}
+.adPops-push p {
+	margin-top: 10px;
+}
+.push-out:before { content: "\e643"; }
+.push-in:before { content: "\e601"; }
