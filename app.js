@@ -35,11 +35,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // express.static 可以方便地托管静态文件
-//app.use(express.static(path.join(__dirname, 'public')));
-app.use('/wechat/v4.0', express.static(config.buildPath));//虚拟目录访问
+app.use(express.static(path.join(__dirname, 'public')));
+//mock数据目录
+app.use(express.static(path.join(__dirname, 'mock')));
+//app.use('/surveyRpt', express.static(config.buildPath));//虚拟目录访问静态文件：localhost:3000/surveyPpt
+app.use(config.online ? config.publicPath : '/', express.static(config.buildPath));//打包后页面引用静态资源的路径，跟线上环境路径一致，确保本地测试也可以访问到
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/*', routes);
+//app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

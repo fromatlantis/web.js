@@ -1,12 +1,12 @@
 {
-	"devPath":"public",
+	"devPath":"views",
     "buildPath":"bin/assets",
-    "publicPath":"/wechat/v4.0/",
+    "publicPath":"/surveyRpt/static/",
     "debug":false,
     "online":false,
     "testServer":{
     	"sftp":{
-    		"host": "123.57.82.83",
+    		"host": "21.32.95.249",
             "remotePath": "/opt/www/exj_managerv2/wechat/v4.0",
             "user": "root",
             "pass": "aliyun123123Q"
@@ -17,10 +17,10 @@
     },
     "onServer":{
     	"sftp":{
-    		"host": "123.57.26.130",
-            "remotePath": "/mnt/www/exj_managerv2/wechat/v4.0",
-            "user": "root",
-            "pass": "aliyun123123Q"
+    		"host": "21.32.95.249",
+            "remotePath": "/surveyTemp/trunk/WebRoot/shorthand",
+            "user": "niuzhiwei",
+            "pass": "niuzhiwei"
     	},
     	"wx":{
     		"appId":"wx9e60458de7e99750"
@@ -28,6 +28,13 @@
     },
     "alias":{
         "zepto" : "javascripts/lib/zepto.min.js",
-        "jquery" : "javascripts/lib/jquery-1.10.2.min.js"
+        "jquery" : "javascripts/lib/jquery-1.10.2.min.js",
+        "commonCss" : "stylesheets/common.css",
+        "Util" : "javascripts/core/Util.js",
+        "swiper2" : "javascripts/lib/swiper2.x/swiper.min.js",
+        "swiper2Css" : "javascripts/lib/swiper2.x/swiper.css",
+        "jquery.form" : "javascripts/lib/jquery.form.js",
+        "FetchApi" : "javascripts/core/FetchApi.js",
+        "downexcel" : "javascripts/core/downexcel.js"
     }
 }

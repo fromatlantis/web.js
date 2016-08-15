@@ -1,0 +1,12 @@
+extends ../../layout
+block content
+	div.wrapper
+		form#uploadForm
+			div.upload-btn-box
+				span.btn.upload-btn 选择文件
+				input#select-file(type="file",name="uploadfile")
+			div.file-info
+				div.file-title 预览
+				div.preview
+			input.btn#file-upload(type='submit',value='上传')
+			div.btn#file-save 保存

@@ -1,0 +1,42 @@
+.upload-btn-box {
+	position: relative;
+}
+#select-file {
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    padding: 10px;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    z-index: 2;
+    width: 85px;
+}
+.upload-btn-box {
+	margin-top: 30px;
+}
+.file-info {
+	margin-top: 20px;
+	border:1px solid #ebebeb;
+	border-radius: 5px;
+	padding: 20px;
+}
+.file-title {
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 16px;
+	color:#03a9f4;
+}
+.file-info li {
+	padding: 10px;
+}
+#file-upload,#file-save {
+	display: block;
+	border: none;
+  	width: 100px;
+  	margin: 0 auto;
+  	margin-top: 30px;
+}
+#file-save {
+	display: none;
+}

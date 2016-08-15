@@ -1,0 +1,92 @@
+.template-list,.search-list {
+	border-radius: 5px;
+	border:1px solid #e8e8e8;
+	position: relative;
+	width: 760px;
+	margin: 0 auto;
+	margin-bottom:10px;
+}
+.template-list {
+	text-align: center;
+	cursor: pointer;
+}
+.search-list {
+	background: #fafafa;
+}
+.search-list td {
+	padding: 10px;
+}
+.search-list .title {
+	text-align: right;
+}
+.search-list span {
+	padding:5px 8px;
+	margin-right: 5px;
+	color:#777;
+}
+.search-list span:hover,.search-list span.current {
+	background: #03a9f4;
+	color:#fff;
+}
+.template-list:hover {
+	/*box-shadow: 0 0 2px #333;*/
+	border:1px solid #dcdcdc;
+}
+.template-list.card {
+	float: left;
+	width: 300px;
+}
+.template-info {
+	padding: 15px;
+}
+.template-info table {
+	width: 100%;
+}
+.template-info td {
+	padding:2px;
+	text-align: left;
+}
+.template-tips {
+	height: 40px;
+	line-height: 40px;
+	background: #fafafa;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	text-align: left;
+	padding-left: 15px;
+}
+.del{
+	margin-left: 10px;
+}
+.fr {
+	float: right;
+	margin-right: 15px;
+}
+.template-class {
+	width: 205px;
+	margin:0 auto;
+	margin-bottom: 20px;
+}
+.class {
+	float: left;
+	width: 100px;
+	text-align: center;
+	padding: 10px 0;
+	border:1px solid #03a9f4;
+	cursor: pointer;
+}
+.class.current {
+	background: #03a9f4;
+	color:#fff;
+}
+.class-1 {
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+}
+.class-2 {
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.new-remark {
+	color: #03a9f4;
+}

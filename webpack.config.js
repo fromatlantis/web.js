@@ -1,3 +1,4 @@
+//html打包时带有目录结构
 var path = require('path');
 var fs = require('fs');
 
@@ -26,34 +27,35 @@ var debug = config.debug;
 //var publicPath = '';
 // 这里publicPath要使用绝对路径，不然scss/css最终生成的css图片引用路径是错误的，应该是css-loader的bug
 //var publicPath = '/';//绝对路径
-var publicPath = config.publicPath;//虚拟绝对路径，跟线上环境路径一致
+var publicPath = config.online ? config.publicPath : '/';//虚拟资源路径，跟线上环境路径一致。
 
 var entries = (function() {
-    var jsDir = path.resolve(srcDir, 'javascripts')
+    var jsDir = path.resolve(srcDir, '**')
     var entryFiles = glob.sync(jsDir + '/*.{js,jsx}')
     var map = {}
     entryFiles.forEach((filePath) => {
-        var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+        var filename = filePath.substring(filePath.lastIndexOf('views') + 6, filePath.lastIndexOf('.'))
         map[filename] = filePath
     })
     return map
 }())
-
 var chunks = Object.keys(entries);//打包的文件都称之为chunks
 
+var viewRoot;
 var plugins =function() {
-    var entryHtml = glob.sync(srcDir + '/*.html')
+    var entryHtml = glob.sync(srcDir + '/**/*.html')
     var r = []
     entryHtml.forEach(function(filePath) {
         var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+        var filepath = filePath.substring(filePath.lastIndexOf('views') + 6, filePath.lastIndexOf('.'))
         var conf = {
             template: filePath,
-            filename: filename + '.html'
+            filename: filepath + '.html'
         }
-        if(filename in entries) {
+        if(filepath in entries) {
             //conf.title = config.title[filename];
             conf.inject = 'body';
-            conf.chunks = ['general','common', filename];
+            conf.chunks = ['general','common', filepath];
             conf.chunksSortMode='dependency';//根据依赖排序
         }
         //if(/b|c/.test(filename)) conf.chunks.splice(2, 0, 'common-b-c')
@@ -63,7 +65,7 @@ var plugins =function() {
 }()
 
 if(debug) {
-    extractCSS = new ExtractTextPlugin('stylesheets/[name].css?[contenthash]')
+    extractCSS = new ExtractTextPlugin('stylesheets/[name].css?[contenthash:8]')
     cssLoader = extractCSS.extract(['css'])
     sassLoader = extractCSS.extract(['css', 'sass'])
     plugins.push(extractCSS,new webpack.HotModuleReplacementPlugin())
@@ -90,7 +92,7 @@ if(debug) {
                 comments: false
             },
             mangle: {
-                except: ['$', 'exports', 'require']
+                except: ['$', 'exports', 'require']//混淆代码时不会被混淆
             }
         }),
         // new AssetsPlugin({
@@ -104,7 +106,7 @@ if(debug) {
 // 为实现webpack-hot-middleware做相关配置
 var entry=Object.assign({
         // 用到什么公共lib（例如React.js），就把它加进vender去，目的是将公用库单独提取打包
-        'general': []
+        //'general': []
     },entries);
 if(debug){
     for (var key of Object.keys(entry)) {
@@ -118,16 +120,16 @@ module.exports = {
     entry: entry,
     output: {
         path: assets,//打包文件存放的绝对路径
-        filename: debug ? 'javascripts/[name].js?[hash]' : 'javascripts/[name].min.js?[chunkhash:8]',
+        filename: debug ? 'javascripts/[name].js?[hash:8]' : 'javascripts/[name].min.js?[chunkhash:8]',
         //下面那种方式deploy的时候无法覆盖掉旧的
         //filename: debug ? 'javascripts/[name].js?[hash]' : 'javascripts/[chunkhash:8].[name].min.js',
-        //不知道下面2句做什么用
+        //下面2句给require.ensure异步模块用
         //chunkFilename: debug ? '[chunkhash:8].chunk.js' : 'javascripts/[chunkhash:8].chunk.min.js',
         //hotUpdateChunkFilename: debug ? '[id].js' : 'js/[id].[chunkhash:8].min.js',
         publicPath: publicPath//网站运行时的访问路径(用于js\css\images打包到页面上的路径)
     },
     resolve: {
-        root: [srcDir, nodeModPath],
+        root: [path.resolve(process.cwd(), 'public'), nodeModPath],
         alias: config.alias,
         extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
     },
@@ -146,17 +148,16 @@ module.exports = {
                 loaders: [
                      // url-loader更好用，小于10KB的图片会自动转成dataUrl，
                     // 否则则调用file-loader，参数直接传入
-                    //'url?limit=10000&name=[path][name].[ext]?[hash:8]',//ie7无法兼容 dataUrl
-                    'url?limit=1&name=[path][name].[ext]?[hash:8]',//不做dataUrl处理，limit＝0为不限制
+                    'url?limit=1&name=[path][name].[ext]?[hash:8]',
                     //下面那种方式deploy的时候无法覆盖掉旧的
                     //'url?limit=10000&name=images/[hash:8].[name].[ext]',
-                    'image?{bypassOnDebug:true, progressive:true,optimizationLevel:3,pngquant:{quality:"65-80",speed:4}}'
+                    //'image?{bypassOnDebug:true, progressive:true,optimizationLevel:3,pngquant:{quality:"65-80",speed:4}}' //低版本node\npm会报错
                 ]
             },
             {
                 test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
+                loader: 'url?limit=1&name=fonts/[name].[ext]?[hash:8]'//不转换为dataUrl
                 //loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
-                loader: 'url?limit=1&name=fonts/[name].[ext]?[hash:8]'
             },
             {test: /\.css$/, loader: cssLoader},
             {test: /\.scss$/, loader: sassLoader},

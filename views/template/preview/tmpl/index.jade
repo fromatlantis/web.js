@@ -1,0 +1,15 @@
+extends ../../../layout
+block content
+	div.wrapper
+		p.tips
+			| 您可以
+			span.btn.online
+				-if(select) 
+					| 选择该模版
+				-else
+					| 复制该模版
+			| 在线编辑，
+			| 也可以
+			span.btn.download 下载该模版
+			| 并离线编辑
+		div.template-info!= data.content

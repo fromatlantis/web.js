@@ -1,26 +1,33 @@
 extends layout
 block content
-	h1= title
-	p.title Welcome to #{title}
-	table.table.table-striped.table-bordered.table-hover.table-checkable.table-responsive.datatable
-		thead
-			tr
-				th.checkbox-column
-					input.uniform(type="checkbox")
-				th(data-class="expand")
-					|	First Name
-				th
-					|	Last Name
-				th(data-hide="phone")
-					|	Username
-				th(data-hide="phone,tablet")
-					|	Status
-		tbody
-			tr
-				td.checkbox-column
-					input.uniform(type="checkbox")
-				td Alan
-				td Walker
-				td Alan Walker
-				td 
-					span.label.label-warning Suspended
+	div.wrapper
+		div.swiper-container
+			div.swiper-wrapper
+				div.swiper-slide.blue-slide slider1
+				div.swiper-slide.red-slide slider2
+				div.swiper-slide.orange-slide slider3
+			div.pagination
+		div.hot-template
+			div.hot-title
+				i.iconfont.split &#xe60e; 
+				| 热门模版
+			-for (var i = 2; i >= 0; i--) {
+				div.template-list
+					div.template-info
+						table
+							tr
+								td 模版名称：小额贷款客户家庭经济情况调查模版
+								td 所属行业：行业1
+							tr
+								td 上传人：牛志伟
+								td 所属机构：机构1
+							tr
+								td 上传时间：2016-08-02 17:00
+								td 来源：来源1
+					div.template-tips
+						span.remark
+							| 小额贷款、经济情况调查
+						span.fr
+							span.preview 预览
+							span.del 删除
+			-}

@@ -1,0 +1,55 @@
+extends ../../layout
+block content
+	div.template-class
+		div.class.class-1.current 农户类
+		div.class.class-2 商户类
+		div(style="clear:both;")
+	div
+		div.search-list
+			table
+				tr
+					td.title 机构：
+					td
+						span.current 机构1
+						span 机构2
+						span 机构3
+					</td>
+				tr
+					td.title 行业：
+					td
+						span 行业1
+						span.current 行业2
+						span 行业3
+				tr
+					td.title 上传者：
+					td
+						span.current 上传者1
+						span 上传者2
+						span 上传者3						
+		div.template-list.new
+			div.template-info
+				i.iconfont.new-report &#xe60a;
+				p.new-report-title 新建报告
+			div.template-tips
+				span.remark.new-remark
+					|	您需要前往模版列表选择一个合适的模版
+		-for (var i = 5; i >= 0; i--) {
+			div.template-list
+				div.template-info
+					table
+						tr
+							td 模版名称：小额贷款客户家庭经济情况调查报告
+							td 所属行业：行业1
+						tr
+							td 上传人：牛志伟
+							td 所属机构：机构1
+						tr
+							td 上传时间：2016-08-02 17:00
+							td 来源：来源1
+				div.template-tips
+					span.remark
+						| 小额贷款、经济情况调查
+					span.fr
+						span.preview 预览
+						span.del 删除
+		-}
