@@ -1,7 +1,8 @@
 {
 	"devPath":"views",
     "buildPath":"bin/assets",
-    "publicPath":"/surveyRpt/static/",
+    "publicPath":"/surveyRpt/",
+    "staticPath":"public", 
     "debug":false,
     "online":false,
     "testServer":{
@@ -35,6 +36,7 @@
         "swiper2Css" : "javascripts/lib/swiper2.x/swiper.css",
         "jquery.form" : "javascripts/lib/jquery.form.js",
         "FetchApi" : "javascripts/core/FetchApi.js",
-        "downexcel" : "javascripts/core/downexcel.js"
+        "downexcel" : "javascripts/core/downexcel.js",
+        "marquee" : "javascripts/lib/marquee.js"
     }
 }

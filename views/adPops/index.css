@@ -1,0 +1,91 @@
+.adPops {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	background: #fff;
+	
+}
+.adPops-container{
+	position: relative;
+	width:647px;
+	height: 400px;
+	border:1px solid #ebebeb;
+	border-radius: 5px;
+	background: #fff !important;
+}
+.adPops-title {
+	border-bottom: 1px solid #ebebeb;
+	text-align: center;
+}
+.adPops-title .tabs {
+	padding: 10px;
+	cursor: pointer;
+	text-align: center;
+	font-size: 16px;
+}
+.tabs.active {
+	border-bottom: 1px solid #000;
+}
+.adPops-title table {
+	width: 100%;
+	border-spacing: 0;
+}
+.adPops-content {
+	padding: 10px;
+	color:#000 !important;
+}
+.content-chip {
+	display: none;
+}
+.content-chip.active {
+	display: block;
+}
+.adPops-push {
+	position: absolute;
+	width: 30px;
+	height: 100px;
+	background: #fff;
+	border:1px solid #ebebeb;
+	left: -32px;
+	top:103px;
+	text-align: center;
+	padding-top: 15px;
+	color:#3F51B5;
+	cursor: pointer;
+	border-top-left-radius: 3px;
+  	border-bottom-left-radius: 3px;
+}
+.adPops-push p {
+	margin-top: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.theme-blue {
+	background: #03a9f4;
+	border:1px solid #03a9f4;
+	color:#fff;
+}
+.msg-icon {
+	margin-right: 5px;
+}
+a {
+	color: #000;
+}
+a:hover{
+	text-decoration: underline;
+}
+.news {
+	padding: 10px;
+}
+.news-title {
+	color: #03a9f4;
+	font-weight: bold;
+}
+.news li {
+	padding-left: 1.5em;
+	height: 20px;
+}
+.news-content  {
+	height: 20px;
+	overflow: hidden;
+}

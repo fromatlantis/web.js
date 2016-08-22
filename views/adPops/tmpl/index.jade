@@ -1,0 +1,31 @@
+div.theme-blue.adPops-container
+	div.news
+		p.news-title
+			i.iconfont.msg-icon &#xe60f;
+			| 消息：
+		div.news-content
+			ul
+				li
+					a(href="javascript:;")
+						| 通知：xxxxxxxxxx
+				li
+					a(href="javascript:;")
+						| 通知2：xxxxxxxxxx
+	div.adPops-title
+		table
+			tr
+				each item,index in data.title
+					-if(index==0)
+						td.tabs.theme-blue.active!= item
+					-else
+						td.tabs.theme-blue!= item
+	div.adPops-content
+		each item,index in data.content
+			-if(index==0)
+				div.content-chip.active!= item
+			-else
+				div.content-chip!= item
+	div.adPops-push.theme-blue
+		i.iconfont
+			|	&#xe60d;
+		p 收起

@@ -17,7 +17,7 @@ var html = template({
 	'nav':'home',
 	'router': ['首页']
 });
-$('body').html(html);
+$('body').html(html);//最好不要用body，这样将script标签清掉了，但是不影响页面运行，因为js已经加载
 var mySwiper = new Swiper('.swiper-container',{
 	loop: true,
 	autoplay: 3000,

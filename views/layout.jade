@@ -2,131 +2,131 @@ div.container
 	div.header
 		span 模版速录系统
 		span.profile
-			i.iconfont &#xe602; 
+			i.iconfont &#xe61b;
 			|	牛志伟
 	div.header.router-chip
-		i.iconfont.step &#xe60b;
+		i.iconfont.step &#xe61f;
 		each item in router
 			span= item
-			i.iconfont &#xe608;
+			i.iconfont &#xe622;
 	div
 		ul.nav
 			div.nav-header
 				|	模版速录系统
-				i.iconfont &#xe605;
+				i.iconfont &#xe616;
 			-if(nav=='home'){
 				li.current
 					a(href='/')
-						i.iconfont &#xe606;
+						i.iconfont &#xe626;
 						|	首页
 			-}else{
 				li
 					a(href='/')
-						i.iconfont &#xe606;
+						i.iconfont &#xe626;
 						|	首页
 			-}
 			-if(nav=='template' || nav=='upload1'){
 				li.current
 					a(href='javascript:;')
-						i.iconfont &#xe607; 
+						i.iconfont &#xe614; 
 						|	模版中心
 					ul.sub-nav
 						-if(nav=='template'){
 							li.current
 								a(href='/template')
-									i.iconfont &#xe601;
+									i.iconfont &#xe61a;
 									|	模版列表
 						-}else{
 							li
 								a(href='/template')
-									i.iconfont &#xe601;
+									i.iconfont &#xe61a;
 									|	模版列表
 						-}
 						-if(nav=='upload1'){
 							li.current
 								a(href='/upload?type=1')
-									i.iconfont &#xe603;
+									i.iconfont &#xe61e;
 									|	上传模版
 						-}else{
 							li
 								a(href='/upload?type=1')
-									i.iconfont &#xe603;
+									i.iconfont &#xe61e;
 									|	上传模版
 						-}
 			-}else{
 				li
 					a(href='javascript:;')
-						i.iconfont &#xe607; 
+						i.iconfont &#xe614;
 						|	模版中心
 					ul.sub-nav
 						li
 							a(href='/template')
-								i.iconfont &#xe601;
+								i.iconfont &#xe61a;
 								|	模版列表
 						li
 							a(href='/upload?type=1')
-								i.iconfont &#xe603;
+								i.iconfont &#xe61e;
 								|	上传模版
 			-}
 			-if(nav=='report' || nav=='upload2'){
 				li.current
 					a(href='javascript:;')
-						i.iconfont &#xe604;
+						i.iconfont &#xe620;
 						|	报告管理
 					ul.sub-nav
 						-if(nav=='report'){
 							li.current
 								a(href='/report')
-									i.iconfont &#xe601;  
+									i.iconfont &#xe61a;  
 									|	报告列表
 						-}else{
 							li
 								a(href='/report')
-									i.iconfont &#xe601;  
+									i.iconfont &#xe61a;
 									|	报告列表
 						-}
 						-if(nav=='upload2'){
 							li.current
 								a(href='/upload?type=2')
-									i.iconfont &#xe603; 
+									i.iconfont &#xe61e;
 									|	上传报告
 						-}else{
 							li
 								a(href='/upload?type=2')
-									i.iconfont &#xe603; 
+									i.iconfont &#xe61e;
 									|	上传报告
 						-}
 			-}else{
 				li
 					a(href='javascript:;')
-						i.iconfont &#xe604;
+						i.iconfont &#xe620;
 						|	报告管理
 					ul.sub-nav
 						li
 							a(href='/report')
-								i.iconfont &#xe601;  
+								i.iconfont &#xe61a;  
 								|	报告列表
 						li
 							a(href='/upload?type=2')
-								i.iconfont &#xe603; 
+								i.iconfont &#xe61e;
 								|	上传报告
 			-}
 			li
 				a(href='javascript:;')
-					i.iconfont &#xe602;
+					i.iconfont &#xe61b;
 					|	个人中心
 				ul.sub-nav
 					li
 						a(href='/template')
-							i.iconfont &#xe60c;  
+							i.iconfont &#xe617; 
 							|	我的模版
 					li
 						a(href='/login')
-							i.iconfont &#xe600;
+							i.iconfont &#xe619;
 							|	退出系统
 			li
 				a(href='javascript:;')
-					i.iconfont &#xe60d;
+					i.iconfont &#xe621;
 					|	帮助中心
 		div.content
 			block content

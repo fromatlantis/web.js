@@ -6,7 +6,7 @@ var pageParams={
 }
 
 var template = require("./tmpl/index.jade"); //返回一个函数
-var loginBg=require('./images/login-bg.png');
+var loginBg=require('../../public/images/login-bg.png');
 var html = template({
 	'title':'登陆',
 	'bg':loginBg

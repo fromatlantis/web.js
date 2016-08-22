@@ -20,6 +20,11 @@ var srcDir = path.resolve(process.cwd(), config.devPath);
 var assets = path.resolve(process.cwd(), config.buildPath);
 var nodeModPath = path.resolve(__dirname, './node_modules');
 
+//打包时，静态资源的生成路径
+var staticPath=config.staticPath;
+var cssStaticPath=staticPath+'/css/';
+var jsStaticPath=staticPath+'/js/';
+
 var extractCSS
 var cssLoader
 var sassLoader
@@ -46,7 +51,7 @@ var plugins =function() {
     var entryHtml = glob.sync(srcDir + '/**/*.html')
     var r = []
     entryHtml.forEach(function(filePath) {
-        var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
+        //var filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
         var filepath = filePath.substring(filePath.lastIndexOf('views') + 6, filePath.lastIndexOf('.'))
         var conf = {
             template: filePath,
@@ -55,7 +60,7 @@ var plugins =function() {
         if(filepath in entries) {
             //conf.title = config.title[filename];
             conf.inject = 'body';
-            conf.chunks = ['general','common', filepath];
+            conf.chunks = ['common', filepath];
             conf.chunksSortMode='dependency';//根据依赖排序
         }
         //if(/b|c/.test(filename)) conf.chunks.splice(2, 0, 'common-b-c')
@@ -65,12 +70,12 @@ var plugins =function() {
 }()
 
 if(debug) {
-    extractCSS = new ExtractTextPlugin('stylesheets/[name].css?[contenthash:8]')
+    extractCSS = new ExtractTextPlugin(cssStaticPath+'[name].css?[contenthash:8]')
     cssLoader = extractCSS.extract(['css'])
     sassLoader = extractCSS.extract(['css', 'sass'])
     plugins.push(extractCSS,new webpack.HotModuleReplacementPlugin())
 } else {
-    extractCSS = new ExtractTextPlugin('stylesheets/[name].min.css?[contenthash:8]', {
+    extractCSS = new ExtractTextPlugin(cssStaticPath+'[name].min.css?[contenthash:8]', {
     //下面那种方式deploy的时候无法覆盖掉旧的
     //extractCSS = new ExtractTextPlugin('stylesheets/[contenthash:8].[name].min.css', {
         // 当allChunks指定为false时，css loader必须指定怎么处理
@@ -120,16 +125,16 @@ module.exports = {
     entry: entry,
     output: {
         path: assets,//打包文件存放的绝对路径
-        filename: debug ? 'javascripts/[name].js?[hash:8]' : 'javascripts/[name].min.js?[chunkhash:8]',
+        filename: debug ? jsStaticPath+'[name].js?[hash:8]' : jsStaticPath+'[name].min.js?[chunkhash:8]',
         //下面那种方式deploy的时候无法覆盖掉旧的
         //filename: debug ? 'javascripts/[name].js?[hash]' : 'javascripts/[chunkhash:8].[name].min.js',
         //下面2句给require.ensure异步模块用
-        //chunkFilename: debug ? '[chunkhash:8].chunk.js' : 'javascripts/[chunkhash:8].chunk.min.js',
+        chunkFilename: debug ? jsStaticPath+'[name].chunk.js?[hash:8]' : jsStaticPath+'[name].chunk.min.js?[chunkhash:8]',
         //hotUpdateChunkFilename: debug ? '[id].js' : 'js/[id].[chunkhash:8].min.js',
         publicPath: publicPath//网站运行时的访问路径(用于js\css\images打包到页面上的路径)
     },
     resolve: {
-        root: [path.resolve(process.cwd(), 'public'), nodeModPath],
+        root: [path.resolve(process.cwd(), 'public')],
         alias: config.alias,
         extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
     },
@@ -156,7 +161,7 @@ module.exports = {
             },
             {
                 test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
-                loader: 'url?limit=1&name=fonts/[name].[ext]?[hash:8]'//不转换为dataUrl
+                loader: 'url?limit=1&name='+staticPath+'/fonts/[name].[ext]?[hash:8]'//不转换为dataUrl
                 //loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
             },
             {test: /\.css$/, loader: cssLoader},

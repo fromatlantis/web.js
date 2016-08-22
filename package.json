@@ -29,7 +29,6 @@
     "jade-loader": "^0.8.0",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",
-    "json-loader": "^0.5.4",
     "lodash": "^4.13.1",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
