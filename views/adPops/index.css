@@ -34,9 +34,11 @@
 	padding: 10px;
 	color:#000 !important;
 }
+/*
 .content-chip {
 	display: none;
 }
+*/
 .content-chip.active {
 	display: block;
 }

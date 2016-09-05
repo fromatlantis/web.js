@@ -2,12 +2,14 @@
 (function(){
 	var root = this;
 	require('./index.css');
+	require('../adPops/index.css');
 	var Store = require('Store');
 	var Events = require('Events');
 	var Page = {
 		push: 0,
 		Apis: {
 			msgs: '/apis/msgs.json',
+			news: '/apis/news.json',
 			detail: '/apis/msgDetail.json'
 		},
 		init: function(){
@@ -39,6 +41,9 @@
 			},
 			detailView: function() {
 				return require('./tmpl/detail.jade');
+			},
+			newsView: function() {
+				return require('./tmpl/news.jade');
 			}
 		}
 	}());
@@ -70,9 +75,17 @@
 			var html = template(Page.Store.getState());
 			$msgPlus.html(html);
 		}
+		function news() {
+			var template = Page.UI.newsView();
+			var html = template(Page.Store.getState());
+			$msgPlus.html(html);
+		}
 		return {
 			init: function() {
 				index();
+			},
+			news: function() {
+				news();
 			},
 			detail: function() {
 				detail();
@@ -81,12 +94,52 @@
 	}());
 
 	Page.HandleEvents = (function(){
+		function push(type){
+			var $msgPlus = $('.msg-plus'),
+				$msgContent = $('.msg-content'),
+				$msgTabs = $('.msg-tabs'),
+				$icon = $(this).find('i');
+			if(type=='right'){
+				$msgPlus.animate({right:-302},function(){
+					$msgTabs.animate({'margin-left':-302});
+					Page.push=1;
+					$icon.html('&#xe60e;')
+				})
+			}else if(type=='left'){
+				$msgPlus.animate({right:0});
+				$msgTabs.animate({'margin-left':0});
+				Page.push=0;
+				$icon.html('&#xe60d;')
+			}
+		}	
+		$(document).on('click','.back-home',function(){
+			Page.Render.init();
+		})
 		var events = new Events({
+			'.news@click': 'showNews',
 			'.content-item@click': 'showDetail',
+			'.showhide@click': 'foldBox',
+			'.home@click': 'showIndex',
+			'.content-tabs td@click': 'changeMsgTabs'
 		}) 
 		return {
 			init: function() {
 				events.dispatch(this);
+			},
+			showNews: function() {
+				$.ajax({
+					url: Page.Apis.news,
+					type: 'GET',
+					dataType: 'JSON',
+					data: {},
+					success:function(res) {
+						Page.Store.dispatch(Page.Action.news(res.records));
+						Page.Render.news();
+						if(Page.push==1){
+							push('left');
+						}
+					}
+				})
 			},
 			showDetail: function() {
 				$.ajax({
@@ -99,7 +152,30 @@
 						Page.Render.detail();
 					}
 				})
+			},
+			foldBox: function() {
+				if(Page.push==0){
+					push('right');
+				}else if(Page.push==1){
+					push('left');
+				}
+			},
+			showIndex: function() {
+				if(Page.push==1){
+					push('left');
+				}
+			},
+			changeMsgTabs: function() {
+				var tabIndex = $(this).data('tab-index');
+				$(this).addClass('active').siblings('.active').removeClass('active');
+				$('ul.content').each(function(){
+					var index = $(this).data('tab-index');
+					if(index == tabIndex){
+						$(this).addClass('active').siblings('.active').removeClass('active');
+					}
+				})
 			}
+		}
 	}());
 
 	Page.Action = (function() {
@@ -120,6 +196,12 @@
 					}
 				}
 			},
+			news: function(record) {
+				return {
+					type:'news',
+					payload:record
+				}
+			},
 			detail: function(record) {
 				return {
 					type:'detail',
@@ -131,7 +213,6 @@
 
 	Page.init();
 
-	/**
 	var msgPlus = Page;
 	if (typeof exports !== 'undefined') {
 		if (typeof module !== 'undefined' && module.exports) {
@@ -146,5 +227,5 @@
 	  		return msgPlus;
 		});
 	}
-	**/
+
 }.call(this));

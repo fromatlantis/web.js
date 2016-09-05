@@ -3,7 +3,7 @@
     "buildPath":"bin/assets",
     "publicPath":"/surveyRpt/",
     "staticPath":"public", 
-    "debug":false,
+    "debug":true,
     "online":false,
     "testServer":{
     	"sftp":{
@@ -37,6 +37,8 @@
         "jquery.form" : "javascripts/lib/jquery.form.js",
         "FetchApi" : "javascripts/core/FetchApi.js",
         "downexcel" : "javascripts/core/downexcel.js",
-        "marquee" : "javascripts/lib/marquee.js"
+        "marquee" : "javascripts/lib/marquee.js",
+        "Store" : "javascripts/core/Store.js",
+        "Events" : "javascripts/core/Events.js"
     }
 }

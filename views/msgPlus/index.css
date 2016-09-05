@@ -1,0 +1,80 @@
+@font-face {font-family: 'iconfont';
+    src: url('../../public/stylesheets/iconfont/iconfont.eot'); /* IE9*/
+  	src: url('../../public/stylesheets/iconfont/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../public/stylesheets/iconfont/iconfont.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+}
+.iconfont{
+    font-family:"iconfont" !important;
+	font-style:normal;
+	font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.msg-plus {
+	min-width: 300px;
+  	position: fixed;
+  	bottom: 2px;
+  	right: 2px;
+  	background: #fff;
+  	font-size: 14px;
+}
+.msg-plus .back-home {
+	color: #000;
+	text-align: left;
+	padding: 10px;
+	cursor: pointer;
+}
+.msg-plus .serach-chip {
+	padding: 10px 10px 5px 10px;
+	border-top: 1px solid #ebebeb;
+  	border-left: 1px solid #ebebeb;
+  	border-right: 1px solid #ebebeb;
+}
+.msg-plus .serach-chip input {
+	border: none;
+}
+.msg-plus .content-tabs, .msg-tabs > table {
+	width: 100%;
+	text-align: center;
+	border-collapse: collapse;
+	cursor: pointer;
+}
+.msg-plus .content-tabs td, .msg-tabs > table td{
+	border: 1px solid #ebebeb;
+	padding: 5px;
+	line-height: 24px;
+}
+.msg-content ul {
+	min-height: 400px;
+	border-left: 1px solid #ebebeb;
+	border-right: 1px solid #ebebeb;
+	padding: 10px;
+	text-align: left;
+	margin: 0;
+}
+.msg-content ul.content {
+	display: none;
+}
+.msg-content ul.active {
+	display: block;
+}
+.msg-content ul li {
+	list-style: none;
+	cursor: pointer;
+	line-height: 20px;
+}
+.content-tabs td.active {
+	border-bottom: none;
+}
+.msg-tabs {
+	width: 300px;
+	background: #fff;
+}
+.msg-tabs i {
+	font-size: 20px;
+	color: #03a9f4;
+}
+.msg-tabs td.active {
+	border-bottom: 1px solid #03a9f4;
+}

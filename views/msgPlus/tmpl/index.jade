@@ -1,0 +1,21 @@
+div.msg-content
+	div.serach-chip
+		i.iconfont &#xe627;
+		input(type='text')
+	table.content-tabs
+		tr
+			each item, index in msgs.tabs
+				td(class=-index==0?'active':'',data-tab-index='#{index}')= item
+	each item, index in msgs.content
+		ul.content(class=-index==0?'active':'',data-tab-index='#{index}')
+			each value in item 
+				li.content-item= value.content
+div.msg-tabs
+	table
+		tr
+			td.home.active 
+				i.iconfont &#xe60f;
+			td.news 
+				i.iconfont &#xe609;
+			td.showhide 
+				i.iconfont &#xe60d;

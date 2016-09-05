@@ -7,6 +7,36 @@ require('./index.css');
 require('swiper2Css');
 var Swiper = require('swiper2');
 
+var Store = require('Store');
+var store =  new Store({
+	counter: 0,
+	todos: []
+});
+
+function action () {
+	return {
+		type: 'todos',
+		payload : {
+			id: 1,
+			content: '待办事项1'
+		}
+	}
+}
+function action2 () {
+	return {
+		type: 'age',
+		payload : 28
+	}
+}
+store.dispatch(action());
+store.dispatch(action2());
+
+var state = store.getState();
+//state.age = 30;
+console.log(state);
+//console.log(state.counter);
+
+
 var pageParams={
 
 }

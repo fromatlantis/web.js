@@ -11,6 +11,8 @@ var webpack = require('webpack')
 var gutil = require('gulp-util')
 
 var webpackConf = require('./webpack.config')
+//var webpackConf = require('./webpack.halo.config')
+
 var config = require('./config.json')
 
 var src = path.resolve(process.cwd(), config.devPath);

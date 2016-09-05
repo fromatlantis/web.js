@@ -111,7 +111,7 @@ if(debug) {
 // 为实现webpack-hot-middleware做相关配置
 var entry=Object.assign({
         // 用到什么公共lib（例如React.js），就把它加进vender去，目的是将公用库单独提取打包
-        //'general': []
+        'general': ['Store','Events']
     },entries);
 if(debug){
     for (var key of Object.keys(entry)) {

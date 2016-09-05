@@ -20,7 +20,11 @@ div.theme-blue.adPops-container
 					-else
 						td.tabs.theme-blue!= item
 	div.adPops-content
-		div.content-chip!= tab.content
+		each item,index in data.content
+			-if(index==0)
+				div.content-chip.active!= item
+			-else
+				div.content-chip!= item
 	div.adPops-push.theme-blue
 		i.iconfont!= pick.content
 		p= pick.text
