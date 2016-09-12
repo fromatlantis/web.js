@@ -1,21 +1,67 @@
 div.msg-content
 	div.serach-chip
-		i.iconfont &#xe627;
-		input(type='text')
+		i.iconfont.search-icon &#xe627;
+		input(type='text',placeholder='查找...')
 	table.content-tabs
 		tr
 			each item, index in msgs.tabs
-				td(class=-index==0?'active':'',data-tab-index='#{index}')= item
+				-if(index==0)
+					td(class='active',data-tab-index='#{index}')= item
+				-else
+					td(data-tab-index='#{index}')= item
 	each item, index in msgs.content
-		ul.content(class=-index==0?'active':'',data-tab-index='#{index}')
-			each value in item 
-				li.content-item= value.content
+		ul.content(data-tab-index='#{index}')
+			each value,index in item
+				//- -if(index>1){ 
+				li.content-item
+					div.item-title
+						span.item-no= (index+1)+'.'
+						span= value.name
+						span.end-day 距结清还有
+							span.day-num= value.endDay 
+							| 天
+					div.item-more
+						table.item-more-table
+							tr
+								td
+									span= value.cargo
+									span= value.mobile
+								td(rowspan='2')
+									img.map-icon(title='#{value.address}',src=require('../../../public/images/map-icon.png'))
+							tr
+								td
+									span= value.trade
+									span= value.amount
+										| 万
+					div.item-deal
+						button.no-more 不再显示
+						button.can-next 有续贷意愿
+				//-
+					-}else{
+						li.content-item
+							div.item-title
+								span.item-no= (index+1)+'.'
+								span= value.name
+								span= value.mobile
+								button 有续贷意愿
+							div.item-more
+								div.item-more-row
+									span= value.cargo
+									span= value.amount
+									span= value.endDay
+								div.item-more-row
+									span= value.trade
+									span= value.address
+					-}
 div.msg-tabs
 	table
 		tr
 			td.home.active 
 				i.iconfont &#xe60f;
+				span 消息
 			td.news 
-				i.iconfont &#xe609;
+				i.iconfont &#xe634;
+				span 新闻
 			td.showhide 
-				i.iconfont &#xe60d;
+				i.iconfont &#xe635;
+				span 收起

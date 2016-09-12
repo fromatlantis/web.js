@@ -1,5 +1,7 @@
 'use strict';
 (function(){
+	//console.time('time');
+	//console.profile();
 	var root = this;
 	require('./index.css');
 	require('../adPops/index.css');
@@ -83,6 +85,7 @@
 		return {
 			init: function() {
 				index();
+				$('.content-tabs').trigger('change.tabs',0); 
 			},
 			news: function() {
 				news();
@@ -98,18 +101,20 @@
 			var $msgPlus = $('.msg-plus'),
 				$msgContent = $('.msg-content'),
 				$msgTabs = $('.msg-tabs'),
-				$icon = $(this).find('i');
+				$icon = $('.showhide').find('i');
 			if(type=='right'){
 				$msgPlus.animate({right:-302},function(){
 					$msgTabs.animate({'margin-left':-302});
 					Page.push=1;
-					$icon.html('&#xe60e;')
+					$icon.html('&#xe636;');
+					$icon.next('span').text('展开');
 				})
 			}else if(type=='left'){
 				$msgPlus.animate({right:0});
 				$msgTabs.animate({'margin-left':0});
 				Page.push=0;
-				$icon.html('&#xe60d;')
+				$icon.html('&#xe635;');
+				$icon.next('span').text('收起');
 			}
 		}	
 		$(document).on('click','.back-home',function(){
@@ -117,11 +122,13 @@
 		})
 		var events = new Events({
 			'.news@click': 'showNews',
-			'.content-item@click': 'showDetail',
+			'.content-item@click': 'showItemMore',
+			'.item-deal .no-more@click': 'noMore',
 			'.showhide@click': 'foldBox',
 			'.home@click': 'showIndex',
-			'.content-tabs td@click': 'changeMsgTabs'
-		}) 
+			'.content-tabs td@click': 'changeMsgTabs',
+			'.content-tabs@change.tabs':'changeTabs'//自定义事件
+		})
 		return {
 			init: function() {
 				events.dispatch(this);
@@ -140,6 +147,19 @@
 						}
 					}
 				})
+			},
+			showItemMore: function() {
+				var $itme = $(this);
+				var $more = $(this).find('.item-more');
+				if($more.is(':visible')) {
+					$more.hide('fast');
+				}else {
+					$more.show('fast');
+				}			
+			},
+			noMore: function() {
+				var $item = $(this).parents('.content-item');
+				$item.hide();
 			},
 			showDetail: function() {
 				$.ajax({
@@ -167,17 +187,16 @@
 			},
 			changeMsgTabs: function() {
 				var tabIndex = $(this).data('tab-index');
-				$(this).addClass('active').siblings('.active').removeClass('active');
-				$('ul.content').each(function(){
-					var index = $(this).data('tab-index');
-					if(index == tabIndex){
-						$(this).addClass('active').siblings('.active').removeClass('active');
-					}
-				})
+				Page.HandleEvents.changeTabs('change.tabs',tabIndex);
+			},
+			changeTabs: function(e,index) {
+				var tabIndex = index;
+				$('.content-tabs td[data-tab-index='+index+']').addClass('active').siblings('.active').removeClass('active');
+				$('ul.content[data-tab-index='+index+']').addClass('active').siblings('.active').removeClass('active');
 			}
 		}
 	}());
-
+	
 	Page.Action = (function() {
 		return {
 			index: function(record){
@@ -210,9 +229,9 @@
 			}
  		}
 	}());
-
 	Page.init();
-
+	//console.timeEnd('time');
+	//console.profileEnd();
 	var msgPlus = Page;
 	if (typeof exports !== 'undefined') {
 		if (typeof module !== 'undefined' && module.exports) {

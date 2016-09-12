@@ -73,7 +73,11 @@ if(debug) {
     extractCSS = new ExtractTextPlugin(cssStaticPath+'[name].css?[contenthash:8]')
     cssLoader = extractCSS.extract(['css'])
     sassLoader = extractCSS.extract(['css', 'sass'])
-    plugins.push(extractCSS,new webpack.HotModuleReplacementPlugin())
+    if(config.hot){
+        plugins.push(extractCSS,new webpack.HotModuleReplacementPlugin())
+    }else{
+        plugins.push(extractCSS)
+    }
 } else {
     extractCSS = new ExtractTextPlugin(cssStaticPath+'[name].min.css?[contenthash:8]', {
     //下面那种方式deploy的时候无法覆盖掉旧的
@@ -113,7 +117,7 @@ var entry=Object.assign({
         // 用到什么公共lib（例如React.js），就把它加进vender去，目的是将公用库单独提取打包
         'general': ['Store','Events']
     },entries);
-if(debug){
+if(config.hot){
     for (var key of Object.keys(entry)) {
         if (! Array.isArray(entry[key])) {
             entry[key] = Array.of(entry[key])

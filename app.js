@@ -11,7 +11,7 @@ var users = require('./routes/users');
 var app = express();
 
 var config = require('./config.json');
-if(config.debug){
+if(config.hot){
   //热部署，部署到线上时必须gulp pack重新打包
   var webpack = require('webpack');
   var webpackDevMiddleware = require('webpack-dev-middleware');

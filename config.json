@@ -5,6 +5,7 @@
     "staticPath":"public", 
     "debug":true,
     "online":false,
+    "hot":true,
     "testServer":{
     	"sftp":{
     		"host": "21.32.95.249",

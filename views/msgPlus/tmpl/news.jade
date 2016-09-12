@@ -1,14 +1,15 @@
 div.theme-blue.adPops-container
 	div.adPops-title
-		div.back-home
-			span 返回
+		div.back-home.theme-blue
+			明略数据
+			i.iconfont.close-icon &#xe639;
 		table
 			tr
 				each item,index in news
 					-if(index==0)
-						td.tabs.theme-blue.active!= item.title
+						td.tabs.active!= item.title
 					-else
-						td.tabs.theme-blue!= item.title
+						td.tabs!= item.title
 	div.adPops-content
 		each item,index in news
 			-if(index==0)

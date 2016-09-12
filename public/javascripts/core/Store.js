@@ -5,7 +5,9 @@ function Store(options) {
 	state = opts;
 }
 Store.prototype.getState = function() {
-	Object.freeze(state);//冻结对象不可修改
+	if(typeof Object.freeze === 'function'){
+		Object.freeze(state);//冻结对象不可修改
+	}
 	return state;
 }
 Store.prototype.dispatch = function (action) {

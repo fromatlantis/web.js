@@ -28,8 +28,8 @@ function action2 () {
 		payload : 28
 	}
 }
-store.dispatch(action());
-store.dispatch(action2());
+//store.dispatch(action());
+//store.dispatch(action2());
 
 var state = store.getState();
 //state.age = 30;
