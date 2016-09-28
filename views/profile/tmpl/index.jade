@@ -1,0 +1,378 @@
+div.left-box
+	div.title-top
+		img.user-icon(src=require('../../../public/images/user-icon.png')) 
+	div.title-item.active 首页
+	div.title-item 基本信息
+	div.title-item 综合指标
+	div.title-item 行业关联
+	div.title-item 行业统计
+	div.title-item 资产信息
+	div.title-item 信用卡
+	div.title-item POS信息
+	div.title-item.finance 理财
+div.right-box
+	div.swiper-container
+		div.swiper-wrapper
+			div.swiper-slide.home-slide
+				div.info-card
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 客户姓名：
+									| 牛志伟
+							tr
+								td 
+									span 月收入：
+									| 5000
+							tr
+								td 
+									span 教育水平：
+									| 本科
+							tr
+								td 
+									span 是否居住满一年：
+									| 满一年
+					div.info-title 客户基本信息
+				div.info-card
+					div.info-title 个贷业务综合指标
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 已拒贷贷款：
+									| 5万/3笔
+							tr
+								td 
+									span 在途贷款：
+									| 5万/1笔
+							tr
+								td 
+									span 历史逾期次数：
+									| 0
+				div.info-card
+					div.info-title 行业关联信息
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 客户与行业关联度：
+									| 0.75	
+							tr
+								td 
+									span 关联度排名：
+									| 500
+							tr
+								td
+									span 行业名称：
+									| 汽车零部件及配件制造
+				div.info-card.card-col2
+					div.info-title 按行业统计指标
+					div.info-detail
+						table.info-table
+							tr
+								td(colspan='2')
+									span 市行名称：
+									| 邮政储蓄银行石家庄分行 
+							tr
+								td 
+									span 贷款总计：
+									| 2000万/20笔
+								td 
+									span 在途贷款：
+									| 500万/1笔
+							tr
+								td 
+									span 在途贷款余额：
+									| 0
+								td 
+									span 不良贷款笔数：
+									| 0
+							tr
+								td 
+									span 不良率：
+									| 0
+								td 
+									span 不良等级：
+									| 0
+				div.info-card
+					div.info-title 资产信息汇总
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 介质数量：
+									| 150
+							tr
+								td 
+									span 被司法查询次数：
+									| 0
+							tr
+								td 
+									span 最早开户日期：
+									| 2014/12/24
+				div.info-card
+					div.info-title 信用卡信息
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 信用卡数量：
+									| 5
+							tr
+								td 
+									span 最晚注销日期：
+									| 2012/06/15
+							tr
+								td 
+									span 逾期天数：
+									| 10
+							tr
+								td
+									span 近一年交易总金额：
+									| 10万
+				div.info-card
+					div.info-title POS信息
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 商户名称：
+									| 商户联保贷款
+							tr
+								td 
+									span 拥有POS数量：
+									| 100
+							tr
+								td
+									span 营业执照注册地址：
+									| 石家庄市长安区乐泰中心
+				div.info-card
+					div.info-title 理财信息
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 购买基金：
+									| 5万
+							tr
+								td 
+									span 购买国债：
+									| 5万
+							tr
+								td
+									span 购买保险：
+									| 2000万
+				div(style='clear:both;')
+			div#slide-base.swiper-slide
+			div#slide-composite.swiper-slide
+			div#slide-correlation.swiper-slide
+			div.swiper-slide.detail-slide
+				div.info-detail.first-info
+					div.detail-title
+						strong 邮政储蓄银行石家庄分行
+					table.info-table								
+						tr
+							td
+								b 贷款总计：
+								| 20笔共2000万
+							td 
+								b 在途贷款：
+								| 1笔共500万
+						tr
+							td 
+								b 在途贷款余额：
+								| 0
+							td 
+								b 不良贷款笔数：
+								| 0
+						tr
+							td 
+								b 不良率：
+								| 0
+							td
+								b 不良等级 
+								| 0
+			div.swiper-slide.detail-slide
+				div.info-detail.first-info
+					table.info-table								
+						tr
+							td
+								b 介质数量：
+								| 100
+							td 
+								b 折的数量：
+								| 100
+						tr
+							td 
+								b 卡的数量：
+								| 100
+							td 
+								b 活期一本通数量：
+								| 0
+						tr
+							td 
+								b 定期一本通数量：
+								| 0
+							td
+								b 单的数量：
+								| 0
+						tr
+							td 
+								b 活期折的数量：
+								| 0
+							td
+								b 定期折的数量： 
+								| 0
+						tr
+							td 
+								b 外币定期单的数量：
+								| 0
+							td
+								b 被司法查询次数： 
+								| 0
+						tr
+							td 
+								b 资产总金额：
+								| 0
+							td
+								b 活期余额： 
+								| 0
+						tr
+							td 
+								b 定期余额：
+								| 0
+							td
+								b 最早开户日期： 
+								| 2016-09-28
+				div.info-detail
+					div.detail-title
+						strong 年均交易金额：1000万
+					table.info-table								
+						tr
+							td
+								b 16年8月的交易金额：
+								| 100万
+							td 
+								b 16年7月的交易金额：
+								| 100万
+						tr
+							td
+								b 16年6月的交易金额：
+								| 100万
+							td 
+								b 16年5月的交易金额：
+								| 100万
+						tr
+							td
+								b 16年4月的交易金额：
+								| 100万
+							td 
+								b 16年3月的交易金额：
+								| 100万
+			div.swiper-slide.detail-slide
+				div.info-detail.first-info
+					table.info-table								
+						tr
+							td
+								b 信用卡数量：
+								| 100
+							td 
+								b 累计授信额度：
+								| 100
+						tr
+							td 
+								b 办理日期(最早)：
+								| 2016-09-28
+							td 
+								b 注销日期(最晚)：
+								| 2016-09-28
+						tr
+							td 
+								b 最低授信额度：
+								| 0
+							td
+								b 最高授信额度：
+								| 0
+						tr
+							td 
+								b 逾期天数： 
+								| 0
+							td
+								b 逾期数： 
+								| 0
+				div.info-detail
+					div.detail-title
+						strong 近一年统计
+					table.info-table								
+						tr
+							td
+								b 消费总金额：
+								| 100万
+							td 
+								b 消费总次数：
+								| 100
+						tr
+							td
+								b 取现总金额：
+								| 100万
+							td 
+								b 取现总次数：
+								| 100
+						tr
+							td
+								b 利息总金额：
+								| 100万
+							td 
+								b 利息总次数：
+								| 100
+						tr
+							td
+								b 费用总金额：
+								| 100万
+							td 
+								b 费用总次数：
+								| 100
+			div.swiper-slide.detail-slide
+				div.info-detail.first-info
+					div.detail-title
+						strong XXX商户
+					table.info-table								
+						tr
+							td
+								b 商户法定代表人姓名：
+								| 马云
+							td 
+								b 商户拥有pos数量：
+								| 100
+						tr
+							td(colspan='2') 
+								b 营业执照注册地址：
+								| 河北省石家庄市
+				div.info-detail
+					div.detail-title
+						strong 近一年交易总额：1000万
+					table.info-table								
+						tr
+							td
+								b 16年8月的交易金额：
+								| 100万
+							td 
+								b 16年7月的交易金额：
+								| 100万
+						tr
+							td
+								b 16年6月的交易金额：
+								| 100万
+							td 
+								b 16年5月的交易金额：
+								| 100万
+						tr
+							td
+								b 16年4月的交易金额：
+								| 100万
+							td 
+								b 16年3月的交易金额：
+								| 100万
+			div#slide-finance.swiper-slide
+div(style='clear:both;')

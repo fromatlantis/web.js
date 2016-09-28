@@ -1,11 +1,12 @@
 {
 	"devPath":"views",
     "buildPath":"bin/assets",
+    "libPath":"public/library",
     "publicPath":"/surveyRpt/",
     "staticPath":"public", 
     "debug":true,
     "online":false,
-    "hot":true,
+    "hot":false,
     "testServer":{
     	"sftp":{
     		"host": "21.32.95.249",
@@ -39,7 +40,10 @@
         "FetchApi" : "javascripts/core/FetchApi.js",
         "downexcel" : "javascripts/core/downexcel.js",
         "marquee" : "javascripts/lib/marquee.js",
+        "tags" : "javascripts/lib/tags/tags.js",
         "Store" : "javascripts/core/Store.js",
-        "Events" : "javascripts/core/Events.js"
+        "Events" : "javascripts/core/Events.js",
+        "echarts" : "javascripts/lib/echarts.js",
+        "slimscroll" : "javascripts/lib/jquery.slimscroll.js"
     }
 }

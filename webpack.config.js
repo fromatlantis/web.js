@@ -115,7 +115,7 @@ if(debug) {
 // 为实现webpack-hot-middleware做相关配置
 var entry=Object.assign({
         // 用到什么公共lib（例如React.js），就把它加进vender去，目的是将公用库单独提取打包
-        'general': ['Store','Events']
+        'vender': ['Store']
     },entries);
 if(config.hot){
     for (var key of Object.keys(entry)) {
@@ -143,13 +143,26 @@ module.exports = {
         extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
     },
     plugins: [new CommonsChunkPlugin({
-                name: 'common',//提取所有非公共Lib实体的公共部分
-                chunks: chunks
+                name: 'common',
+                chunks: chunks //only use these entities(最优方案：所有入口文件提取可以得到最大值)
             }),new webpack.ProvidePlugin({
                 $: "jquery",//适配各种写法
                 jQuery: "jquery",
                 "window.jQuery": "jquery"
             })].concat(plugins),
+    /**
+    plugins: [new CommonsChunkPlugin({
+                name: 'vender',//第三方公共Lib实体的公共部分。注意commonsChunk的顺序
+                minChunks:Infinity,
+            }),new CommonsChunkPlugin({
+                name: 'common',//提取所有非公共Lib实体的公共部分
+                //chunks: chunks //only use these entities
+            }),new webpack.ProvidePlugin({
+                $: "jquery",//适配各种写法
+                jQuery: "jquery",
+                "window.jQuery": "jquery"
+            })].concat(plugins),
+    **/
     module: {
         loaders: [
             {

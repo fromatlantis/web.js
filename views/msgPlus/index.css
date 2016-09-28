@@ -12,9 +12,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 .msg-plus {
-	min-width: 300px;
+	min-width: 320px;
   	position: fixed;
-  	bottom: 2px;
+  	bottom: -1px;
   	right: 2px;
   	background: #fff;
   	font-size: 14px;
@@ -38,6 +38,7 @@
 	border-top: 1px solid #ccc;
   	border-left: 1px solid #ccc;
   	border-right: 1px solid #ccc;
+  	text-align: left;
 }
 .msg-plus .serach-chip .search-icon {
 	margin-right: 5px;
@@ -56,23 +57,32 @@
 	border: 1px solid #ccc;
 	padding: 5px;
 	line-height: 24px;
+	font-size: 14px;
+  	font-family: "微软雅黑";
 }
-.msg-tabs > table td {
+.msg-tabs > table td{
 	border: 1px solid #03a9f4;
 	padding: 5px;
 	line-height: 24px;
 }
+.msg-tabs > table td span {
+  	float: left;
+	font-size: 14px;
+  	font-family: "微软雅黑";
+  	line-height: 24px;
+}
 .msg-content {
-	width: 300px;
+	width: 320px;
 }
 .msg-content ul {
-	height: 400px;
+	height: 500px;
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #ccc;
-	padding: 10px;
+	padding: 0;
 	text-align: left;
 	margin: 0;
-	overflow-y: scroll;
+	overflow-y: auto;
+	overflow-x: hidden; 
 }
 .msg-content ul.content {
 	display: none;
@@ -85,24 +95,49 @@
 	cursor: pointer;
 	line-height: 20px;
 	border-bottom: 1px solid #ebebeb;
-	padding: 10px 0;
+	padding: 10px 20px;
 }
 .msg-content ul li span {
 	margin-right: 10px;
 }
+.msg-content .content-tips {
+  	background: #fff9c4;
+  	padding: 10px;
+  	font-size: 14px;
+  	text-align: center;
+}
+.msg-content .content-tips span.red-num{
+  	margin: 0 2px !important;
+	color: #e51c23;
+	font-size: 16px;
+}
 .msg-content .item-title {
+	margin-bottom: 10px;
+}
+.msg-content .item-title span{
 	font-size: 16px;
 	font-weight: 600;
-	margin-bottom: 10px;
 }
 .msg-content .item-title .end-day {
 	font-size: 14px;
+}
+.msg-content .item-title .end-date {
+	font-size: 14px;
+	font-family:'arial';
 }
 .msg-content .item-title .day-num {
 	margin: 0 2px !important;
 	color: #e51c23;
 	font-size: 16px;
 }
+.msg-content .item-title .flag-icon {
+	font-weight: normal;
+  	color: #03a9f4;
+  	display: none;
+}
+.msg-content .item-title .flag-icon.show {
+  	display: inline-block;
+}  
 .msg-content .item-deal {
 	text-align: center;
 	margin-top: 10px;
@@ -115,10 +150,10 @@
 	/*display: none;*/
 }
 .msg-content .item-more .item-more-table {
-	width: 100%;
+	width: 255px;
 }
-.item-more-table span {
-	/*background: #ebebeb;*/
+.item-more-table td.address-map {
+	text-align: right;
 }
 .item-more-table .map-icon {
 	width: 50px;
@@ -127,7 +162,7 @@
 .msg-content button {
 	background: none;
   	border: 1px solid #03a9f4;
-  	padding: 3px;
+  	width:90px;height:26px;line-height:25px;
   	font-size: 14px;
   	cursor: pointer;
   	background: #03a9f4;
@@ -145,14 +180,62 @@
 	border-bottom: none;
 }
 .msg-tabs {
-	width: 300px;
+	width: 320px;
 	background: #fff;
 	color: #03a9f4;
 }
 .msg-tabs i {
 	font-size: 20px;
 	margin-right: 5px;
+	float: left;
+	margin-left: 15px;
+	line-height: 24px;
 }
 .msg-tabs td.active {
 	border-bottom: 1px solid #03a9f4;
+}
+/*-------------------------------------------------news------------------------------------------------------*/
+.yc-logo {
+	height: 30px;
+	vertical-align: middle;
+}
+.news-card {
+	border: 1px solid #ebebeb;
+	margin-bottom: 5px;
+}
+.news-card > .news-title {
+	color: #03a9f4;
+  	font-weight: bold;
+  	padding: 5px;
+  	font-size: 15px;
+  	font-family: "宋体";
+}
+.news-card > .news-summary {
+	padding: 0 5px;
+	font-size: 10px;
+	color: #999;
+}
+.news-card > .news-footer {
+	background: #f6f6f6;
+	padding:5px;
+	font-size: 13px;
+}
+.news-card > .news-footer > .news-source {
+	color: #03a9f4;
+	margin-right: 20px;
+}
+.news-card > .news-footer > .news-time {
+	color: #999;
+	margin-right: 20px;
+}
+.news-card > .news-footer > .news-tags {
+	float: right;
+}
+.news-card > .news-footer > .news-tags > span {
+	border: 1px solid #efb9b9;
+  	padding: 0 5px;
+  	font-size: 10px;
+  	background: #fff;
+  	margin-right: 5px;
+  	color: #f13f40;
 }

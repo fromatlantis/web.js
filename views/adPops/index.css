@@ -80,10 +80,6 @@ a:hover{
 .news {
 	padding: 10px;
 }
-.news-title {
-	color: #03a9f4;
-	font-weight: bold;
-}
 .news li {
 	padding-left: 1.5em;
 	height: 20px;

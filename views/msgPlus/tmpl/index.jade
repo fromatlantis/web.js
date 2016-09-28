@@ -9,50 +9,125 @@ div.msg-content
 					td(class='active',data-tab-index='#{index}')= item
 				-else
 					td(data-tab-index='#{index}')= item
-	each item, index in msgs.content
-		ul.content(data-tab-index='#{index}')
-			each value,index in item
-				//- -if(index>1){ 
+	ul.content(data-tab-index=0)
+		div.content-tips
+			| 已结结清
+			span.red-num= msgs.content.sum.COUNTS
+			| 笔，共
+			span.red-num= msgs.content.sum.AMOUNTALL
+			| 万元
+		each value,index in msgs.content
+			li.content-item
+				div.item-title
+					span.item-no= (index+1)+'.'
+					span= value.CUS_NAME
+					span.end-day 已经结清
+						span.day-num= value.DAYS
+						| 天
+					-if(value.IS_LOANING=='1'){
+						i.iconfont.flag-icon.show(title='有续贷意愿') &#xe63d;
+					-}else{
+						i.iconfont.flag-icon(title='有续贷意愿') &#xe63d;
+					-}
+				div.item-more
+					table.item-more-table
+						tr
+							td
+								span= value.APP_OP_NAME
+								span= value.MOBILE_PHONE
+							td.address-map(rowspan='2')
+								img.map-icon(data-lng='#{value.BUS_LNG}',data-lat='#{BUS_LAT}',src=require('../../../public/images/map-icon.png'))
+						tr
+							td
+								span= value.INDUSTRY_NAME
+								span= value.DUEBILL_AMOUNT/10000
+									| 万
+				div.item-deal
+					button.no-more(data-loanid='#{value.LOAN_ID}') 不再显示
+					button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+	ul.content(data-tab-index=1)
+		-if(tab2){
+			div.content-tips
+				| 即将结清
+				span.red-num= tab2.content.sum.COUNTS
+				| 笔，共
+				span.red-num= tab2.content.sum.AMOUNTALL
+				| 万元
+			each value,index in tab2.content
 				li.content-item
 					div.item-title
 						span.item-no= (index+1)+'.'
-						span= value.name
+						span= value.CUS_NAME
 						span.end-day 距结清还有
-							span.day-num= value.endDay 
+							span.day-num= value.DAYS 
 							| 天
+						-if(value.IS_LOANING=='1'){
+							i.iconfont.flag-icon.show(title='有续贷意愿') &#xe63d;
+						-}else{
+							i.iconfont.flag-icon(title='有续贷意愿') &#xe63d;
+						-}
 					div.item-more
 						table.item-more-table
 							tr
 								td
-									span= value.cargo
-									span= value.mobile
-								td(rowspan='2')
-									img.map-icon(title='#{value.address}',src=require('../../../public/images/map-icon.png'))
+									span= value.APP_OP_NAME
+									span= value.MOBILE_PHONE
+								td.address-map(rowspan='2')
+									img.map-icon(data-lng='#{value.BUS_LNG}',data-lat='#{BUS_LAT}',src=require('../../../public/images/map-icon.png'))
 							tr
 								td
-									span= value.trade
-									span= value.amount
+									span= value.INDUSTRY_NAME
+									span= value.DUEBILL_AMOUNT/10000
 										| 万
 					div.item-deal
-						button.no-more 不再显示
-						button.can-next 有续贷意愿
-				//-
-					-}else{
-						li.content-item
-							div.item-title
-								span.item-no= (index+1)+'.'
-								span= value.name
-								span= value.mobile
-								button 有续贷意愿
-							div.item-more
-								div.item-more-row
-									span= value.cargo
-									span= value.amount
-									span= value.endDay
-								div.item-more-row
-									span= value.trade
-									span= value.address
-					-}
+						button.no-more(data-loanid='#{value.LOAN_ID}') 不再显示
+						button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+		-}
+	ul.content(data-tab-index=2)
+		-if(tab3){
+			div.content-tips
+				| 总共检查
+				span.red-num= tab3.content.length
+				| 人，贷后检查总额
+				-var total=0
+				-for(var i=0;i<tab3.content.length;i++){
+					-total=total+parseInt(tab3.content[i].dueBillAmount)
+				-}
+				span.red-num= total/10000
+				| 万元
+			each value,index in tab3.content
+				li.content-item
+					div.item-title
+						span.item-no= (index+1)+'.'
+						span= value.cusName
+						span.end-date #{value.dueBillBeginDate}~#{value.dueBillEndDate}
+						-if(value.alterType=='inspected'){
+							i.iconfont.flag-icon.show(title='已调查') &#xe63d;
+						-}else{
+							i.iconfont.flag-icon(title='已调查') &#xe63d;
+						-}
+					div.item-more
+						table.item-more-table
+							tr
+								td
+									-if(value.remindType==1){
+										span 贷后首期检查
+									-}else if(value.remindType==2){
+										span 贷后常规检查
+									-}else{
+										span 贷后特别检查
+									-}
+									span= value.dueBillAmount/10000
+										| 万
+								td.address-map(rowspan='2')
+									img.map-icon(data-lng='#{value.busLng}',data-lat='{#value.busLat}',src=require('../../../public/images/map-icon.png'))
+							tr
+								td
+									span= value.appOpName
+					div.item-deal
+						button.no-more(data-rmdid='#{value.rmdId}') 不再显示
+						button.can-next(data-rmdid='#{value.rmdId}') 已调查
+		-}
 div.msg-tabs
 	table
 		tr

@@ -11,7 +11,7 @@ var webpack = require('webpack')
 var gutil = require('gulp-util')
 
 var webpackConf = require('./webpack.config')
-//var webpackConf = require('./webpack.halo.config')
+var webpackLibConf = require('./webpack.lib.config')
 
 var config = require('./config.json')
 
@@ -71,6 +71,18 @@ gulp.task('pack', ['clean'], (done) => {
         }
         **/
     })
+})
+
+gulp.task('pack-lib', () => {
+    var name=gulp.env.name;
+    if(name){
+        webpack(webpackLibConf({name:name}), (err, stats) => {
+            if(err) throw new gutil.PluginError('webpack', err)
+            gutil.log('[webpack]', stats.toString({colors: true}))
+        })
+    }else{
+         console.log('请输入--name参数');   
+    }
 })
 
 // html process
