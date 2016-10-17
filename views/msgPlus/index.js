@@ -8,7 +8,7 @@ var Events = require('Events');
 
 var Page = {
 	push: 0,
-	ajaxDataType: typeof CVal == "undefined" ? 'json' : 'jsonp',
+	ajaxDataType: typeof CVal == "undefined" ? 'jsonp' : 'jsonp',
 	init: function(){
 		function firstRequest(callback){
 			$(document.body).append('<div class="msg-plus"></div>');
@@ -16,7 +16,7 @@ var Page = {
 				Page.APIS.getMsgs(),
 				Page.APIS.getClosedSum()
 			).done(function(data,sum){
-				data[0].data.sum = sum[0].data[0];//注意返回值是一个ajax对象，数据要用data[0]获取，否则报错
+				data[0].data.sum = sum[0].data[0];//注意：如果是多个接口，返回值是一个ajax对象，数据要用data[0]获取，否则报错；如果是一个接口则直接data获取
 				callback(data[0].data);
 			})
 		}
@@ -44,22 +44,28 @@ var Page = {
 }
 
 Page.APIS = (function(){
-	var apiPath = typeof CVal == "undefined" ? '' : CVal.path;
+	var apiPath = typeof CVal == "undefined" ? 'http://21.32.95.248:8088/bhoserver' : CVal.path;
 	var postData = {};
 	if(typeof CVal != "undefined"){
 		postData.userId = CVal.getUserId();
 		postData.posId = CVal.getPostId();
 		postData.orgId  = CVal.getOrgId();
 	}
+	else{
+		postData.userId = "20111207770";
+		postData.posId ="E02";
+		postData.orgId  ="13011576";
+	}
 	var Apis = {
-		msgs: apiPath + '/portals/getDataClosed.json',
-		msgs2: apiPath + '/portals/getCloseDataSoon.json',
-		msgs3: apiPath + '/portals/getLoanRemindListByUserId.json',
-		news: apiPath + '/portals/news.json',
-		closedSum: apiPath + '/portals/getDataClosedSum.json',
-		closeDataSoonSum: apiPath + '/portals/getCloseDataSoonSum.json',
-		dealShowData: apiPath + '/portals/dealShowData.json',
-		loanRemindAlteraction: apiPath + '/portals/loanRemindAlteraction.json'
+		msgs: apiPath + '/portals/getDataClosed',
+		msgs2: apiPath + '/portals/getCloseDataSoon',
+		msgs3: apiPath + '/portals/getLoanRemindListByUserId',
+		news: apiPath + '/portals/news',
+		closedSum: apiPath + '/portals/getDataClosedSum',
+		closeDataSoonSum: apiPath + '/portals/getCloseDataSoonSum',
+		dealShowData: apiPath + '/portals/dealShowData',
+		loanRemindAlteraction: apiPath + '/portals/loanRemindAlteraction',
+		bulletinInfo: apiPath + '/portals/bulletinInform/getBulletinInformDetail'
 	}
 	return {
 		getMsgs: function() {
@@ -138,6 +144,15 @@ Page.APIS = (function(){
 				data: postData,
 				jsonp: '_callback'
 			})
+		},
+		bulletinInfo: function() {
+			return $.ajax({
+				url: Apis.bulletinInfo,
+				type: 'GET',
+				dataType: Page.ajaxDataType,
+				data: postData,
+				jsonp: '_callback'
+			})
 		}
 	}
 }());
@@ -189,6 +204,19 @@ Page.Render = (function(){
 		var template = Page.UI.newsView();
 		var html = template(Page.Store.getState());
 		$msgPlus.html(html);
+		require.ensure('slimscroll',function(){
+			require('slimscroll');
+			 $('.adPops-content').slimScroll({
+	            position: "right",
+	            height: '325px',
+	            distance: '2px',
+	            railVisible: true,
+	            size: '5px',                    
+	            color: '#999',                    
+	            railOpacity: '0.5',
+	            railColor: '#eee'
+	        });
+		},'slimscroll');//第三个参数是给这个模块命名，否则[name]是一个自动分配的id
 	}
 	return {
 		init: function() {
@@ -236,13 +264,20 @@ Page.HandleEvents = (function(){
 		'.showhide@click': 'foldBox',
 		'.home@click': 'showIndex',
 		'.content-tabs td@click': 'changeMsgTabs',
-		'.content-tabs@change.tabs':'changeTabs'//自定义事件
+		'.content-tabs@change.tabs':'changeTabs',//自定义事件
+		'.text-ellipsis@mouseover':'showTips',
+		'.text-ellipsis@mouseout':'hideTips'
 	})
 	return {
 		init: function() {
 			events.dispatch(this);
 		},
 		showNews: function() {
+			Page.Render.news();
+			if(Page.push==1){
+				push('left');
+			}
+			/**
 			$.when(Page.APIS.getNews()).done(function(data){
 				Page.Store.dispatch(Page.Action.news(data.records));
 				Page.Render.news();
@@ -250,6 +285,7 @@ Page.HandleEvents = (function(){
 					push('left');
 				}
 			})
+			**/
 		},
 		showItemMore: function() {
 			var $itme = $(this).parent('.content-item');
@@ -286,6 +322,8 @@ Page.HandleEvents = (function(){
 			var loanId = $(this).data('loanid');
 			var rmdId = $(this).data('rmdid');
 			var $flag = $(this).parents('.content-item').find('.flag-icon');
+			$(this).addClass('disable');
+			$(this).attr('disabled',true);
 			if(!!loanId){
 				$.when(Page.APIS.dealShowData(loanId,1,1)).done(function(data){
 					$flag.show('fast');
@@ -330,6 +368,16 @@ Page.HandleEvents = (function(){
 						Page.HandleEvents.changeTabs('change.tabs',1);
 					})
 				}
+				/**
+				else if(tabIndex==3 && !state.tab4) {
+					$.when(Page.APIS.bulletinInfo()).done(function(data){
+						Page.Store.dispatch(Page.Action.tab4(data.data));
+						Page.Render.init();
+						//$('.content-tabs').trigger('change.tabs',2); 
+						Page.HandleEvents.changeTabs('change.tabs',3);
+					})
+				}
+				**/
 			}
 			Page.HandleEvents.changeTabs('change.tabs',tabIndex);
 		},
@@ -337,6 +385,14 @@ Page.HandleEvents = (function(){
 			var tabIndex = index;
 			$('.content-tabs td[data-tab-index='+index+']').addClass('active').siblings('.active').removeClass('active');
 			$('ul.content[data-tab-index='+index+']').addClass('active').siblings('.active').removeClass('active');
+		},
+		showTips:function(e){
+			var $tips = $(this).next('.text-tooltip');
+			$tips.show();
+		},
+		hideTips:function(e){
+			var $tips = $(this).next('.text-tooltip');
+			$tips.hide();
 		}
 	}
 }());
@@ -344,7 +400,7 @@ Page.HandleEvents = (function(){
 Page.Action = (function() {
 	return {
 		index: function(record){
-			var tabs=['已经结清','即将结清','贷后助手'],
+			var tabs=['已经结清','即将结清','贷后助手','业务通报'],
 				content=record;
 			/**
 			for(var i=0;i<record.length;i++){
@@ -369,7 +425,7 @@ Page.Action = (function() {
 					content:record
 				}
 			}
-		},
+		},//即将结清tab页
 		tab3: function(record){
 			return {
 				type: 'tab3',
@@ -377,7 +433,15 @@ Page.Action = (function() {
 					content:record
 				}
 			}
-		},
+		},//贷后助手tab页
+		tab4:function(record){
+			return {
+				type: 'tab4',
+				payload : {
+					content:record
+				}
+			}
+		},//业务通报tab页
 		news: function(record) {
 			return {
 				type:'news',

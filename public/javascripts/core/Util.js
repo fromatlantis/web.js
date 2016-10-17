@@ -76,4 +76,31 @@ function _urlParam(key){
  	if(r!=null) return unescape(r[2]); return null;
 }
 
+Util.prototype.fixedEmpty = function(value,_default){
+	if(value=='' || value==undefined || value==null||value == 'NULL'){
+		return _default || '-';
+	}else if(!isNaN(value)){
+		value = parseInt(value) == value ? value : value.toFixed(2)
+	}
+	return value;
+}
+
+Util.prototype.formatMoney = function(_money,_digit){
+	var tpMoney = '-';
+	var digit = _digit || 2;
+	if(undefined != _money){
+		tpMoney = _money;			
+	}
+	tpMoney = new Number(tpMoney);
+	if(isNaN(tpMoney)){
+		return '-';
+	}
+	tpMoney = tpMoney.toFixed(digit);
+	var re = /^(-?\d+)(\d{3})(\.?\d*)/;
+	while(re.test(tpMoney)){
+		tpMoney = tpMoney.replace(re,'$1,$2$3')	
+	}
+	return tpMoney + '元';
+}
+
 module.exports=Util;

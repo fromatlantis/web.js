@@ -32,6 +32,7 @@
     "alias":{
         "zepto" : "javascripts/lib/zepto.min.js",
         "jquery" : "javascripts/lib/jquery-1.10.2.min.js",
+        "Template" : "javascripts/core/Template.js",
         "commonCss" : "stylesheets/common.css",
         "Util" : "javascripts/core/Util.js",
         "swiper2" : "javascripts/lib/swiper2.x/swiper.min.js",

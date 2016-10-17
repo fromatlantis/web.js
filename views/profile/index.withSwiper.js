@@ -5,177 +5,189 @@ var Store = require('Store');
 var Events = require('Events');
 
 //swiper轮播插件
-//require('swiper2Css');
-//var Swiper = require('swiper2');
-var Util = require('Util');
-var util = new Util();
+require('swiper2Css');
+var Swiper = require('swiper2');
+var UtilFn = require('Util'),Util = new UtilFn();
 
 var Page = {
 	isFirstLoad:true,
 	ajaxDataType: typeof CVal == "undefined" ? 'jsonp' : 'jsonp',
 	init: function(options){
 		var opts = options || {};
+		$(document.body).append('<div class="profile"></div>');
 		function firstRequest(callback){
 			var store = Page.Store;
+				
+			var _loadCnt = 4;
 			$.when(
-				Page.APIS.getCustomerInfo(opts),
-				Page.APIS.getAssetsMonthlyStat(opts),
+				Page.APIS.getCustomerInfo(opts)
+			).done(function(data){
+				//注意：如果是多个接口，返回值是一个ajax对象，数据要用data[0]获取，否则报错；如果是一个接口则直接data获取
+				if(data.code==1000 && data.data){
+					// callback(data.data.tb_ml_cpv_union_head_five_par);
+				}else{
+					// alert(data.message);
+				}
+				_loadCnt--;
+				var _data = data.data.tb_ml_cpv_union_head_five_par;
+				store.dispatch(Page.Action.index(_data));
+				loadDone();
+			});
+			//POS信息
+			$.when(
+				Page.APIS.getCustomerPosInfo(opts)
+			).done(function(data){
+				_loadCnt--;
+				var _data = data.data || {};
+				store.dispatch(Page.Action.customerPosInfo(_data.tb_ml_cpv_pos || {}));
+				loadDone();
+			});
+			//储蓄交易
+			$.when(
+				Page.APIS.getAssetsMonthlyStat(opts)
+			).done(function(data){
+				_loadCnt--;
+				var _data = data.data || [];
+				store.dispatch(Page.Action.assetsMonthlyStat(_data));
+				loadDone();
+			});
+			//信用卡
+			$.when(
 				Page.APIS.getCustomerCreditCardInfo(opts)
-			).done(function(data,monthlyStat,creditCardInfo){
-				if(data[0].code == 1000 && monthlyStat[0].code == 1000 && creditCardInfo[0].code == 1000){
-					var _data={},_data2=[],_data3=[];
-					if(data[0].data){
-						var _data = data[0].data;
-						store.dispatch(Page.Action.index(_data));
-					}
-					if(monthlyStat[0].data){
-						_data2 = monthlyStat[0].data;
-						store.dispatch(Page.Action.assetsMonthlyStat(_data2));
-					}
-					if(creditCardInfo[0].data){
-						_data3 = creditCardInfo[0].data;
-						store.dispatch(Page.Action.customerCreditCardInfo(_data3));
-					}
-					if(!$.isEmptyObject(_data)){
-						callback(store);
-					}
+			).done(function(data){
+				_loadCnt--;
+				var _data = data.data || [];
+				store.dispatch(Page.Action.customerCreditCardInfo(_data));
+				loadDone();
+			});
+			//请求结束检测
+			function loadDone(){
+				if(_loadCnt == 0){
+					Page.Render.init();
+					callback(store);
+				}
+					
+			}
+		}
+		
+		firstRequest(function(store){
+			Page.mySwiper = new Swiper('.swiper-container',{
+				mode:'vertical',
+				mousewheelControl:true,
+				onSlideChangeStart:function() {
+					var index = Page.mySwiper.activeIndex;
+					$('.title-item:eq('+index+')').addClass('active').siblings('.active').removeClass('active');
 				}
 			});
-		}
-		if(Page.isFirstLoad){
-			//程序一定要严谨，考虑全面
-			firstRequest(function(store){
-				$(document.body).append('<div class="profile"></div>');//一定要放在回调里，防止多次执行
+			require.ensure('echarts',function(){
+				var baseData = store.getState().database;
+				var echarts = require('echarts');
+				var baseChart = echarts.init(document.getElementById('slide-base'));//基本信息
+				var compositeChart = echarts.init(document.getElementById('slide-composite'));//综合指标
+				//var scatterChart = echarts.init(document.getElementById('slide-correlation'));//行业关联
+				var financeChart = echarts.init(document.getElementById('slide-finance'));//理财
+				var posChart = echarts.init(document.getElementById('pos-monthly'));//pos信息按月统计
+
 				/**
-				Page.mySwiper = new Swiper('.swiper-container',{
-					mode:'vertical',
-					mousewheelControl:true,
-					onSlideChangeStart:function() {
-						var index = Page.mySwiper.activeIndex;
-						$('.title-item:eq('+index+')').addClass('active').siblings('.active').removeClass('active');
-					}
-				});
-				**/
-				require.ensure('echarts',function(){
-
-					Page.Render.init();//不能放在外面，防止dom未加载的情况
-					Page.isFirstLoad = false;
-
-					var baseData = store.getState().database;
-					var echarts = require('echarts');
-					var baseChart = echarts.init(document.getElementById('slide-base'));//基本信息
-					var compositeChart = echarts.init(document.getElementById('slide-composite'));//综合指标
-					//var scatterChart = echarts.init(document.getElementById('slide-correlation'));//行业关联
-					var financeChart = echarts.init(document.getElementById('slide-finance'));//理财
-					var posChart = echarts.init(document.getElementById('pos-monthly'));//pos信息按月统计
-
-					/**
-					* 数据填充
-					*/
-					var handleGraphJson = function(nodeObj,_json){
-						if(!nodeObj) return;
-						
-						if(nodeObj.idx){
-							var flag = false,
-								idxArr = nodeObj.idx.split(','),
-								_label = nodeObj.label;
-							$.each(idxArr,function(i,_idx){
-								var _val = baseData[_idx];
-								if(_val != undefined && _val != 'NULL') flag = true;
+				* 数据填充
+				*/
+				var handleGraphJson = function(nodeObj,_json){
+					if(!nodeObj) return;
+					
+					if(nodeObj.idx){
+						var flag = false,
+							idxArr = nodeObj.idx.split(','),
+							_label = nodeObj.label;
+						$.each(idxArr,function(i,_idx){
+							var _val = baseData[_idx];
+							if(_val != undefined) flag = true;
+						});
+						if(flag){
+							_label = _label.replace(/[#]/g,function(){
+								var _val = baseData[idxArr.shift()];
+								if(_val ===  true) _val = '是';
+								else if(_val ===  false) _val = '否';
+								return _val;
 							});
-							if(flag){
-								_label = _label.replace(/[#]/g,function(){
-									var _val = baseData[idxArr.shift()];
-									if(_val ===  true) _val = '是';
-									else if(_val ===  false) _val = '否';
-									return _val;
-								});
-								_label = _label.replace(/[$]/g,function(){
-									var _val = util.formatMoney(baseData[idxArr.shift()]);
-									return _val;
-								});
-								nodeObj.label = _label;
-								_json.nodes.push(nodeObj);
-								_json.edges.push({sourceID: "root", attributes: {}, targetID: nodeObj.id, size: 1});
-							}
-						}else{
+							nodeObj.label = _label;
 							_json.nodes.push(nodeObj);
-							if(nodeObj.id!='-1'){//隐藏点，处理label过长溢出问题
-								_json.edges.push({sourceID: "root", attributes: {}, targetID: nodeObj.id, size: 1});
-							}
+							_json.edges.push({sourceID: "root", attributes: {}, targetID: nodeObj.id, size: 1});
+						}
+					}else{
+						_json.nodes.push(nodeObj);
+						if(nodeObj.id!='-1'){//隐藏点，处理label过长溢出问题
+							_json.edges.push({sourceID: "root", attributes: {}, targetID: nodeObj.id, size: 1});
 						}
 					}
-					//基本信息
-					var baseJson = {edges: [],nodes: [
-						{color: "#03a9f4", label: "基本信息", attributes: {}, y: 0, x: 0, id: "root", size: 50}
-						]},baseConf = [
-							{color: "#4f19c7", label: "身份证 #",idx: "certificate_code", attributes: {}, y: -100, x: -120, id: "id",size: 15},
-							{color: "#4f19c7", label: "学历 #" ,idx: "educational_level", attributes: {}, y: 150, x: 200, id: "education", size: 15},
-							{color: "#4f19c7", label: "是否居住满一年 - #",idx: "rsd_year_flag", attributes: {}, y: 100, x: 120, id: "living", size: 15},
-							{color: "#4f19c7", label: "月收入 $",idx: "monthly_profit", attributes: {}, y: -150, x: -200, id: "income", size: 15},
-							{color: "#4f19c7", label: "#",idx: "cus_name", attributes: {}, y: -100, x: 100, id: "name", size: 15},
-							{color: "#4f19c7", label: "是否本地户口 - #",idx: "is_native_account", attributes: {}, y: 100, x: -100, id: "address", size: 15},
-							{color: "#4f19c7", label: "手机 #",idx: "mobile_phone", attributes: {}, y: -50, x: 80, id: "phone", size: 15},
-							{color: "#4f19c7", label: "", attributes: {}, y: 100, x: 225, id: "-1", size: 0.01}
-						];
-					for(var i=0,len = baseConf.length;i<len;i++){
-						handleGraphJson(baseConf[i],baseJson);
-					}
-					//myChart.showLoading();
-					Page.DrawGraph(baseJson,baseChart);
-					//综合指标
-					var compositeJson = {edges: [],nodes: [
-						{color: "#03a9f4", label: "个贷业务综合指标", attributes: {}, y: 0, x: 0, id: "root", size: 50}
-						]},compositeConf = [
-							{color: "#4f19c7", label: "已拒贷贷款：#笔，共$",idx:"rejected_loan_cnt,rejected_loan_amt,",attributes: {}, y: -60, x: -70, id: "1", size: 15},
-							{color: "#4f19c7", label: "已核销贷款：#笔，共$", idx: "canceled_loan_cnt,canceled_loan_amt",attributes: {}, y: -40, x: 60, id: "2", size: 15},
-							{color: "#4f19c7", label: "在途贷款：#笔，共$", idx: "curr_loan_cnt,curr_loan_amt",attributes: {}, y: 50, x: -80, id: "3", size: 15},
-							{color: "#4f19c7", label: "在途贷款余额：$", idx: "curr_loan_bal",attributes: {}, y: -80, x: 60, id: "4", size: 15},
-							{color: "#4f19c7", label: "历史逾期次数：#次", idx: "overdue_times_his",attributes: {}, y: 80, x: -60, id: "5", size: 15},
-							{color: "#4f19c7", label: "历史逾期本金：$", idx: "overdue_capital_his",attributes: {}, y: -60, x: 70, id: "6", size: 15},
-							{color: "#4f19c7", label: "", attributes: {}, y: 100, x: 120, id: "-1", size: 0.01}
-						];
-					for(var i=0,len = compositeConf.length;i<len;i++){
-						handleGraphJson(compositeConf[i],compositeJson);
-					}
-			        Page.DrawGraph(compositeJson,compositeChart);
-		  
-			        //Page.DrawScatter(baseData,scatterChart);//行业关联散点图
-			        Page.DrawPie(baseData,financeChart);
-			        
-			        /**
-			        * pos按月份数据处理
-			        */
-			        var handleBarJson = function(){
-			        	var result = {};
-			        	var labelArr = [];
-			        	var valueArr = [];
-			        	for(var i=1;i<=12;i++){
-			        		labelArr.push('第'+i+'个月');
-			        		valueArr.push(parseFloat(baseData['trans_amt_'+i]).toFixed(2));
-			        	}
-			        	result.label = labelArr;
-			        	result.value = valueArr;
-			        	return result;
-			        }
-			        Page.DrawBar(handleBarJson(),posChart);
-				},'echarts');//第三个参数是给这个模块命名，否则[name]是一个自动分配的id 
-				/**
-				* 明细数据填充
-				*/
-				//Page.loadDetails(opts);
-			})
-		}
+				}
+				//基本信息
+				var baseJson = {edges: [],nodes: [
+					{color: "#03a9f4", label: "基本信息", attributes: {}, y: 0, x: 0, id: "root", size: 50}
+					]},baseConf = [
+						{color: "#4f19c7", label: "身份证 #",idx: "certificate_code", attributes: {}, y: -100, x: -120, id: "id",size: 15},
+						{color: "#4f19c7", label: "学历 #" ,idx: "educational_level", attributes: {}, y: 150, x: 200, id: "education", size: 15},
+						{color: "#4f19c7", label: "居住满一年", attributes: {}, y: 100, x: 120, id: "living", size: 15},
+						{color: "#4f19c7", label: "月收入 #",idx: "monthly_profit", attributes: {}, y: -150, x: -200, id: "income", size: 15},
+						{color: "#4f19c7", label: "#",idx: "cus_name", attributes: {}, y: -100, x: 100, id: "name", size: 15},
+						{color: "#4f19c7", label: "是否本地户口 - #",idx: "is_native_account", attributes: {}, y: 100, x: -100, id: "address", size: 15},
+						{color: "#4f19c7", label: "#",idx: "mobile_phone", attributes: {}, y: -50, x: 80, id: "phone", size: 15},
+						{color: "#4f19c7", label: "", attributes: {}, y: 100, x: 135, id: "-1", size: 0.01}
+					];
+				for(var i=0,len = baseConf.length;i<len;i++){
+					handleGraphJson(baseConf[i],baseJson);
+				}
+				//myChart.showLoading();
+				Page.DrawGraph(baseJson,baseChart);
+				//综合指标
+				var compositeJson = {edges: [],nodes: [
+					{color: "#03a9f4", label: "个贷业务综合指标", attributes: {}, y: 0, x: 0, id: "root", size: 50}
+					]},compositeConf = [
+						{color: "#4f19c7", label: "已拒贷贷款：#笔，共#",idx:"rejected_loan_cnt,rejected_loan_amt,",attributes: {}, y: 0, x: -80, id: "1", size: 15},
+						{color: "#4f19c7", label: "已核销贷款：#笔，共#", idx: "canceled_loan_cnt,canceled_loan_amt",attributes: {}, y: 0, x: 80, id: "2", size: 15},
+						{color: "#4f19c7", label: "在途贷款：#笔，共#", idx: "curr_loan_cnt,curr_loan_amt",attributes: {}, y: 50, x: -80, id: "3", size: 15},
+						{color: "#4f19c7", label: "在途贷款余额：#", idx: "curr_loan_bal",attributes: {}, y: -80, x: 60, id: "4", size: 15},
+						{color: "#4f19c7", label: "历史逾期次数：#次", idx: "overdue_times_his",attributes: {}, y: 80, x: -60, id: "5", size: 15},
+						{color: "#4f19c7", label: "历史逾期本金：#", idx: "overdue_capital_his",attributes: {}, y: -50, x: 80, id: "6", size: 15},
+						{color: "#4f19c7", label: "", attributes: {}, y: 100, x: 120, id: "-1", size: 0.01}
+					];
+				for(var i=0,len = compositeConf.length;i<len;i++){
+					handleGraphJson(compositeConf[i],compositeJson);
+				}
+		        Page.DrawGraph(compositeJson,compositeChart);
+	  
+		        //Page.DrawScatter(baseData,scatterChart);//行业关联散点图
+		        Page.DrawPie(baseData,financeChart);
+		        
+		        /**
+		        * pos按月份数据处理
+		        */
+		        var handleBarJson = function(){
+		        	var result = {};
+		        	var labelArr = [];
+		        	var valueArr = [];
+		        	for(var i=1;i<=12;i++){
+		        		labelArr.push('第'+i+'个月');
+		        		valueArr.push(baseData['trans_amt_'+i]);
+		        	}
+		        	result.label = labelArr;
+		        	result.value = valueArr;
+		        	return result;
+		        }
+		        Page.DrawBar(handleBarJson(),posChart);
+			},'echarts');//第三个参数是给这个模块命名，否则[name]是一个自动分配的id 
+			/**
+			* 明细数据填充
+			*/
+			Page.loadDetails(opts);
+		})
 	},
 	destroy: function(){
-		Page.Store.getInitialState();//初始化store，否则多次Init是会导致留有旧数据
 		$('.profile').remove();
-		Page.isFirstLoad = true;
 	}
 }
 
 Page.APIS = (function(){
-	var apiPath = typeof CVal == "undefined" ? 'http://21.32.95.248:8088/bhoserver' : CVal.path;
+	var apiPath = typeof CVal == "undefined" ? '' : CVal.path;
 	var postData = {};
 	if(typeof CVal != "undefined"){
 		postData.userId = CVal.getUserId();
@@ -183,10 +195,10 @@ Page.APIS = (function(){
 		postData.orgId  = CVal.getOrgId();
 	}
 	var Apis = {
-		customerInfo: apiPath + '/bhoApi/getCustomerInfoByIdNo',	//根据身份证号获取客户信息
-		customerPosInfo: apiPath + '/bhoApi/customerPosInfo',//    查询指定客户POS信息
-		assetsMonthlyStat: apiPath + '/bhoApi/getAssetsMonthlyStat',	//客户储蓄交易按月统计
-		customerCreditCardInfo: apiPath + '/bhoApi/customerCreditCardInfo'	//查询指定客户信用卡信息
+		customerInfo: apiPath + 'http://21.32.95.248:8088/bhoserver/bhoApi/getCustomerInfoByIdNo',	//根据身份证号获取客户信息
+		customerPosInfo: apiPath + 'http://21.32.95.248:8088/bhoserver/bhoApi/customerPosInfo',//    查询指定客户POS信息
+		assetsMonthlyStat: apiPath + 'http://21.32.95.248:8088/bhoserver/bhoApi/getAssetsMonthlyStat',	//客户储蓄交易按月统计
+		customerCreditCardInfo: apiPath + 'http://21.32.95.248:8088/bhoserver/bhoApi/customerCreditCardInfo'	//查询指定客户信用卡信息
 		//customerInfo: apiPath + 'http://21.32.95.196:8080/bhoserver/bhoApi/getCustomerInfoByIdNo',	//根据身份证号获取客户信息
 		//customerPosInfo: apiPath + 'http://21.32.95.196:8080/bhoserver/bhoApi/customerPosInfo',//    查询指定客户POS信息
 		//assetsMonthlyStat: apiPath + 'http://21.32.95.196:8080/bhoserver/bhoApi/getAssetsMonthlyStat',	//客户储蓄交易按月统计
@@ -285,7 +297,7 @@ Page.HandleEvents = (function(){
 	})
 	**/
 	var events = new Events({
-		'.profile .title-item@click': 'moveTo',
+		'.profile .title-item@mouseover': 'moveTo',
 		'.profile .profile-close@click': 'close'
 	}) 
 	return {
@@ -293,23 +305,17 @@ Page.HandleEvents = (function(){
 			events.dispatch(this);
 		},
 		moveTo: function(event) {
-			/**
 			var index = parseInt($(this).index())-1;
 			$(this).addClass('active').siblings('.active').removeClass('active');
 			Page.mySwiper.swipeTo(index,200,false);
-			**/
-			last = event.timeStamp == undefined ? new Date().getTime() : event.timeStamp;
-			event.timeStamp = last;
-			var index = $(this).index()-1;
-			var $wrapper = $('.swiper-wrapper');
-			var h = $('.swiper-slide').height();
-			$(this).addClass('active').siblings('.active').removeClass('active');
-			$wrapper.css({'margin-top':-index*h});
 			/**
+			last = event.timeStamp;
+			var target = $(this).data('move');
+			var $rightBox = $('.right-box');
 			setTimeout(function(){
 				if(last-event.timeStamp == 0){
-					//$wrapper.animate({marginTop:-index*h},500);
-					$wrapper.css({'margin-top':-index*h});
+					var $targetEl = $(target);
+					$rightBox.animate({scrollTop:$targetEl.offset().top + $rightBox.scrollTop() - 9},1000);
 				}
 			},350);
 			**/
@@ -321,12 +327,6 @@ Page.HandleEvents = (function(){
 }());
 
 Page.Action = (function() {
-	function sortMonthly(a,b){
-		return a.tb_ml_cpv_assets_monthly_stat.summ_mon - b.tb_ml_cpv_assets_monthly_stat.summ_mon;
-	}
-	function sortCredit(a,b){
-		return a.tb_ml_cpv_credit_monthly_trans_stat.summ_mon - b.tb_ml_cpv_credit_monthly_trans_stat.summ_mon;
-	}
 	return {
 		index: function(record){
 			return {
@@ -341,15 +341,12 @@ Page.Action = (function() {
 			}
 		},
 		assetsMonthlyStat: function(record){
-			record = record.sort(sortMonthly);
 			return {
 				type: 'assetsMonthlyStat',
 				payload : record
 			}
 		},
 		customerCreditCardInfo: function(record){
-			//console.log(record);
-			record = record.sort(sortCredit);
 			return {
 				type: 'customerCreditCardInfo',
 				payload : record
@@ -521,13 +518,6 @@ Page.DrawBar = function(data,myChart) {
 	//console.log(data);
 	myChart.hideLoading();
 	myChart.setOption({
-		title: {
-			text:'距今最近的第N个月交易总金额',
-			textStyle: {
-				color:'#555',
-				fontSize:14
-			}
-		},
 		color:['#3398DB'],
 		tooltip : {
 			trigger: 'axis',

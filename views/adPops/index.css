@@ -7,8 +7,7 @@
 }
 .adPops-container{
 	position: relative;
-	width:647px;
-	height: 400px;
+	width:600px;
 	border:1px solid #ebebeb;
 	border-radius: 5px;
 	background: #fff !important;
@@ -32,8 +31,10 @@
 	border-spacing: 0;
 }
 .adPops-content {
-	padding: 10px;
 	color:#333 !important;
+}
+.adPops-content > .content-box {
+	padding: 10px;
 }
 /*
 .content-chip {

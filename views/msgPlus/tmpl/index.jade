@@ -1,7 +1,6 @@
 div.msg-content
 	div.serach-chip
-		i.iconfont.search-icon &#xe627;
-		input(type='text',placeholder='查找...')
+		个贷助手
 	table.content-tabs
 		tr
 			each item, index in msgs.tabs
@@ -11,10 +10,10 @@ div.msg-content
 					td(data-tab-index='#{index}')= item
 	ul.content(data-tab-index=0)
 		div.content-tips
-			| 已结结清
+			| 已经结清
 			span.red-num= msgs.content.sum.COUNTS
 			| 笔，共
-			span.red-num= msgs.content.sum.AMOUNTALL
+			span.red-num= msgs.content.sum.AMOUNTALL/10000
 			| 万元
 		each value,index in msgs.content
 			li.content-item
@@ -44,14 +43,18 @@ div.msg-content
 									| 万
 				div.item-deal
 					button.no-more(data-loanid='#{value.LOAN_ID}') 不再显示
-					button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+					-if(value.IS_LOANING=='1'){
+						button.can-next.disable(data-loanid='#{value.LOAN_ID}',disabled='disabled') 有续贷意愿
+					-}else{
+						button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+					-}
 	ul.content(data-tab-index=1)
 		-if(tab2){
 			div.content-tips
 				| 即将结清
 				span.red-num= tab2.content.sum.COUNTS
 				| 笔，共
-				span.red-num= tab2.content.sum.AMOUNTALL
+				span.red-num= tab2.content.sum.AMOUNTALL/10000
 				| 万元
 			each value,index in tab2.content
 				li.content-item
@@ -73,7 +76,7 @@ div.msg-content
 									span= value.APP_OP_NAME
 									span= value.MOBILE_PHONE
 								td.address-map(rowspan='2')
-									img.map-icon(data-lng='#{value.BUS_LNG}',data-lat='#{BUS_LAT}',src=require('../../../public/images/map-icon.png'))
+									img.map-icon(data-lng='#{value.BUS_LNG}',data-lat='#{value.BUS_LAT}',src=require('../../../public/images/map-icon.png'))
 							tr
 								td
 									span= value.INDUSTRY_NAME
@@ -81,7 +84,11 @@ div.msg-content
 										| 万
 					div.item-deal
 						button.no-more(data-loanid='#{value.LOAN_ID}') 不再显示
-						button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+						-if(value.IS_LOANING=='1'){
+							button.can-next.disable(data-loanid='#{value.LOAN_ID}',disabled='disabled') 有续贷意愿
+						-}else{
+							button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+						-}
 		-}
 	ul.content(data-tab-index=2)
 		-if(tab3){
@@ -96,38 +103,96 @@ div.msg-content
 				span.red-num= total/10000
 				| 万元
 			each value,index in tab3.content
-				li.content-item
-					div.item-title
-						span.item-no= (index+1)+'.'
-						span= value.cusName
-						span.end-date #{value.dueBillBeginDate}~#{value.dueBillEndDate}
-						-if(value.alterType=='inspected'){
-							i.iconfont.flag-icon.show(title='已调查') &#xe63d;
-						-}else{
-							i.iconfont.flag-icon(title='已调查') &#xe63d;
-						-}
-					div.item-more
-						table.item-more-table
-							tr
-								td
-									-if(value.remindType==1){
-										span 贷后首期检查
-									-}else if(value.remindType==2){
-										span 贷后常规检查
-									-}else{
-										span 贷后特别检查
-									-}
-									span= value.dueBillAmount/10000
-										| 万
-								td.address-map(rowspan='2')
-									img.map-icon(data-lng='#{value.busLng}',data-lat='{#value.busLat}',src=require('../../../public/images/map-icon.png'))
-							tr
-								td
-									span= value.appOpName
-					div.item-deal
-						button.no-more(data-rmdid='#{value.rmdId}') 不再显示
-						button.can-next(data-rmdid='#{value.rmdId}') 已调查
+				-if(value.checkFlag!='2'){
+					li.content-item
+						div.item-title
+							span.item-no= (index+1)+'.'
+							span= value.cusName
+							span.end-date #{value.dueBillBeginDate}~#{value.dueBillEndDate}
+							-if(value.checkFlag=='1'){
+								i.iconfont.flag-icon.show(title='已调查') &#xe63d;
+							-}else{
+								i.iconfont.flag-icon(title='已调查') &#xe63d;
+							-}
+						div.item-more
+							table.item-more-table
+								tr
+									td
+										-if(value.remindType==1){
+											span 贷后首期检查
+										-}else if(value.remindType==2){
+											span 贷后常规检查
+										-}else{
+											span 贷后特别检查
+										-}
+										span= value.dueBillAmount/10000
+											| 万
+									td.address-map(rowspan='2')
+										img.map-icon(data-lng='#{value.busLng}',data-lat='#{value.busLat}',src=require('../../../public/images/map-icon.png'))
+								tr
+									td
+										span= value.appOpName
+						div.item-deal
+							button.no-more(data-rmdid='#{value.rmdId}') 不再显示
+							-if(value.checkFlag=='1'){
+								button.can-next.disable(data-rmdid='#{value.rmdId}',disabled='disabled') 已调查
+							-}else{
+								button.can-next(data-rmdid='#{value.rmdId}') 已调查
+							-}
+				-}
 		-}
+	ul.content(data-tab-index=3)
+		li.content-item
+			div.item-title
+				span.item-no 1.
+				span 杜士凯
+				span.end-day 已调查
+					span.day-num 3
+					| 笔
+			div.item-more
+				table.item-more-table
+					tr
+						td
+							span 停留8天
+							span 13833901253
+						td.address-map(rowspan='2')
+							img.map-icon(src=require('../../../public/images/map-icon.png'),title='河北省石家庄市')
+					tr
+						td(colspan='2')
+							span 制造业
+					tr
+						td(colspan='2')
+							p.text-ellipsis 
+								b 通报详情：
+								| 杜士凯：调查结论及建议10万,杜士凯：填写损益表10万,高保帅：调查结论及建议7万,高保帅：填写损益表10万,王中良：调查结论及建议7万,王中良：填写损益表10万
+							p.text-tooltip
+								| 杜士凯：调查结论及建议10万,杜士凯：填写损益表10万,高保帅：调查结论及建议7万,高保帅：填写损益表10万,王中良：调查结论及建议7万,王中良：填写损益表10万
+		li.content-item
+			div.item-title
+				span.item-no 2.
+				span 李国军
+				span.end-day 待调查
+					span.day-num 1
+					| 笔
+			div.item-more
+				table.item-more-table
+					tr
+						td
+							span 停留8天
+							span 15028831666
+						td.address-map(rowspan='2')
+							img.map-icon(src=require('../../../public/images/map-icon.png'),title='河北省石家庄市')
+					tr
+						td(colspan='2')
+							span 制造业
+					tr
+						td(colspan='2')
+							p.text-ellipsis 
+								b 通报详情：
+								| 10-04 申请金额30万
+							p.text-tooltip
+								| 10-04 申请金额30万
+
 div.msg-tabs
 	table
 		tr

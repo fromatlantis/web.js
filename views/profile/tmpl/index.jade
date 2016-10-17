@@ -1,11 +1,47 @@
+- var util = { 
+- 	fixedEmpty: function(value,_default){
+- 		if(value=='' || value==undefined || value==null||value == 'NULL'){
+- 			return _default || '-';
+- 		}else if(!isNaN(value)){
+-			value = parseInt(value) == value ? value : value.toFixed(2)
+-		}
+- 		return value;
+- 	},
+-	formatMoney: function(_money,_digit) {
+-		var tpMoney = '-';
+-		var digit = _digit || 2;
+-		if(undefined != _money){
+-			tpMoney = _money;			
+-		}
+-		tpMoney = new Number(tpMoney);
+-		if(isNaN(tpMoney)){
+-			return '-';
+-		}
+-		tpMoney = tpMoney.toFixed(digit);
+-		var re = /^(-?\d+)(\d{3})(\.?\d*)/;
+-		while(re.test(tpMoney)){
+-			tpMoney = tpMoney.replace(re,'$1,$2$3')	
+-		}
+-		return tpMoney + '元';
+-	}
+- }
+div.profile-header
+	| 客户综合信息
+	div.header-fr
+		i.iconfont.profile-close &#xe60b;
 div.left-box
 	div.title-top
-		img.user-icon(src=require('../../../public/images/user-icon.png')) 
-	div.title-item.active 首页
-	div.title-item 基本信息
+		img.user-icon(src=require('../../../public/images/yc_logo.png'))
+		p.text-title 邮储河北省分行
+		p.text-small 信息科技部
+		p.text-small 三农金融部 
+	div.title-item.active 概览
+	div.title-item(data-move='.base') 基本信息
 	div.title-item 综合指标
-	div.title-item 行业关联
-	div.title-item 行业统计
+	//-
+		div.title-item 行业关联
+	//-
+		div.title-item 行业统计
 	div.title-item 资产信息
 	div.title-item 信用卡
 	div.title-item POS信息
@@ -20,81 +56,112 @@ div.right-box
 							tr
 								td 
 									span 客户姓名：
-									| 牛志伟
+									| #{util.fixedEmpty(database.cus_name)}
 							tr
 								td 
 									span 月收入：
-									| 5000
+									| #{util.formatMoney(database.monthly_profit)}
 							tr
 								td 
 									span 教育水平：
-									| 本科
+									| #{util.fixedEmpty(database.educational_level)}
 							tr
 								td 
 									span 是否居住满一年：
-									| 满一年
+									| #{util.fixedEmpty(database.rsd_year_flag)}
 					div.info-title 客户基本信息
-				div.info-card
+				div.info-card.card-col2
 					div.info-title 个贷业务综合指标
 					div.info-detail
 						table.info-table
 							tr
 								td 
 									span 已拒贷贷款：
-									| 5万/3笔
+									| #{util.fixedEmpty(database.rejected_loan_cnt)} 笔，共#{util.formatMoney(database.rejected_loan_amt)}
+								td
+									span 已核销贷款：
+									| #{util.fixedEmpty(database.canceled_loan_cnt)} 笔，共#{util.formatMoney(database.canceled_loan_amt)}
 							tr
 								td 
 									span 在途贷款：
-									| 5万/1笔
+									| #{util.fixedEmpty(database.curr_loan_cnt)} 笔，共#{util.formatMoney(database.curr_loan_amt)}
+								td
+									span 在途贷款余额：
+									| #{util.formatMoney(database.curr_loan_bal)}
 							tr
 								td 
 									span 历史逾期次数：
-									| 0
-				div.info-card
-					div.info-title 行业关联信息
+									| #{util.fixedEmpty(database.overdue_times_his)} 次
+								td 
+									span 历史逾期本金：
+									| #{util.formatMoney(database.overdue_capital_his)}
+				//-本次不上线
+					div.info-card
+						div.info-title 行业关联信息
+						div.info-detail
+							table.info-table
+								tr
+									td 
+										span 客户与行业关联度：
+										| #{util.fixedEmpty(database.rate)}	
+								tr
+									td 
+										span 关联度排名：
+										| #{util.fixedEmpty(database.rn)}
+								tr
+									td
+										span 行业名称：
+										| #{util.fixedEmpty(database.industry_name)}
+				//-
+					div.info-card.card-col2
+						div.info-title 按行业统计指标
+						div.info-detail
+							table.info-table
+								tr
+									td(colspan='2')
+										span 市行名称：
+										| #{util.fixedEmpty(database.city_name)} 
+								tr
+									td 
+										span 贷款总计：
+										| #{util.fixedEmpty(database.loan_cnt)}笔，共#{util.formatMoney(database.loan_amt)}
+									td 
+										span 在途贷款：
+										| #{util.fixedEmpty(database.loan_cnt_curr)}笔，共#{util.formatMoney(database.loan_amt_curr)}
+								tr
+									td 
+										span 在途贷款余额：
+										| #{util.formatMoney(database.loan_bal_curr)}
+									td 
+										span 不良贷款笔数：
+										| #{util.fixedEmpty(database.nonp_loan_cnt)}
+								tr
+									td 
+										span 不良率：
+										| #{util.fixedEmpty(database.nonp_loan_bal_rate)}
+									td 
+										span 不良等级：
+										| #{util.fixedEmpty(database.nonp_loan_lvl)}
+				div.info-card.card-col2
+					div.info-title POS信息
 					div.info-detail
 						table.info-table
 							tr
 								td 
-									span 客户与行业关联度：
-									| 0.75	
-							tr
-								td 
-									span 关联度排名：
-									| 500
+									span 商户名称：
+									| #{util.fixedEmpty(database.mer_name)}
 							tr
 								td
-									span 行业名称：
-									| 汽车零部件及配件制造
-				div.info-card.card-col2
-					div.info-title 按行业统计指标
-					div.info-detail
-						table.info-table
+									span 营业执照注册地址：
+									| #{util.fixedEmpty(database.bus_lic_reg_addr)}
 							tr
-								td(colspan='2')
-									span 市行名称：
-									| 邮政储蓄银行石家庄分行 
+								td
+									span 商户法定代表人姓名：
+									| #{util.fixedEmpty(database.mer_legal_name)}
 							tr
-								td 
-									span 贷款总计：
-									| 2000万/20笔
-								td 
-									span 在途贷款：
-									| 500万/1笔
-							tr
-								td 
-									span 在途贷款余额：
-									| 0
-								td 
-									span 不良贷款笔数：
-									| 0
-							tr
-								td 
-									span 不良率：
-									| 0
-								td 
-									span 不良等级：
-									| 0
+								td
+									span 近一年月均交易金额：
+									| #{util.formatMoney(database.total_amt_ly)}
 				div.info-card
 					div.info-title 资产信息汇总
 					div.info-detail
@@ -102,51 +169,15 @@ div.right-box
 							tr
 								td 
 									span 介质数量：
-									| 150
+									| #{util.fixedEmpty(database.media_cnt)}
 							tr
 								td 
 									span 被司法查询次数：
-									| 0
+									| #{util.fixedEmpty(database.justice_query_times)}
 							tr
 								td 
-									span 最早开户日期：
-									| 2014/12/24
-				div.info-card
-					div.info-title 信用卡信息
-					div.info-detail
-						table.info-table
-							tr
-								td 
-									span 信用卡数量：
-									| 5
-							tr
-								td 
-									span 最晚注销日期：
-									| 2012/06/15
-							tr
-								td 
-									span 逾期天数：
-									| 10
-							tr
-								td
-									span 近一年交易总金额：
-									| 10万
-				div.info-card
-					div.info-title POS信息
-					div.info-detail
-						table.info-table
-							tr
-								td 
-									span 商户名称：
-									| 商户联保贷款
-							tr
-								td 
-									span 拥有POS数量：
-									| 100
-							tr
-								td
-									span 营业执照注册地址：
-									| 石家庄市长安区乐泰中心
+									span 年月均交易额：
+									| #{util.formatMoney(database.avg_amt_yearly)}
 				div.info-card
 					div.info-title 理财信息
 					div.info-detail
@@ -154,225 +185,262 @@ div.right-box
 							tr
 								td 
 									span 购买基金：
-									| 5万
+									| #{util.formatMoney(database.fund_amt)}
+							tr
+								td 
+									span 购买理财：
+									| #{util.formatMoney(database.financing_amt)}
 							tr
 								td 
 									span 购买国债：
-									| 5万
+									| #{util.formatMoney(database.national_debt_amt)}
 							tr
 								td
 									span 购买保险：
-									| 2000万
+									| #{util.formatMoney(database.insurance_amt)}
+				div.info-card.card-col2
+					div.info-title 信用卡信息
+					div.info-detail
+						table.info-table
+							tr
+								td 
+									span 信用卡数量：
+									| #{util.fixedEmpty(database.credist_card_cnt)}
+								td 
+									span 信用卡账户数：
+									| #{util.fixedEmpty(database.acct_num_cnt)}
+							tr
+								td 
+									span 最低授信额度：
+									| #{util.formatMoney(database.credit_line_min)}
+								td 
+									span 最高授信额度：
+									| #{util.formatMoney(database.credit_line_max)}
+							tr
+								td(colspan='2')
+									span 近一年月均消费金额：
+									| #{util.formatMoney(database.amt_sum_consume)}
 				div(style='clear:both;')
-			div#slide-base.swiper-slide
+			div#slide-base.swiper-slide.move
 			div#slide-composite.swiper-slide
-			div#slide-correlation.swiper-slide
-			div.swiper-slide.detail-slide
-				div.info-detail.first-info
-					div.detail-title
-						strong 邮政储蓄银行石家庄分行
-					table.info-table								
-						tr
-							td
-								b 贷款总计：
-								| 20笔共2000万
-							td 
-								b 在途贷款：
-								| 1笔共500万
-						tr
-							td 
-								b 在途贷款余额：
-								| 0
-							td 
-								b 不良贷款笔数：
-								| 0
-						tr
-							td 
-								b 不良率：
-								| 0
-							td
-								b 不良等级 
-								| 0
+			//-
+				div.slide-correlation.swiper-slide
+					div#slide-correlation
+			//-
+				div.swiper-slide.detail-slide
+					div.info-detail.first-info
+						div.detail-title
+							strong 市行名称：#{util.fixedEmpty(database.city_name)}
+						div.detail-body
+							table.info-table								
+								tr
+									td
+										b 贷款总计：
+										| #{util.fixedEmpty(database.loan_cnt)}笔，共#{util.formatMoney(database.loan_amt)}
+									td 
+										b 在途贷款：
+										| #{util.fixedEmpty(database.loan_cnt_curr)}笔，共#{util.formatMoney(database.loan_amt_curr)}
+								tr
+									td 
+										b 在途贷款余额：
+										| #{util.formatMoney(database.loan_bal_curr)}
+								tr
+									td 
+										b 不良贷款笔数：
+										| #{util.fixedEmpty(database.nonp_loan_cnt)}
+									td 
+										b 不良贷款余额：
+										| #{util.formatMoney(database.nonp_loan_bal)}
+								tr
+									td 
+										b 不良率：
+										| #{util.fixedEmpty(database.nonp_loan_bal_rate)}
+									td
+										b 不良等级 
+										| #{util.fixedEmpty(database.nonp_loan_lvl)}
 			div.swiper-slide.detail-slide
 				div.info-detail.first-info
 					table.info-table								
 						tr
 							td
 								b 介质数量：
-								| 100
+								| #{util.fixedEmpty(database.media_cnt)}
 							td 
 								b 折的数量：
-								| 100
+								| #{util.fixedEmpty(database.cnt_book)}
 						tr
 							td 
 								b 卡的数量：
-								| 100
+								| #{util.fixedEmpty(database.cnt_card)}
 							td 
 								b 活期一本通数量：
-								| 0
+								| #{util.fixedEmpty(database.cnt_onebk_cdm)}
 						tr
 							td 
 								b 定期一本通数量：
-								| 0
+								| #{util.fixedEmpty(database.cnt_onebk_fix)}
 							td
 								b 单的数量：
-								| 0
+								| #{util.fixedEmpty(database.cnt_bill)}
 						tr
 							td 
 								b 活期折的数量：
-								| 0
+								| #{util.fixedEmpty(database.cnt_book_cdm)}
 							td
 								b 定期折的数量： 
-								| 0
+								| #{util.fixedEmpty(database.cnt_book_fix)}
 						tr
 							td 
 								b 外币定期单的数量：
-								| 0
+								| #{util.fixedEmpty(database.cnt_bill_foreign)}
 							td
 								b 被司法查询次数： 
-								| 0
+								| #{util.fixedEmpty(database.justice_query_times)}
 						tr
 							td 
 								b 资产总金额：
-								| 0
+								| #{util.formatMoney(database.total_savings_amt)}
 							td
 								b 活期余额： 
-								| 0
+								| #{util.formatMoney(database.cdm_bal_sum)}
 						tr
 							td 
 								b 定期余额：
-								| 0
+								| #{util.formatMoney(database.fix_bal_sum)}
 							td
 								b 最早开户日期： 
-								| 2016-09-28
+								| #{util.fixedEmpty(database.cd_earliest_open_date)}
 				div.info-detail
 					div.detail-title
-						strong 年均交易金额：1000万
-					table.info-table								
-						tr
-							td
-								b 16年8月的交易金额：
-								| 100万
-							td 
-								b 16年7月的交易金额：
-								| 100万
-						tr
-							td
-								b 16年6月的交易金额：
-								| 100万
-							td 
-								b 16年5月的交易金额：
-								| 100万
-						tr
-							td
-								b 16年4月的交易金额：
-								| 100万
-							td 
-								b 16年3月的交易金额：
-								| 100万
+						strong 年月额均交易金额：#{util.formatMoney(database.avg_amt_yearly)}
+					div.detail-body(style="max-height:200px;")
+						table.info-table
+							-if(assetsMonthlyStat){			
+								each assetStat,index in assetsMonthlyStat						
+									if(index%2==0)
+										tr
+											td
+												b 交易日期：
+												span= assetStat.tb_ml_cpv_assets_monthly_stat.summ_mon
+											td 
+												b 交易金额：
+												span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt)}
+											td 
+												b 交易次数：
+												span= assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt
+									else
+										tr.even
+											td
+												b 交易日期：
+												span= assetStat.tb_ml_cpv_assets_monthly_stat.summ_mon
+											td 
+												b 交易金额：
+												span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt)}
+											td 
+												b 交易次数：
+												span= assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt
+							-}
 			div.swiper-slide.detail-slide
 				div.info-detail.first-info
 					table.info-table								
 						tr
 							td
 								b 信用卡数量：
-								| 100
+								| #{util.fixedEmpty(database.credist_card_cnt)}
 							td 
 								b 累计授信额度：
-								| 100
+								| #{util.formatMoney(database.credit_line_sum)}
 						tr
 							td 
 								b 办理日期(最早)：
-								| 2016-09-28
+								| #{util.fixedEmpty(database.earliest_open_date)}
 							td 
 								b 注销日期(最晚)：
-								| 2016-09-28
+								| #{util.fixedEmpty(database.latest_close_date)}
 						tr
 							td 
 								b 最低授信额度：
-								| 0
+								| #{util.formatMoney(database.credit_line_min)}
 							td
 								b 最高授信额度：
-								| 0
+								| #{util.formatMoney(database.credit_line_max)}
 						tr
 							td 
-								b 逾期天数： 
-								| 0
+								b 近一年月均消费次数： 
+								| #{util.fixedEmpty(database.cnt_sum_consume)}
 							td
-								b 逾期数： 
-								| 0
+								b 近一年月均取现金额： 
+								| #{util.formatMoney(database.amt_sum_withdrawl)}
+						tr
+							td 
+								b 近一年月均取现次数： 
+								| #{util.fixedEmpty(database.cnt_sum_withdrawl)}
+							td
+								b 近一年月均利息金额： 
+								| #{util.formatMoney(database.amt_sum_interest)}
+						tr
+							td 
+								b 近一年月均利息次数： 
+								| #{util.fixedEmpty(database.cnt_sum_interest)}
+							td
+								b 近一年月均费用金额： 
+								| #{util.formatMoney(database.amt_sum_fee)}
+						tr
+							td
+								b 近一年月均费用次数：
+								| #{util.fixedEmpty(database.cnt_sum_fee)}
 				div.info-detail
 					div.detail-title
-						strong 近一年统计
-					table.info-table								
-						tr
-							td
-								b 消费总金额：
-								| 100万
-							td 
-								b 消费总次数：
-								| 100
-						tr
-							td
-								b 取现总金额：
-								| 100万
-							td 
-								b 取现总次数：
-								| 100
-						tr
-							td
-								b 利息总金额：
-								| 100万
-							td 
-								b 利息总次数：
-								| 100
-						tr
-							td
-								b 费用总金额：
-								| 100万
-							td 
-								b 费用总次数：
-								| 100
+						strong 近一年月均消费金额：#{util.formatMoney(database.amt_sum_consume)}
+					div.detail-body(style="max-height:200px;")								
+						table.info-table
+							-if(customerCreditCardInfo && customerCreditCardInfo){		
+								each assetStat,index in customerCreditCardInfo						
+									if(index%2==0)
+										tr
+											td
+												b 统计月份：
+												span= assetStat.tb_ml_cpv_credit_monthly_trans_stat.summ_mon
+											td 
+												b 交易金额：
+												span #{util.formatMoney(assetStat.tb_ml_cpv_credit_monthly_trans_stat.trans_amt)}
+											td 
+												b 交易次数：
+												span= assetStat.tb_ml_cpv_credit_monthly_trans_stat.trans_cnt
+									else
+										tr.even
+											td
+												b 统计月份：
+												span= assetStat.tb_ml_cpv_credit_monthly_trans_stat.summ_mon
+											td 
+												b 交易金额：
+												span #{util.formatMoney(assetStat.tb_ml_cpv_credit_monthly_trans_stat.trans_amt)}
+											td 
+												b 交易次数：
+												span= assetStat.tb_ml_cpv_credit_monthly_trans_stat.trans_cnt
+							-}
 			div.swiper-slide.detail-slide
 				div.info-detail.first-info
 					div.detail-title
-						strong XXX商户
-					table.info-table								
-						tr
-							td
-								b 商户法定代表人姓名：
-								| 马云
-							td 
-								b 商户拥有pos数量：
-								| 100
-						tr
-							td(colspan='2') 
-								b 营业执照注册地址：
-								| 河北省石家庄市
+						strong 商户名称：#{util.fixedEmpty(database.mer_name)}
+					div.detail-body
+						table.info-table								
+							tr
+								td
+									b 商户法定代表人姓名：
+									| #{util.fixedEmpty(database.mer_legal_name)}
+								td 
+									b 商户拥有pos数量：
+									| #{util.fixedEmpty(database.pos_cnt)}
+							tr
+								td(colspan='2') 
+									b 营业执照注册地址：
+									| #{util.fixedEmpty(database.bus_lic_reg_addr)}
 				div.info-detail
 					div.detail-title
-						strong 近一年交易总额：1000万
-					table.info-table								
-						tr
-							td
-								b 16年8月的交易金额：
-								| 100万
-							td 
-								b 16年7月的交易金额：
-								| 100万
-						tr
-							td
-								b 16年6月的交易金额：
-								| 100万
-							td 
-								b 16年5月的交易金额：
-								| 100万
-						tr
-							td
-								b 16年4月的交易金额：
-								| 100万
-							td 
-								b 16年3月的交易金额：
-								| 100万
-			div#slide-finance.swiper-slide
+						strong 近一年月均交易金额: #{util.formatMoney(database.total_amt_ly)}
+					div.detail-body#pos-monthly(style="height:270px;")								
+			div.slide-finance.swiper-slide
+				div#slide-finance
 div(style='clear:both;')
+div.profile-footer

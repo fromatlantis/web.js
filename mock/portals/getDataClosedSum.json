@@ -1,7 +1,7 @@
 {
 	"code": 200,
 	"data":[{
-		"AMOUNTALL":100,
+		"AMOUNTALL":10000000,
 		"COUNTS":10	
 	}],
 	"message":""

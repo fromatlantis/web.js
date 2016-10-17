@@ -18,7 +18,7 @@
   	right: 2px;
   	background: #fff;
   	font-size: 14px;
-  	font-family: "微软雅黑";
+  	font-family: "Microsoft YaHei";
 }
 .msg-plus .back-home {
 	text-align: left;
@@ -34,11 +34,16 @@
   	font-weight: normal;
 }
 .msg-plus .serach-chip {
-	padding: 10px 10px 5px 10px;
+	padding: 10px;
 	border-top: 1px solid #ccc;
   	border-left: 1px solid #ccc;
   	border-right: 1px solid #ccc;
   	text-align: left;
+	background: url('../../public/images/bg.png');
+	background-position: 80% 70%;
+  	color: #fff;
+  	font-size: 16px;
+  	font-weight: bold;
 }
 .msg-plus .serach-chip .search-icon {
 	margin-right: 5px;
@@ -58,7 +63,7 @@
 	padding: 5px;
 	line-height: 24px;
 	font-size: 14px;
-  	font-family: "微软雅黑";
+  	font-family: "Microsoft YaHei";
 }
 .msg-tabs > table td{
 	border: 1px solid #03a9f4;
@@ -68,7 +73,7 @@
 .msg-tabs > table td span {
   	float: left;
 	font-size: 14px;
-  	font-family: "微软雅黑";
+  	font-family: "Microsoft YaHei";
   	line-height: 24px;
 }
 .msg-content {
@@ -92,10 +97,14 @@
 }
 .msg-content ul li {
 	list-style: none;
-	cursor: pointer;
 	line-height: 20px;
+	cursor: default;
 	border-bottom: 1px solid #ebebeb;
 	padding: 10px 20px;
+}
+.msg-content ul li td {
+	line-height: 20px;
+	position: relative;
 }
 .msg-content ul li span {
 	margin-right: 10px;
@@ -113,10 +122,14 @@
 }
 .msg-content .item-title {
 	margin-bottom: 10px;
+	cursor: pointer;
 }
 .msg-content .item-title span{
 	font-size: 16px;
 	font-weight: 600;
+}
+.msg-content .item-title i{
+	font-size: 14px;
 }
 .msg-content .item-title .end-day {
 	font-size: 14px;
@@ -145,7 +158,7 @@
 .msg-content .item-more {
 	margin-left: 20px;
 	font-size: 13px;
-  	font-family: "宋体";
+  	font-family: "SimSun";
   	color: #555;
 	/*display: none;*/
 }
@@ -158,6 +171,24 @@
 .item-more-table .map-icon {
 	width: 50px;
 	vertical-align: middle;
+}
+.item-more-table .text-ellipsis {
+	margin: 0;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	width: 250px;
+	white-space: nowrap;
+}
+.item-more-table .text-tooltip {
+	background: #555;
+  	color: #fff;
+  	padding: 10px;
+  	margin: 0;
+  	position: absolute;
+  	width: 230px;
+  	top: 20px;
+  	display: none;
+  	z-index: 999;
 }
 .msg-content button {
 	background: none;
@@ -175,6 +206,11 @@
 }
 .msg-content button.can-next:hover {
 	background: #039be5;
+}
+.msg-content button.can-next.disable {
+	opacity: 0.65;
+	filter: alpha(opacity=65);
+	cursor: default;
 }
 .content-tabs td.active {
 	border-bottom: none;
@@ -206,18 +242,18 @@
 .news-card > .news-title {
 	color: #03a9f4;
   	font-weight: bold;
-  	padding: 5px;
+  	padding: 10px 10px 5px 10px;
   	font-size: 15px;
-  	font-family: "宋体";
+  	font-family: "SimSun";
 }
 .news-card > .news-summary {
-	padding: 0 5px;
-	font-size: 10px;
+	padding: 0 10px;
+	font-size: 12px;
 	color: #999;
 }
 .news-card > .news-footer {
 	background: #f6f6f6;
-	padding:5px;
+	padding:5px 10px;
 	font-size: 13px;
 }
 .news-card > .news-footer > .news-source {
@@ -234,7 +270,7 @@
 .news-card > .news-footer > .news-tags > span {
 	border: 1px solid #efb9b9;
   	padding: 0 5px;
-  	font-size: 10px;
+  	font-size: 12px;
   	background: #fff;
   	margin-right: 5px;
   	color: #f13f40;

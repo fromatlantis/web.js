@@ -2,7 +2,7 @@
 var state = {};
 function Store(options) {
 	var opts = options || {};
-	state = opts;
+	state = this.initState = opts;
 }
 Store.prototype.getState = function() {
 	if(typeof Object.freeze === 'function'){
@@ -21,5 +21,10 @@ Store.prototype.dispatch = function (action) {
 	}else{
 		//console.log('action必须遵从标准结构，如：{"type":"user","payload":{"name":"vincent","age":"18"}}');
 	}
+}
+Store.prototype.getInitialState = function() {
+	state = this.initState;
+	//console.log(state.customerCreditCardInfo);
+	return state;
 }
 module.exports=Store;

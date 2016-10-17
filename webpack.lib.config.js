@@ -12,18 +12,21 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var extractCSS
 var cssLoader
 var sassLoader
-var debug = config.debug;
+var debug = true;
 var plugins = [];
 
 module.exports = (options) =>{
-
     let opts = options || {};
     var libraryName = opts.name;
+    var serverMap = {
+        local:'/library/'+libraryName+'/',
+        test:'http://21.32.95.248:8088/bhoserver/resources/static/js/bho/'+libraryName+'/',
+        online:'http://21.32.3.162:80/bhoserver/resources/static/js/bho/'+libraryName+'/',
+    }
     var libraryPath =  path.resolve(config.libPath, libraryName);//绝对路径
-
     var outputFile = libraryName + '.js';
     //var CVal = {};
-    var publicPath = typeof CVal == "undefined" ?  '/library/'+libraryName+'/' : 'http://127.0.0.1:8080/bhoserver/resources/static/js/bho/msgPlus/';//虚拟资源路径，跟线上环境路径一致。
+    var publicPath = typeof CVal == "undefined" ?  serverMap['local'] : serverMap['test'];//虚拟资源路径，跟线上环境路径一致。
 
     if(debug) {
         extractCSS = new ExtractTextPlugin(libraryName+'.css?[contenthash:8]')
@@ -95,7 +98,7 @@ module.exports = (options) =>{
         module: {
             loaders: [
                 {
-                    test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
+                    test: /\.(jpe?g|png|gif|ico)$/,
                     loaders: [
                          // url-loader更好用，小于10KB的图片会自动转成dataUrl，
                         // 否则则调用file-loader，参数直接传入
@@ -106,7 +109,7 @@ module.exports = (options) =>{
                     ]
                 },
                 {
-                    test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
+                    test: /\.((ttf|eot|svg|woff)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot|svg|woff)$/,
                     loader: 'url?limit=1&name=fonts/[name].[ext]?[hash:8]'
                     //loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
                 },
