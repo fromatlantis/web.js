@@ -19,12 +19,16 @@
 		//console.timeEnd('time');
 		//var halo = new halo();
 		//console.log(halo);
-		//var haloPlugins = new haloPlugins();
 		haloPlugins.msgPlus.init();
+		haloPlugins.modal.init({
+			width:550,
+			cityId:'13000320',
+			industryId:'0111'
+		});
 		//console.timeEnd('time');
-		/**
-		profile.init({
-			certificateCode:'13022919840116361X'
+		
+		haloPlugins.profile.init({
+			certificateCode:'132326197204021974'
 		});
 		$('button').click(function(){
 			profile.destroy();
@@ -32,7 +36,6 @@
 				certificateCode:'130602197808291549'
 			});
 		})
-		**/
 
 	</script>
 </body>

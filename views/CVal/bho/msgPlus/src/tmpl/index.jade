@@ -1,0 +1,106 @@
+div.msg-content
+	div.serach-chip
+		i.iconfont.search-icon &#xe627;
+		input(type='text',placeholder='查找...')
+	table.content-tabs
+		tr
+			each item, index in msgs.tabs
+				-if(index==0)
+					td(class='active',data-tab-index='#{index}')= item
+				-else
+					td(data-tab-index='#{index}')= item
+	ul.content(data-tab-index=0)
+		each value,index in msgs.content
+			li.content-item
+				div.item-title
+					span.item-no= (index+1)+'.'
+					span= value.CUS_NAME
+					span.end-day 已经结清
+						span.day-num= value.NEXTDAY 
+						| 天
+					i.iconfont.flag-icon &#xe63d;
+				div.item-more
+					table.item-more-table
+						tr
+							td
+								span= value.APP_OP_NAME
+								span= value.MOBILE_PHONE
+							td.address-map(rowspan='2')
+								img.map-icon(data-lng='#{value.BUS_LNG}',data-lat='#{BUS_LAT}',src=require('../../../public/images/map-icon.png'))
+						tr
+							td
+								span= value.INDUSTRY_NAME
+								span= value.DUEBILL_AMOUNT/10000
+									| 万
+				div.item-deal
+					button.no-more 不再显示
+					button.can-next 有续贷意愿
+	ul.content(data-tab-index=1)
+		each value,index in msgs.content
+			li.content-item
+				div.item-title
+					span.item-no= (index+1)+'.'
+					span= value.CUS_NAME
+					span.end-day 距结清还有
+						span.day-num= value.LASTDAYS 
+						| 天
+					i.iconfont.flag-icon &#xe63d;
+				div.item-more
+					table.item-more-table
+						tr
+							td
+								span= value.APP_OP_NAME
+								span= value.MOBILE_PHONE_TOTAL
+							td.address-map(rowspan='2')
+								img.map-icon(data-lng='#{value.BUS_LNG}',data-lat='#{BUS_LAT}',src=require('../../../public/images/map-icon.png'))
+						tr
+							td
+								span= value.INDUSTRY_NAME
+								span= value.DUEBILL_AMOUNT/10000
+									| 万
+				div.item-deal
+					button.no-more 不再显示
+					button.can-next 有续贷意愿
+	ul.content(data-tab-index=2)
+		div.content-tips
+			| 总共检查
+			span.red-num 5
+			| 人，首期贷款检查总额
+			span.red-num 100
+			| 万元
+		-if(tab3){
+			each value,index in tab3.content
+				li.content-item
+					div.item-title
+						span.item-no= (index+1)+'.'
+						span= value.cusName
+						span.end-date #{value.dueBillBeginDate}~#{value.dueBillEndDate}
+						i.iconfont.flag-icon &#xe63d;
+					div.item-more
+						table.item-more-table
+							tr
+								td
+									span= value.remindType
+									sspan= value.dueBillAmount
+										| 万
+								td.address-map(rowspan='2')
+									img.map-icon(title='#{value.registeredAddress}',src=require('../../../public/images/map-icon.png'))
+							tr
+								td
+									span= value.cargo
+					div.item-deal
+						button.no-more 不再显示
+						button.can-next 已调查
+		-}
+div.msg-tabs
+	table
+		tr
+			td.home.active 
+				i.iconfont &#xe60f;
+				span 消息
+			td.news 
+				i.iconfont &#xe634;
+				span 新闻
+			td.showhide 
+				i.iconfont &#xe635;
+				span 收起

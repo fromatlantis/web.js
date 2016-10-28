@@ -1,0 +1,18 @@
+div.theme-blue.adPops-container
+	div.adPops-title
+		div.back-home.theme-blue
+			明略数据
+			i.iconfont.close-icon &#xe639;
+		table
+			tr
+				each item,index in news
+					-if(index==0)
+						td.tabs.active!= item.title
+					-else
+						td.tabs!= item.title
+	div.adPops-content
+		each item,index in news
+			-if(index==0)
+				div.content-chip.active!= item.content
+			-else
+				div.content-chip!= item.content

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/library/CVal/CVal.css">
+	<style type="text/css">
+	body {
+		background: #ccc;
+	}
+	</style>
+</head>
+<body>
+	<button>切换</button>
+	<script type="text/javascript" src='/javascripts/lib/jquery-1.7.2.min.js'></script>
+	<script type="text/javascript" src='/library/CVal/CVal.js'></script>
+	<script type="text/javascript">
+		//console.timeEnd('time');
+		//var halo = new halo();
+		//console.log(halo);
+		CVal.msgPlus.init();
+		CVal.modal.init({
+			width:550,
+			cityId:'13000320',
+			industryId:'0111'
+		});
+		//console.timeEnd('time');
+		
+		CVal.profile.init({
+			certificateCode:'132326197204021974'
+		});
+		$('button').click(function(){
+			profile.destroy();
+			profile.init({
+				certificateCode:'130602197808291549'
+			});
+		})
+
+	</script>
+</body>
+</html>

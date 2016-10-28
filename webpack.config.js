@@ -148,7 +148,8 @@ module.exports = {
             }),new webpack.ProvidePlugin({
                 $: "jquery",//适配各种写法
                 jQuery: "jquery",
-                "window.jQuery": "jquery"
+                "window.jQuery": "jquery",
+                "moment": "moment"
             })].concat(plugins),
     /**
     plugins: [new CommonsChunkPlugin({

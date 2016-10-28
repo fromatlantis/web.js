@@ -1,0 +1,29 @@
+table.content-tabs
+	tr
+		each item, index in tabs
+			-if(index==0)
+				td(class='active',data-tab-index='#{index}')= item
+			-else
+				td(data-tab-index='#{index}')= item
+ul.content(data-tab-index=0)
+	li.content-item
+		div.item-title
+			span.item-no 1
+			span 张亚坤
+			span.end-day 月放款145万
+		div.item-more
+			table.item-more-table
+				tr
+					td
+						span 农户联保贷款
+						span 20万
+					td.address-map(rowspan='2')
+						img.map-icon(src=require('../../../public/images/map-icon.png'),title='石家庄长安区')
+				tr
+					td(colspan='2')
+						span 批发零售行业
+				tr
+					td(colspan='2')
+						p.text-ellipsis
+							b 业务最新：
+							span 09-08 申请贷款20万

@@ -1,0 +1,109 @@
+body {
+	background: #ccc;
+}
+.__modal {
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+	border:1px solid rgba(0,0,0,.2);
+	*border: 1px solid #999;
+	font-family: 'Microsoft Yahei';
+	position: fixed;
+	left: 50%;
+	top: 25%;
+	z-index: 999;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=0),
+	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=90),
+ 	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=180),
+ 	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=270);
+}
+.__modal > .__modal-header {
+	font-size: 18px;
+	padding: 15px;
+	font-weight: bold;
+	border-bottom: 1px solid #e5e5e5;
+	background: #ebebeb;
+	background-image: url('../../public/images/bg.png');
+	background-position: 80% 70%;
+	color: #fff;
+	text-align: center;
+}
+.__modal > .__modal-header > .__modal-close {
+	float: right;
+  	font-size: 20px;
+  	cursor: pointer;
+}
+.__modal > .__modal-body {
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+	line-height: 20px;
+}
+.__modal > .__modal-footer {
+	padding: 10px;
+	text-align: right;
+}
+/*---------------------bootstrap-------------------------*/
+.btn {
+	padding: 6px 12px;
+	font-size: 14px;
+	cursor: pointer;
+	border:1px solid transparent;
+	border-radius: 4px;
+	font-family: 'Microsoft Yahei';
+}
+.btn-default {
+	color: #333;
+	background: #fff;
+	border-color: #ccc;
+}
+.btn-default:hover{
+	background: #ccc;
+}
+.clearfix:after {
+	display: block;
+	height: 100%;
+	_height:100%;
+	clear:both;
+	content:'\020';
+}
+.clearfix {
+	zoom:1;
+}
+/*------------------------------------industry-------------------------------*/
+.industyr-info {
+	width: 100%;
+	font-size: 14px;
+	color: #555;
+}
+.industyr-info td {
+	font-size: 14px;
+	color: #555;
+	line-height: 20px;
+	text-align: left;
+  	font-family: 'Microsoft Yahei';
+}
+.tips-holder {
+	position: relative;
+	display: inline-block;
+}
+.tips-info {
+	position: absolute;
+	background: #555;
+	color: #fff;
+	padding: 10px;
+	bottom: -60px;
+	left: 25px;
+	display: none;
+	width: 270px;
+}
+.lvl-tips {
+	margin-left: 5px;
+}
+.__star {
+	color: #ffd740;
+  	margin: 0 3px;
+}
+.__unstar {
+	color: #e0e0e0;
+  	margin: 0 3px;
+}

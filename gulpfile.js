@@ -19,10 +19,10 @@ var src = path.resolve(process.cwd(), config.devPath);
 var assets = path.resolve(process.cwd(), config.buildPath);
 
 gulp.task('copy', () => {
-    var _path=gulp.env.path;
-    if(path){
+    var name=gulp.env.name;
+    if(name){
         var _elements=path.resolve(process.cwd()+'/public','_elements');
-        var targetPath=path.resolve(src,_path);
+        var targetPath=path.resolve(src,name);
         var html=path.resolve(targetPath, 'index.html');
         fs.exists(html, function (exists) {
             if(exists){

@@ -45,6 +45,8 @@
         "Store" : "javascripts/core/Store.js",
         "Events" : "javascripts/core/Events.js",
         "echarts" : "javascripts/lib/echarts.js",
-        "slimscroll" : "javascripts/lib/jquery.slimscroll.js"
+        "slimscroll" : "javascripts/lib/jquery.slimscroll.js",
+        "moment" : "javascripts/lib/moment.js",
+        "CVal": "javascripts/core/CVal.js"
     }
 }

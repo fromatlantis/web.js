@@ -163,13 +163,16 @@
   	text-align: left;
 }
 .detail-slide > .info-detail > .detail-title > strong {
-	font-size: 14px;
+	font-size: 15px;
 	font-family: "Microsoft YaHei";
 }
 .detail-slide > .info-detail > .detail-body{
-	overflow: auto;
+	overflow-y: auto;
   	border: 1px solid #ebebeb;
-  	padding: 10px;
+  	padding: 10px 20px;
+}
+.detail-slide > .info-detail > .detail-items {
+	padding: 0;
 }
 .detail-slide > .info-detail .info-table {
 	width: 100%;
@@ -179,9 +182,13 @@
 }
 .detail-slide > .info-detail .info-table td{
 	text-align: left;
-	font-size: 12px;
+	font-size: 13px;
 	font-family: "Microsoft YaHei";
 	line-height: 20px;
+	color:#555;
+}
+.detail-slide > .info-detail  > .detail-items .info-table td{
+	padding: 3px 8px;
 }
 .right-box .info-detail > .info-item {
 	margin-right: 5px;
@@ -193,7 +200,7 @@
 	height: 161px;
 	*width:179px;
 	*height:139px;
-	border: 1px solid #ebebeb;
+	border: 1px solid #ccc;
 	float: left;
 	padding: 10px;
 	margin-right: -1px;
@@ -220,6 +227,10 @@
 	width: 400px;
 	*width:380px;
 	margin-left: -1px;
+}
+.home-slide .card-col2 > .info-detail {
+	margin-top: 10px;
+	margin-left: 10px;
 }
 .home-slide .info-title {
 	font-size: 14px;
@@ -252,4 +263,7 @@
 	background: #fff;
 	float: left;
 	width: 100%;
+}
+#slide-base .base-tel-arr {
+	margin-left: 65px;
 }

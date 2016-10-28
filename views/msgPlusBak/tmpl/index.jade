@@ -1,0 +1,189 @@
+div.msg-content
+	div.serach-chip
+		个贷助手
+	table.content-tabs
+		tr
+			each item, index in tabs
+				-if(index==0)
+					td(class='active',data-tab-index='#{index}')= item
+				-else
+					td(data-tab-index='#{index}')= item
+	ul.content(data-tab-index=0)
+		-if(tab1)
+			-if(tab1.content.sum)
+				div.content-tips
+					| 已经结清
+					span.red-num= tab1.content.sum.COUNTS
+					| 笔，共
+					span.red-num= tab1.content.sum.AMOUNTALL/10000
+					| 万元
+			-if(tab1.content.length > 0)
+				each value,index in tab1.content
+					li.content-item
+						div.item-title
+							span.item-no= (index+1)+'.'
+							span= value.CUS_NAME
+							span.end-day 已经结清
+								span.day-num= value.DAYS
+								| 天
+							-if(value.IS_LOANING=='1'){
+								i.iconfont.flag-icon.show(title='有续贷意愿') &#xe63d;
+							-}else{
+								i.iconfont.flag-icon(title='有续贷意愿') &#xe63d;
+							-}
+						div.item-more
+							table.item-more-table
+								tr
+									td
+										span= value.APP_OP_NAME
+										span= value.MOBILE_PHONE
+									td.address-map(rowspan='2')
+										img.map-icon(src=require('../../../public/images/map-icon.png'))
+								tr
+									td
+										span= value.INDUSTRY_NAME
+										span= value.DUEBILL_AMOUNT/10000
+											| 万
+						div.item-deal
+							button.no-more(data-loanid='#{value.LOAN_ID}') 不再显示
+							-if(value.IS_LOANING=='1'){
+								button.can-next.disable(data-loanid='#{value.LOAN_ID}',disabled='disabled') 有续贷意愿
+							-}else{
+								button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+							-}
+			-else
+				p.none-data 暂无数据。	
+	ul.content(data-tab-index=1)
+		-if(tab2){
+			-if(tab2.content.sum)
+				div.content-tips
+					| 即将结清
+					span.red-num= tab2.content.sum.COUNTS
+					| 笔，共
+					span.red-num= tab2.content.sum.AMOUNTALL/10000
+					| 万元
+			-if(tab2.content.length > 0)
+				each value,index in tab2.content
+					li.content-item
+						div.item-title
+							span.item-no= (index+1)+'.'
+							span= value.CUS_NAME
+							span.end-day 距结清还有
+								span.day-num= value.DAYS 
+								| 天
+							-if(value.IS_LOANING=='1'){
+								i.iconfont.flag-icon.show(title='有续贷意愿') &#xe63d;
+							-}else{
+								i.iconfont.flag-icon(title='有续贷意愿') &#xe63d;
+							-}
+						div.item-more
+							table.item-more-table
+								tr
+									td
+										span= value.APP_OP_NAME
+										span= value.MOBILE_PHONE
+									td.address-map(rowspan='2')
+										img.map-icon(src=require('../../../public/images/map-icon.png'))
+								tr
+									td
+										span= value.INDUSTRY_NAME
+										span= value.DUEBILL_AMOUNT/10000
+											| 万
+						div.item-deal
+							button.no-more(data-loanid='#{value.LOAN_ID}') 不再显示
+							-if(value.IS_LOANING=='1'){
+								button.can-next.disable(data-loanid='#{value.LOAN_ID}',disabled='disabled') 有续贷意愿
+							-}else{
+								button.can-next(data-loanid='#{value.LOAN_ID}') 有续贷意愿
+							-}
+			-else
+				p.none-data 暂无数据。
+		-}
+	ul.content(data-tab-index=2)
+		-if(tab3){
+			-if(tab3.content.sum)
+				div.content-tips
+					| 总共检查
+					span.red-num= tab3.content.sum.CUSCOUNT
+					| 人，贷后检查总额
+					span.red-num= tab3.content.sum.AMOUNTSUM/10000
+					| 万元
+			each value,index in tab3.content
+				-if(value.checkFlag!='2'){
+					li.content-item
+						div.item-title
+							span.item-no= (index+1)+'.'
+							span= value.cusName
+							span.end-date #{value.dueBillBeginDate}~#{value.dueBillEndDate}
+							-if(value.checkFlag=='1'){
+								i.iconfont.flag-icon.show(title='已调查') &#xe63d;
+							-}else{
+								i.iconfont.flag-icon(title='已调查') &#xe63d;
+							-}
+						div.item-more
+							table.item-more-table
+								tr
+									td
+										-if(value.remindType==1){
+											span 贷后首期检查
+										-}else if(value.remindType==2){
+											span 贷后常规检查
+										-}else{
+											span 贷后特别检查
+										-}
+										span= value.dueBillAmount/10000
+											| 万
+									td.address-map(rowspan='2')
+										img.map-icon(data-lng='#{value.busLng}',data-lat='#{value.busLat}',src=require('../../../public/images/map-icon.png'))
+								tr
+									td
+										span= value.appOpName
+						div.item-deal
+							button.no-more(data-rmdid='#{value.rmdId}') 不再显示
+							-if(value.checkFlag=='1'){
+								button.can-next.disable(data-rmdid='#{value.rmdId}',disabled='disabled') 已调查
+							-}else{
+								button.can-next(data-rmdid='#{value.rmdId}') 已调查
+							-}
+				-}
+		-}
+	ul.content(data-tab-index=3)
+		-if(tab4 && tab4.content.length > 0)
+			each item, index in tab4.content
+				li.content-item
+					div.item-title
+						span.item-no= index+1
+						span= item.customerName
+						span.end-day= item.informSurvey
+					div.item-more
+						table.item-more-table
+							tr
+								td
+									span= item.actionStatus
+									span= item.mobilePhone
+								td.address-map(rowspan='2')
+									img.map-icon(src=require('../../../public/images/map-icon.png'),title='#{item.registeredAddress}')
+							tr
+								td(colspan='2')
+									span= item.workCorpType
+							tr
+								td(colspan='2')
+									p.text-ellipsis
+										b 通报详情：
+										span= item.researchDetail
+									p.text-tooltip
+										span= item.researchDetail
+		-else
+			p.none-data 暂无数据。
+div.msg-tabs
+	table
+		tr
+			td.home.active 
+				i.iconfont &#xe60f;
+				span 消息
+			td.news 
+				i.iconfont &#xe634;
+				span 新闻
+			td.showhide 
+				i.iconfont &#xe635;
+				span 收起

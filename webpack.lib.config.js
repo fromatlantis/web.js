@@ -25,8 +25,8 @@ module.exports = (options) =>{
     }
     var libraryPath =  path.resolve(config.libPath, libraryName);//绝对路径
     var outputFile = libraryName + '.js';
-    //var CVal = {};
-    var publicPath = typeof CVal == "undefined" ?  serverMap['local'] : serverMap['test'];//虚拟资源路径，跟线上环境路径一致。
+    var CVal = {};
+    var publicPath = typeof CVal == "undefined" ?  serverMap['local'] : serverMap['online'];//虚拟资源路径，跟线上环境路径一致。
 
     if(debug) {
         extractCSS = new ExtractTextPlugin(libraryName+'.css?[contenthash:8]')
@@ -90,7 +90,9 @@ module.exports = (options) =>{
         plugins: [new webpack.ProvidePlugin({
                     $: "jquery",//适配各种写法
                     jQuery: "jquery",
-                    "window.jQuery": "jquery"
+                    "window.jQuery": "jquery",
+                    "moment": "moment",
+                    //"CVal":"CVal"
                 })].concat(plugins),
         externals: {
             'jquery':'$'//以<script>的形式挂在到页面上来加载，key值要和ProvidePlugin的value值（全局变量）对应

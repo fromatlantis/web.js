@@ -1,6 +1,6 @@
-webpackJsonphaloPlugins([2],{
+webpackJsonphaloPlugins([1],{
 
-/***/ 26:
+/***/ 29:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {/*! Copyright (c) 2011 Piotr Rochala (http://rocha.la)

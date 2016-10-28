@@ -1,10 +1,10 @@
 @charset "utf-8";
 @font-face {font-family: 'iconfont';
-    src: url(/library/haloPlugins/fonts/iconfont.eot?ae3a1d19); /* IE9*/
-  	src: url(/library/haloPlugins/fonts/iconfont.eot?ae3a1d19#iefix) format('embedded-opentype'),
-  	url(/library/haloPlugins/fonts/iconfont.woff?2315b840) format('woff'),
-    url(/library/haloPlugins/fonts/iconfont.ttf?b5699cc9) format('truetype'),
-    url(/library/haloPlugins/fonts/iconfont.svg?9ba848b1#iconfont) format('svg');  /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    src: url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/fonts/iconfont.eot?74a5e7bc); /* IE9*/
+  	src: url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/fonts/iconfont.eot?74a5e7bc#iefix) format('embedded-opentype'),
+  	url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/fonts/iconfont.woff?1a0e637b) format('woff'),
+    url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/fonts/iconfont.ttf?02a4dfc2) format('truetype'),
+    url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/fonts/iconfont.svg?87fc6da9#iconfont) format('svg');  /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
 }
 .iconfont{
     font-family:"iconfont" !important;
@@ -38,7 +38,7 @@
 	font-weight: bold;
 	font-family :'Microsoft YaHei';
 	color: #fff;
-	background: url(/library/haloPlugins/images/bg.png?40df1ced);
+	background: url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/images/bg.png?bffe2292);
 	background-position:90% 70%;
 }
 .profile > .profile-header > .header-fr {
@@ -60,7 +60,7 @@
     background: #29b6f6;
     float: left;
     border-left: 1px solid #03a9f4;
-    background: url(/library/haloPlugins/images/bg.png?40df1ced);
+    background: url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/images/bg.png?bffe2292);
 	background-position:85% 60%;
 	height:483px;
 }
@@ -163,13 +163,16 @@
   	text-align: left;
 }
 .detail-slide > .info-detail > .detail-title > strong {
-	font-size: 14px;
+	font-size: 15px;
 	font-family: "Microsoft YaHei";
 }
 .detail-slide > .info-detail > .detail-body{
-	overflow: auto;
+	overflow-y: auto;
   	border: 1px solid #ebebeb;
-  	padding: 10px;
+  	padding: 10px 20px;
+}
+.detail-slide > .info-detail > .detail-items {
+	padding: 0;
 }
 .detail-slide > .info-detail .info-table {
 	width: 100%;
@@ -179,9 +182,13 @@
 }
 .detail-slide > .info-detail .info-table td{
 	text-align: left;
-	font-size: 12px;
+	font-size: 13px;
 	font-family: "Microsoft YaHei";
 	line-height: 20px;
+	color:#555;
+}
+.detail-slide > .info-detail  > .detail-items .info-table td{
+	padding: 3px 8px;
 }
 .right-box .info-detail > .info-item {
 	margin-right: 5px;
@@ -193,7 +200,7 @@
 	height: 161px;
 	*width:179px;
 	*height:139px;
-	border: 1px solid #ebebeb;
+	border: 1px solid #ccc;
 	float: left;
 	padding: 10px;
 	margin-right: -1px;
@@ -220,6 +227,10 @@
 	width: 400px;
 	*width:380px;
 	margin-left: -1px;
+}
+.home-slide .card-col2 > .info-detail {
+	margin-top: 10px;
+	margin-left: 10px;
 }
 .home-slide .info-title {
 	font-size: 14px;
@@ -252,20 +263,10 @@
 	background: #fff;
 	float: left;
 	width: 100%;
-}@font-face {font-family: 'iconfont';
-    src: url(/library/haloPlugins/fonts/iconfont.eot?ae3a1d19); /* IE9*/
-  	src: url(/library/haloPlugins/fonts/iconfont.eot?ae3a1d19#iefix) format('embedded-opentype'), 
-    url(/library/haloPlugins/fonts/iconfont.ttf?b5699cc9) format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
 }
-.iconfont{
-    font-family:"iconfont" !important;
-	font-style:normal;
-	font-size: 16px;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: 0.2px;
-    -moz-osx-font-smoothing: grayscale;
-}
-.msg-plus {
+#slide-base .base-tel-arr {
+	margin-left: 65px;
+}.msg-plus {
 	min-width: 320px;
   	position: fixed;
   	bottom: -1px;
@@ -273,6 +274,7 @@
   	background: #fff;
   	font-size: 14px;
   	font-family: "Microsoft YaHei";
+  	z-index: 9999;
 }
 .msg-plus .back-home {
 	text-align: left;
@@ -293,7 +295,7 @@
   	border-left: 1px solid #ccc;
   	border-right: 1px solid #ccc;
   	text-align: left;
-	background: url(/library/haloPlugins/images/bg.png?40df1ced);
+	background: url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/images/bg.png?bffe2292);
 	background-position: 80% 70%;
   	color: #fff;
   	font-size: 16px;
@@ -359,6 +361,7 @@
 .msg-content ul li td {
 	line-height: 20px;
 	position: relative;
+	word-break: break-all;
 }
 .msg-content ul li span {
 	margin-right: 10px;
@@ -484,14 +487,26 @@
 .msg-tabs td.active {
 	border-bottom: 1px solid #03a9f4;
 }
+.none-data {
+	margin: 0;
+	padding: 15px;
+	font-size: 14px;
+	font-family: 'Microsoft YaHei';
+}
 /*-------------------------------------------------news------------------------------------------------------*/
 .yc-logo {
 	height: 30px;
 	vertical-align: middle;
 }
 .news-card {
-	border: 1px solid #ebebeb;
-	margin-bottom: 5px;
+	border-bottom: 1px solid #e0e0e0;
+  	margin-bottom: 5px;
+  	padding-bottom: 5px;
+  	text-align: left;
+  	cursor: pointer;
+}
+.new-card div {
+	text-align: left;
 }
 .news-card > .news-title {
 	color: #03a9f4;
@@ -503,10 +518,11 @@
 .news-card > .news-summary {
 	padding: 0 10px;
 	font-size: 12px;
-	color: #999;
+	color: #555;
+	text-indent: 2em;
+	line-height: 18px;
 }
 .news-card > .news-footer {
-	background: #f6f6f6;
 	padding:5px 10px;
 	font-size: 13px;
 }
@@ -519,7 +535,7 @@
 	margin-right: 20px;
 }
 .news-card > .news-footer > .news-tags {
-	float: right;
+	display: inline-block;
 }
 .news-card > .news-footer > .news-tags > span {
 	border: 1px solid #efb9b9;
@@ -528,7 +544,19 @@
   	background: #fff;
   	margin-right: 5px;
   	color: #f13f40;
-}.adPops {
+}
+/*-------------------------------------news / home  disabled-------------------------------------*/
+
+.msg-plus .home {
+	color: #ccc;
+  	border: 1px solid #ccc;
+}
+.msg-plus .news {
+	color: #ccc;
+	border: 1px solid #ccc;
+	border-right: 1px solid #03a9f4;
+}
+.adPops {
 	position: fixed;
 	bottom: 0;
 	right: 0;
@@ -545,6 +573,8 @@
 .adPops-title {
 	border-bottom: 1px solid #d7d7d7;
 	text-align: center;
+	background: url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/images/bg.png?bffe2292);
+	background-position: 80% 70%;
 }
 .adPops-title .tabs {
 	padding: 8px;
@@ -618,4 +648,112 @@ a:hover{
 .news-content  {
 	height: 20px;
 	overflow: hidden;
+}body {
+	background: #ccc;
+}
+.__modal {
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+	border:1px solid rgba(0,0,0,.2);
+	*border: 1px solid #999;
+	font-family: 'Microsoft Yahei';
+	position: fixed;
+	left: 50%;
+	top: 25%;
+	z-index: 999;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=0),
+	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=90),
+ 	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=180),
+ 	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=270);
+}
+.__modal > .__modal-header {
+	font-size: 18px;
+	padding: 15px;
+	font-weight: bold;
+	border-bottom: 1px solid #e5e5e5;
+	background: #ebebeb;
+	background-image: url(http://21.32.3.162:80/bhoserver/resources/static/js/bho/haloPlugins/images/bg.png?bffe2292);
+	background-position: 80% 70%;
+	color: #fff;
+	text-align: center;
+}
+.__modal > .__modal-header > .__modal-close {
+	float: right;
+  	font-size: 20px;
+  	cursor: pointer;
+}
+.__modal > .__modal-body {
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+	line-height: 20px;
+}
+.__modal > .__modal-footer {
+	padding: 10px;
+	text-align: right;
+}
+/*---------------------bootstrap-------------------------*/
+.btn {
+	padding: 6px 12px;
+	font-size: 14px;
+	cursor: pointer;
+	border:1px solid transparent;
+	border-radius: 4px;
+	font-family: 'Microsoft Yahei';
+}
+.btn-default {
+	color: #333;
+	background: #fff;
+	border-color: #ccc;
+}
+.btn-default:hover{
+	background: #ccc;
+}
+.clearfix:after {
+	display: block;
+	height: 100%;
+	_height:100%;
+	clear:both;
+	content:' ';
+}
+.clearfix {
+	zoom:1;
+}
+/*------------------------------------industry-------------------------------*/
+.industyr-info {
+	width: 100%;
+	font-size: 14px;
+	color: #555;
+}
+.industyr-info td {
+	font-size: 14px;
+	color: #555;
+	line-height: 20px;
+	text-align: left;
+  	font-family: 'Microsoft Yahei';
+}
+.tips-holder {
+	position: relative;
+	display: inline-block;
+}
+.tips-info {
+	position: absolute;
+	background: #555;
+	color: #fff;
+	padding: 10px;
+	bottom: -60px;
+	left: 25px;
+	display: none;
+	width: 270px;
+}
+.lvl-tips {
+	margin-left: 5px;
+}
+.__star {
+	color: #ffd740;
+  	margin: 0 3px;
+}
+.__unstar {
+	color: #e0e0e0;
+  	margin: 0 3px;
 }

@@ -1,21 +1,21 @@
 'use strict';
-var state = {};
+//var state = {};
 function Store(options) {
 	var opts = options || {};
-	state = this.initState = opts;
+	this.state = this.initState = opts;
 }
 Store.prototype.getState = function() {
 	if(typeof Object.freeze === 'function'){
-		Object.freeze(state);//冻结对象不可修改
+		Object.freeze(this.state);//冻结对象不可修改
 	}
-	return state;
+	return this.state;
 }
 Store.prototype.dispatch = function (action) {
 	if(action.hasOwnProperty('type') && action.hasOwnProperty('payload')){
 		//console.log(action.type+'变化前：'+JSON.stringify(state[action.type]));
-		var tempState = $.extend(true,{},state);
+		var tempState = $.extend(true,{},this.state);
 		tempState[action.type] = action.payload;
-		state = tempState;
+		this.state = tempState;
 		//console.log(state);
 		//console.log(action.type+'变化后：'+JSON.stringify(state[action.type]));
 	}else{
@@ -23,8 +23,8 @@ Store.prototype.dispatch = function (action) {
 	}
 }
 Store.prototype.getInitialState = function() {
-	state = this.initState;
+	this.state = this.initState;
 	//console.log(state.customerCreditCardInfo);
-	return state;
+	return this.state;
 }
 module.exports=Store;

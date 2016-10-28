@@ -1,0 +1,95 @@
+div.fraud-search-subnav
+	a.goto-app(href='javascript:;') 应用
+	a(href='javascript:;') 反欺诈中心
+	a(href='javascript:;') 查询检索
+div.fraud-search-tabs
+	span 
+		a(href='../index.html') 统计分析
+	span.current 查询检索
+	span 
+		a(href='../fanZhaPian/cbevent.html') 串并案分析
+div.serach-conditions
+	//-
+		div.conditions-header 高级检索
+	div.conditions-body
+		div.conditions-row
+			div.conditions-item
+				span 报警时间
+				input#alarm-time(type='text',placeholder='选择时间范围')
+			div.conditions-item
+				span 地点
+				input.alarm-address(type='text')
+			div.conditions-item
+				span 报警人电话
+				input.alarm-tel(type='text')
+		div.conditions-row
+			div.conditions-item
+				span 警情级别
+				select.alarm-level
+					option(value='-1') 请选择
+					-each item in level
+						option(value='#{item.jqjbdm}') #{item.jqjbmc}
+				span.alarm-type-label 类型
+				select.alarm-type
+					option(value='-1') 请选择
+					-each item in case_data
+						option(value='#{item.value}') #{item.name}	
+			div.conditions-item
+				span 管辖单位
+				select.alarm-unit
+					option(value='-1') 请选择
+					-each item in list
+						optgroup(label = '#{item.root.name}')
+							-each node in item.nodes
+								option(value='#{node.id}')= node.name
+			div.conditions-item
+				span 报警人姓名
+				input.alarm-name(type='text')
+		div.conditions-row
+			div.conditions-item
+				span 报警详情
+				input.alarm-des(type='text')
+			div.conditions-item
+				span 处理情况
+				input.alarm-deals(type='text')		
+			div.conditions-item
+				span 事件单编号
+				input.alarm-id(type='text')
+	div.conditions-footer
+		button 开始检索
+div.search-result
+	table
+		thead
+			tr
+				th 序号
+				th 事件单编号
+				th 报警时间
+				th 地点
+				th 报警人
+				th 警情级别
+				th 警情类型
+				th 警情详情
+				th 处警情况
+				th.deal-chip 操作
+		tbody
+			-each item,index in result.bodyData
+				tr
+					td= index+1
+					td= item.sjdbh
+					td= item.bjsj
+					td
+						span.alarm-location(data-toggle='tooltip',data-placement='bottom',title='#{item.location}')= item.location
+					td= item.bjrxm
+					td= item.jqjb
+					td= item.jqlx
+					td
+						span.alarm-detail(data-toggle='tooltip',data-placement='bottom',title='#{item.bjxq}')= item.bjxq
+					td
+						span.alarm-deal-detail(data-toggle='tooltip',data-placement='bottom',title='#{item.cjqk}')= item.cjqk
+					td.deal-chip 
+						p.deal-btn(data-id='#{item.sjdbh}') 串并
+	div.data-page
+		div.pages.pull-right
+
+
+

@@ -130,7 +130,7 @@ Page.Action = (function() {
 				payload:record
 			}
 		}
-		}
+	}
 }());
 
 Page.init();

@@ -26,9 +26,9 @@
 -	}
 - }
 div.profile-header
-	| 客户综合信息
+	| 客户综合信息 — #{database.cus_name}
 	div.header-fr
-		i.iconfont.profile-close &#xe60b;
+		i.iconfont.profile-close &#xe639;
 div.left-box
 	div.title-top
 		img.user-icon(src=require('../../../public/images/yc_logo.png'))
@@ -37,7 +37,7 @@ div.left-box
 		p.text-small 三农金融部 
 	div.title-item.active 概览
 	div.title-item(data-move='.base') 基本信息
-	div.title-item 综合指标
+	div.title-item 个贷指标
 	//-
 		div.title-item 行业关联
 	//-
@@ -45,7 +45,8 @@ div.left-box
 	div.title-item 资产信息
 	div.title-item 信用卡
 	div.title-item POS信息
-	div.title-item.finance 理财
+	//-
+		div.title-item.finance 理财
 div.right-box
 	div.swiper-container
 		div.swiper-wrapper
@@ -59,16 +60,20 @@ div.right-box
 									| #{util.fixedEmpty(database.cus_name)}
 							tr
 								td 
-									span 月收入：
-									| #{util.formatMoney(database.monthly_profit)}
+									span 证件号：
+									| #{util.fixedEmpty(database.certificate_code)}
+							tr
+								td 
+									span 移动电话：
+									| #{util.fixedEmpty(database.telFirst)}
+							tr
+								td 
+									span 是否本地户口：
+									| #{util.fixedEmpty(database.is_native_account)}
 							tr
 								td 
 									span 教育水平：
 									| #{util.fixedEmpty(database.educational_level)}
-							tr
-								td 
-									span 是否居住满一年：
-									| #{util.fixedEmpty(database.rsd_year_flag)}
 					div.info-title 客户基本信息
 				div.info-card.card-col2
 					div.info-title 个贷业务综合指标
@@ -76,25 +81,30 @@ div.right-box
 						table.info-table
 							tr
 								td 
-									span 已拒贷贷款：
-									| #{util.fixedEmpty(database.rejected_loan_cnt)} 笔，共#{util.formatMoney(database.rejected_loan_amt)}
+									span 已核销贷款笔数：
+									| #{util.fixedEmpty(database.canceled_loan_cnt)}
 								td
-									span 已核销贷款：
-									| #{util.fixedEmpty(database.canceled_loan_cnt)} 笔，共#{util.formatMoney(database.canceled_loan_amt)}
+									span 在途贷款笔数：
+									| #{util.fixedEmpty(database.curr_loan_cnt)}
 							tr
 								td 
-									span 在途贷款：
-									| #{util.fixedEmpty(database.curr_loan_cnt)} 笔，共#{util.formatMoney(database.curr_loan_amt)}
+									span 已核销贷款金额：
+									| #{util.formatMoney(database.canceled_loan_amt)}
 								td
-									span 在途贷款余额：
-									| #{util.formatMoney(database.curr_loan_bal)}
+									span 在途贷款金额：
+									| #{util.formatMoney(database.curr_loan_amt)}
 							tr
 								td 
 									span 历史逾期次数：
-									| #{util.fixedEmpty(database.overdue_times_his)} 次
+									| #{util.fixedEmpty(database.overdue_times_his)}
+								td
+									span 在途贷款余额：
+									| #{util.formatMoney(database.curr_loan_bal)}	
+							tr
 								td 
 									span 历史逾期本金：
 									| #{util.formatMoney(database.overdue_capital_his)}
+
 				//-本次不上线
 					div.info-card
 						div.info-title 行业关联信息
@@ -160,43 +170,55 @@ div.right-box
 									| #{util.fixedEmpty(database.mer_legal_name)}
 							tr
 								td
+									span 商户拥有的pos数量：
+									| #{util.fixedEmpty(database.pos_cnt)}
+							tr
+								td
 									span 近一年月均交易金额：
 									| #{util.formatMoney(database.total_amt_ly)}
 				div.info-card
-					div.info-title 资产信息汇总
+					div.info-title 资产信息
 					div.info-detail
 						table.info-table
 							tr
 								td 
-									span 介质数量：
-									| #{util.fixedEmpty(database.media_cnt)}
+									span 最早开户日期：
+									| #{util.fixedEmpty(database.cd_earliest_open_date)}
 							tr
 								td 
-									span 被司法查询次数：
-									| #{util.fixedEmpty(database.justice_query_times)}
+									span 活期余额：
+									| #{util.formatMoney(database.cdm_bal_sum)}
+							tr
+								td 
+									span 定期余额：
+									| #{util.formatMoney(database.fix_bal_sum)}
 							tr
 								td 
 									span 年月均交易额：
 									| #{util.formatMoney(database.avg_amt_yearly)}
+							tr
+								td 
+									span 年月均交易次数：
+									| #{util.fixedEmpty(database.avg_cnt_yearly)}
 				div.info-card
 					div.info-title 理财信息
 					div.info-detail
 						table.info-table
 							tr
 								td 
-									span 购买基金：
+									span 购买基金金额：
 									| #{util.formatMoney(database.fund_amt)}
 							tr
 								td 
-									span 购买理财：
+									span 购买理财金额：
 									| #{util.formatMoney(database.financing_amt)}
 							tr
 								td 
-									span 购买国债：
+									span 购买国债金额：
 									| #{util.formatMoney(database.national_debt_amt)}
 							tr
 								td
-									span 购买保险：
+									span 购买保险金额：
 									| #{util.formatMoney(database.insurance_amt)}
 				div.info-card.card-col2
 					div.info-title 信用卡信息
@@ -207,8 +229,15 @@ div.right-box
 									span 信用卡数量：
 									| #{util.fixedEmpty(database.credist_card_cnt)}
 								td 
+									span 最早办理日期：
+									| #{util.fixedEmpty(database.earliest_open_date)}
+							tr
+								td 
 									span 信用卡账户数：
 									| #{util.fixedEmpty(database.acct_num_cnt)}
+								td 
+									span 最晚注销日期：
+									| #{util.fixedEmpty(database.latest_close_date)}
 							tr
 								td 
 									span 最低授信额度：
@@ -220,100 +249,151 @@ div.right-box
 								td(colspan='2')
 									span 近一年月均消费金额：
 									| #{util.formatMoney(database.amt_sum_consume)}
+							tr
+								td(colspan='2')
+									span 近一年月均消费次数：
+									| #{util.fixedEmpty(database.cnt_sum_consume)}
 				div(style='clear:both;')
-			div#slide-base.swiper-slide.move
-			div#slide-composite.swiper-slide
-			//-
-				div.slide-correlation.swiper-slide
-					div#slide-correlation
-			//-
-				div.swiper-slide.detail-slide
-					div.info-detail.first-info
-						div.detail-title
-							strong 市行名称：#{util.fixedEmpty(database.city_name)}
-						div.detail-body
-							table.info-table								
-								tr
-									td
-										b 贷款总计：
-										| #{util.fixedEmpty(database.loan_cnt)}笔，共#{util.formatMoney(database.loan_amt)}
-									td 
-										b 在途贷款：
-										| #{util.fixedEmpty(database.loan_cnt_curr)}笔，共#{util.formatMoney(database.loan_amt_curr)}
-								tr
-									td 
-										b 在途贷款余额：
-										| #{util.formatMoney(database.loan_bal_curr)}
-								tr
-									td 
-										b 不良贷款笔数：
-										| #{util.fixedEmpty(database.nonp_loan_cnt)}
-									td 
-										b 不良贷款余额：
-										| #{util.formatMoney(database.nonp_loan_bal)}
-								tr
-									td 
-										b 不良率：
-										| #{util.fixedEmpty(database.nonp_loan_bal_rate)}
-									td
-										b 不良等级 
-										| #{util.fixedEmpty(database.nonp_loan_lvl)}
-			div.swiper-slide.detail-slide
+			div#slide-base.swiper-slide.detail-slide
 				div.info-detail.first-info
-					table.info-table								
-						tr
-							td
-								b 介质数量：
-								| #{util.fixedEmpty(database.media_cnt)}
-							td 
-								b 折的数量：
-								| #{util.fixedEmpty(database.cnt_book)}
-						tr
-							td 
-								b 卡的数量：
-								| #{util.fixedEmpty(database.cnt_card)}
-							td 
-								b 活期一本通数量：
-								| #{util.fixedEmpty(database.cnt_onebk_cdm)}
-						tr
-							td 
-								b 定期一本通数量：
-								| #{util.fixedEmpty(database.cnt_onebk_fix)}
-							td
-								b 单的数量：
-								| #{util.fixedEmpty(database.cnt_bill)}
-						tr
-							td 
-								b 活期折的数量：
-								| #{util.fixedEmpty(database.cnt_book_cdm)}
-							td
-								b 定期折的数量： 
-								| #{util.fixedEmpty(database.cnt_book_fix)}
-						tr
-							td 
-								b 外币定期单的数量：
-								| #{util.fixedEmpty(database.cnt_bill_foreign)}
-							td
-								b 被司法查询次数： 
-								| #{util.fixedEmpty(database.justice_query_times)}
-						tr
-							td 
-								b 资产总金额：
-								| #{util.formatMoney(database.total_savings_amt)}
-							td
-								b 活期余额： 
-								| #{util.formatMoney(database.cdm_bal_sum)}
-						tr
-							td 
-								b 定期余额：
-								| #{util.formatMoney(database.fix_bal_sum)}
-							td
-								b 最早开户日期： 
-								| #{util.fixedEmpty(database.cd_earliest_open_date)}
+					div.detail-title
+						strong #{util.fixedEmpty(database.cus_name)}
+					div.detail-body
+						table.info-table
+							tr
+								td 
+									b 移动电话：
+									| #{util.fixedEmpty(database.telArr[0])}
+									each item,index in database.telArr
+										-if(index > 0 && item != '')
+											p.base-tel-arr #{util.fixedEmpty(item)}
+							tr 
+								td 
+									b 证件号码：
+									| #{util.fixedEmpty(database.certificate_code)}
+							tr
+								td 
+									b 是否本地户口：
+									| #{util.fixedEmpty(database.is_native_account)}
+							tr
+								td 
+									b 是否居住满一年：
+									| #{util.fixedEmpty(database.rsd_year_flag)}
+							tr
+								td
+									b 教育水平：
+									| #{util.fixedEmpty(database.educational_level)}
+							tr
+								td 
+									b 月收入：
+									| #{util.formatMoney(database.monthly_profit)}
+			div#slide-composite.swiper-slide.detail-slide
+				div.info-detail.first-info
+					div.detail-title
+						strong 个贷业务综合指标
+					div.detail-body
+						table.info-table								
+							tr
+								td
+									b 已拒贷贷款笔数：
+									| #{util.fixedEmpty(database.rejected_loan_cnt)}
+							tr
+								td 
+									b 已拒贷贷款金额：
+									| #{util.formatMoney(database.rejected_loan_amt)}
+							tr
+								td 
+									b 已核销贷款笔数：
+									| #{util.fixedEmpty(database.canceled_loan_cnt)}
+							tr
+								td 
+									b 已核销贷款金额：
+									| #{util.formatMoney(database.canceled_loan_amt)}
+							tr
+								td 
+									b 在途贷款笔数：
+									| #{util.fixedEmpty(database.curr_loan_cnt)}
+							tr
+								td
+									b 在途贷款金额：
+									| #{util.formatMoney(database.curr_loan_amt)}
+							tr
+								td 
+									b 在途贷款余额：
+									| #{util.formatMoney(database.curr_loan_bal)}
+							tr
+								td
+									b 历史逾期次数： 
+									| #{util.fixedEmpty(database.overdue_times_his)}
+							tr
+								td 
+									b 历史逾期本金：
+									| #{util.formatMoney(database.overdue_capital_his)}
+			div.swiper-slide.detail-slide
 				div.info-detail
 					div.detail-title
-						strong 年月额均交易金额：#{util.formatMoney(database.avg_amt_yearly)}
-					div.detail-body(style="max-height:200px;")
+						strong 合计：#{util.fixedEmpty(database.media_cnt)}
+					div.detail-body
+						table.info-table								
+							tr
+								td 
+									b 卡的数量：
+									| #{util.fixedEmpty(database.cnt_card)}
+								td 
+									b 活期一本通数量：
+									| #{util.fixedEmpty(database.cnt_onebk_cdm)}
+								td 
+									b 定期一本通数量：
+									| #{util.fixedEmpty(database.cnt_onebk_fix)}
+							tr
+								td
+									b 折的数量：
+									| #{util.fixedEmpty(database.cnt_book)}
+								td 
+									b 活期折的数量：
+									| #{util.fixedEmpty(database.cnt_book_cdm)}
+								td
+									b 定期折的数量： 
+									| #{util.fixedEmpty(database.cnt_book_fix)}
+							tr
+								td
+									b 单的数量：
+									| #{util.fixedEmpty(database.cnt_bill)}
+								td 
+									b 外币定期单的数量：
+									| #{util.fixedEmpty(database.cnt_bill_foreign)}
+								td
+									b 未知类型： 
+									| #{util.fixedEmpty(database.cnt_none)}
+				div.info-detail
+					div.detail-title
+						strong 合计：#{util.formatMoney(database.total_savings_amt)}
+					div.detail-body
+						table.info-table
+							tr
+								td
+									b 活期余额：
+									| #{util.formatMoney(database.cdm_bal_sum)}
+								td
+									b 购买理财：
+									| #{util.formatMoney(database.financing_amt)}
+								td
+									b 购买基金：
+									| #{util.formatMoney(database.fund_amt)}								
+							tr
+								td
+									b 定期余额：
+									| #{util.formatMoney(database.fix_bal_sum)}
+								td
+									b 购买国债：
+									| #{util.formatMoney(database.national_debt_amt)}
+								td
+									b 购买保险：
+									| #{util.formatMoney(database.insurance_amt)}
+				div.info-detail
+					div.detail-title
+						strong 近一年月均交易金额：#{util.formatMoney(database.avg_amt_yearly)}
+					div.detail-body.detail-items(style="height:170px;")
 						table.info-table
 							-if(assetsMonthlyStat){			
 								each assetStat,index in assetsMonthlyStat						
@@ -348,51 +428,61 @@ div.right-box
 								b 信用卡数量：
 								| #{util.fixedEmpty(database.credist_card_cnt)}
 							td 
-								b 累计授信额度：
-								| #{util.formatMoney(database.credit_line_sum)}
-						tr
-							td 
-								b 办理日期(最早)：
-								| #{util.fixedEmpty(database.earliest_open_date)}
-							td 
-								b 注销日期(最晚)：
-								| #{util.fixedEmpty(database.latest_close_date)}
-						tr
-							td 
-								b 最低授信额度：
-								| #{util.formatMoney(database.credit_line_min)}
-							td
-								b 最高授信额度：
-								| #{util.formatMoney(database.credit_line_max)}
-						tr
-							td 
 								b 近一年月均消费次数： 
 								| #{util.fixedEmpty(database.cnt_sum_consume)}
+						tr
+							td
+								b 信用卡账户数：
+								| #{util.fixedEmpty(database.acct_num_cnt)}
 							td
 								b 近一年月均取现金额： 
 								| #{util.formatMoney(database.amt_sum_withdrawl)}
 						tr
 							td 
+								b 办理日期(最早)：
+								| #{util.fixedEmpty(database.earliest_open_date)}
+							td 
 								b 近一年月均取现次数： 
-								| #{util.fixedEmpty(database.cnt_sum_withdrawl)}
+								| #{util.fixedEmpty(database.cnt_sum_withdrawl)}	
+						tr
+							td 
+								b 注销日期(最晚)：
+								| #{util.fixedEmpty(database.latest_close_date)}
 							td
 								b 近一年月均利息金额： 
 								| #{util.formatMoney(database.amt_sum_interest)}
 						tr
 							td 
+								b 最低授信额度：
+								| #{util.formatMoney(database.credit_line_min)}
+							td 
 								b 近一年月均利息次数： 
 								| #{util.fixedEmpty(database.cnt_sum_interest)}
+						tr
+							td
+								b 最高授信额度：
+								| #{util.formatMoney(database.credit_line_max)}
 							td
 								b 近一年月均费用金额： 
 								| #{util.formatMoney(database.amt_sum_fee)}
 						tr
+							td 
+								b 累计授信额度：
+								| #{util.formatMoney(database.credit_line_sum)}
 							td
 								b 近一年月均费用次数：
 								| #{util.fixedEmpty(database.cnt_sum_fee)}
+						tr
+							td 
+								b 逾期天数：
+								| #{util.fixedEmpty(database.overdue_days)}
+							td
+								b 逾期数：
+								| #{util.fixedEmpty(database.overdue_terms)}
 				div.info-detail
 					div.detail-title
 						strong 近一年月均消费金额：#{util.formatMoney(database.amt_sum_consume)}
-					div.detail-body(style="max-height:200px;")								
+					div.detail-body.detail-items(style="height:188px;")								
 						table.info-table
 							-if(customerCreditCardInfo && customerCreditCardInfo){		
 								each assetStat,index in customerCreditCardInfo						
@@ -429,6 +519,7 @@ div.right-box
 								td
 									b 商户法定代表人姓名：
 									| #{util.fixedEmpty(database.mer_legal_name)}
+							tr
 								td 
 									b 商户拥有pos数量：
 									| #{util.fixedEmpty(database.pos_cnt)}
@@ -439,8 +530,47 @@ div.right-box
 				div.info-detail
 					div.detail-title
 						strong 近一年月均交易金额: #{util.formatMoney(database.total_amt_ly)}
-					div.detail-body#pos-monthly(style="height:270px;")								
-			div.slide-finance.swiper-slide
-				div#slide-finance
+					div.detail-body#pos-monthly.detail-items(style="height:240px;")
+						table.info-table
+							-for(var i=1;i<=12;i++){
+								-var key = 'trans_amt_' + i;
+								-if(i%2==0)
+									tr
+										td 
+											b 统计月份：
+											| #{moment().subtract(i,'M').format('YYYY-MM')}
+										td
+											b 交易金额：
+											| #{util.formatMoney(database[key])}
+								-else
+									tr.even
+										td 
+											b 统计月份：
+											| #{moment().subtract(i,'M').format('YYYY-MM')}
+										td
+											b 交易金额：
+											| #{util.formatMoney(database[key])}
+							-}
+			//-				
+				div.slide-finance.swiper-slide.detail-slide
+					div.info-detail.first-info
+						div.detail-title
+							strong 理财信息
+						div.detail-body
+							table.info-table								
+								tr
+									td
+										b 购买基金：
+										| #{util.formatMoney(database.fund_amt)}
+									td
+										b 购买理财：
+										| #{util.formatMoney(database.financing_amt)}
+								tr
+									td
+										b 购买国债：
+										| #{util.formatMoney(database.national_debt_amt)}
+									td
+										b 购买保险：
+										| #{util.formatMoney(database.insurance_amt)}
 div(style='clear:both;')
 div.profile-footer

@@ -1,0 +1,16 @@
+-each item,index in result.bodyData
+	tr
+		td= index+1
+		td= item.sjdbh
+		td= item.bjsj
+		td
+			span.alarm-location(data-toggle='tooltip',data-placement='bottom',title='#{item.location}')= item.location
+		td= item.bjrxm
+		td= item.jqjb
+		td= item.jqlx
+		td
+			span.alarm-detail(data-toggle='tooltip',data-placement='bottom',title='#{item.bjxq}')= item.bjxq
+		td
+			span.alarm-deal-detail(data-toggle='tooltip',data-placement='bottom',title='#{item.cjqk}')= item.cjqk
+		td.deal-chip 
+			p.deal-btn(data-id='#{item.sjdbh}') 串并
