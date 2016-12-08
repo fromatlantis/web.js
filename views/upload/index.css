@@ -5,11 +5,7 @@
 	position: absolute;
     top: 0;
     left: 0;
-    width: 120px;
-    padding: 10px;
-    opacity: 0;
-    filter:alpha(opacity=0);
-    z-index: 2;
+    z-index: -1;
     width: 85px;
 }
 .upload-btn-box {
@@ -20,6 +16,8 @@
 	border:1px solid #ebebeb;
 	border-radius: 5px;
 	padding: 20px;
+    background: #fff;
+    text-align: center;
 }
 .file-title {
 	text-align: center;
@@ -30,7 +28,7 @@
 .file-info li {
 	padding: 10px;
 }
-#file-upload,#file-save {
+#file-upload {
 	display: block;
 	border: none;
   	width: 100px;
@@ -38,5 +36,11 @@
   	margin-top: 30px;
 }
 #file-save {
-	display: none;
+	border: none;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    display: none;
 }

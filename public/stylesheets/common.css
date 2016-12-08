@@ -9,10 +9,11 @@
 	outline: none;
 }
 body {
-	font-family: '微软雅黑';
+	font-family: 'Microsoft YaHei';
 	color: #555;
 	font-size: 14px;
 	-webkit-font-smoothing:antialiased;
+	background-color: #f5f5f5;
 }
 a {
 	color: #fff;
@@ -110,9 +111,13 @@ table {
 	font-size: 16px;
 	color:#e1f5fe;
 }
+.nav-header i {
+	margin-left: 10px;
+}
 .content {
 	margin-top:120px;
 	margin-left: 200px;
+	margin-right: 360px;
 }
 .btn {
 	display: inline-block;
@@ -142,4 +147,46 @@ table {
 .wrapper {
 	width: 760px;
 	margin: 0 auto;
+}
+.btn-link {
+  color: #75b9e6;
+  font-weight: normal;
+  cursor: pointer;
+  border-radius: 0;
+}
+.btn-link:hover,
+.btn-link:focus {
+  color: #3498da;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.help-card {
+  position: fixed;
+  right: 100px;
+  top: 200px;
+  background: #fff;
+  z-index: 999;
+  border-radius: 5px;
+  border: 1px solid #ebebeb;
+  width: 260px;
+}
+.help-card-content {
+  padding: 10px 20px;
+  line-height: 20px;
+}
+.help-card-title {
+  padding: 10px;
+  border-bottom: 1px solid #ebebeb;
+  font-size: 16px;
+  font-weight: bold;
+  background: #daecf9;
+}
+.help-card-title i {
+  font-size: 24px;
+  margin-right: 5px;
+  color: #ffcc66;
+}
+.help-card-content li {
+  border-bottom: 1px dotted #ccc;
+  padding: 10px 0;
 }

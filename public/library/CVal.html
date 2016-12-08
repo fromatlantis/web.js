@@ -4,7 +4,6 @@
 	<meta charset='utf-8'>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="/library/CVal/CVal.css">
 	<style type="text/css">
 	body {
 		background: #ccc;
@@ -13,30 +12,24 @@
 </head>
 <body>
 	<button>切换</button>
+	<li id="showUserBox"><a href="javascript:">用户：卢文娟</a><ul><li style="height:21px;margin-top:1px;margin-bottom:2px;width:205px;"><a style="text-decoration:none;" href="javascript:">★用户信息★</a></li><li style="height:21px;margin-top:1px;margin-bottom:2px;width:205px;"><a style="text-decoration:none;" href="javascript:">☞用户编号: 20080688980</a></li><li style="height:21px;margin-top:1px;margin-bottom:2px;width:205px;"><a style="text-decoration:none;" href="javascript:">☞用户姓名: 卢文娟</a></li><li style="height:21px;margin-top:1px;margin-bottom:2px;width:205px;"><a style="text-decoration:none;" href="javascript:">☞机构编号: 13012859</a></li><li style="height:21px;margin-top:1px;margin-bottom:2px;width:205px;"><a style="text-decoration:none;" href="javascript:">☞机构名称: 石家庄市方北路支行</a></li><li style="height:21px;margin-top:1px;margin-bottom:2px;width:205px;"><a style="text-decoration:none;" href="javascript:">☞机构级别: 05</a></li><li style="height:21px;margin-top:1px;margin-bottom:2px;width:205px;"><a style="text-decoration:none;" href="javascript:">☞岗位编号: E02</a></li><li style="height:21px;margin-top:1px;margin-bottom:8px;"><a style="text-decoration:none;" href="javascript:">☞岗位名称: 二级支行信贷员</a></li></ul></li>
 	<script type="text/javascript" src='/javascripts/lib/jquery-1.7.2.min.js'></script>
-	<script type="text/javascript" src='/library/CVal/CVal.js'></script>
 	<script type="text/javascript">
-		//console.timeEnd('time');
-		//var halo = new halo();
-		//console.log(halo);
-		CVal.msgPlus.init();
-		CVal.modal.init({
-			width:550,
-			cityId:'13000320',
-			industryId:'0111'
-		});
-		//console.timeEnd('time');
-		
-		CVal.profile.init({
-			certificateCode:'132326197204021974'
-		});
-		$('button').click(function(){
-			profile.destroy();
-			profile.init({
-				certificateCode:'130602197808291549'
-			});
-		})
-
+		var cvalInit = function(){
+		    window.CVal = {};
+		    /**
+		     * 服务端地址
+		     */
+		    //CVal.path = 'http://21.32.95.196:8080/bhoserver'; // 本地测试
+		    CVal.path = 'http://21.32.95.248:8088/bhoserver'; // 测试环境
+		   	//CVal.path = 'http://21.32.3.70:80/bhoserver'; // 生产环境
+		}
+		//CVal对象初始化
+		cvalInit();
+		//加载组件
+		var _load = function(url) {var dom = document.createElement('script'); dom.src = url; dom.async = true; document.getElementsByTagName('head')[0].appendChild(dom);};
+		_load(CVal.path + '/resources/static/js/common/logm/Base.js?require=http://21.32.3.70:8200/bho/logm.js,http://localhost:3000/library/dist/CVal/CVal.js&app=bho&_=' + (new Date()).getTime());
+		//_load(CVal.path + '/resources/static/js/common/logm/Base.js?require=http://21.32.3.70:8200/bho/logm.js,' + CVal.path + '/resources/static/js/bho/CVal.js&app=bho&_=' + (new Date()).getTime());
 	</script>
 </body>
 </html>

@@ -7,7 +7,7 @@ var Apis = {
 	del: '/surveyRpt/template/delete'
 }
 var pageParams={
-	router:['报告管理','报告列表']
+	router:['我的报告','历史报告']
 }
 
 var template    = require("./tmpl/index.jade"); //返回一个函数

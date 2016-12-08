@@ -1,9 +1,11 @@
 div.theme-blue.adPops-container
 	div.adPops-title
 		div.back-home
+			//-
+				i.iconfont.close-icon &#xe639;
+			i.close-icon 返回
 			img.yc-logo(src=require('../../../public/images/yc_logo.png'))
 			行业新闻
-			i.iconfont.close-icon &#xe639;
 		//-
 			table
 				tr
@@ -14,17 +16,22 @@ div.theme-blue.adPops-container
 							td.tabs!= item.title
 	div.adPops-content
 		div.content-box
-			-if(news){
-				each item,index in news
-					div.news-card(data-id='#{item.industryId}')
-						div.news-title
-							= item.newsTitle
-						div.news-summary
-							= item.content
-							| ···
-						div.news-footer
-							span.news-source= item.siteName
-							span.news-time= moment(item.timestamp, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')
-							div.news-tags
-								span= item.industryName
-			-}
+			-if(news)
+				-if(news.length > 0)
+					each item,index in news
+						div.news-card
+							div.news-title(data-id='#{item.pageId}')
+								= item.newsTitle
+							div.news-summary
+								= item.content
+								| ···
+							div.news-footer
+								span.news-source= item.siteName
+								span.news-time= moment(item.timestamp, 'YYYYMMDDHHmmss').format('YYYY-MM-DD HH:mm:ss')
+								div.news-tags.inline-block-fixed
+									span(data-industry-id = '#{item.industryId}')= item.industryName
+				-else
+					p.none-data 暂无数据。
+			-else
+				div.loading-box
+					img(src=require('../../../public/images/loading.gif'))

@@ -44,9 +44,17 @@
         "tags" : "javascripts/lib/tags/tags.js",
         "Store" : "javascripts/core/Store.js",
         "Events" : "javascripts/core/Events.js",
+        "Cookie" : "javascripts/core/Cookie.js",
         "echarts" : "javascripts/lib/echarts.js",
         "slimscroll" : "javascripts/lib/jquery.slimscroll.js",
-        "moment" : "javascripts/lib/moment.js",
-        "CVal": "javascripts/core/CVal.js"
+        "momentn" : "javascripts/lib/moment.js",
+        "moment" : "javascripts/lib/moment-with-locales.js",
+        "crypto" : "javascripts/lib/crypto-js",
+        "select2" : "javascripts/lib/select2/select2.min.js",
+        "datepicker" : "javascripts/lib/datepicker/daterangepicker.js",
+        "datepickerCss" : "javascripts/lib/datepicker/daterangepicker.css",
+        "pagination" : "javascripts/lib/pagination/1.2.0/pagination.js",
+        "paginationCss" : "javascripts/lib/pagination/1.2.0/pagination.css",
+        "bootstrap":"javascripts/lib/bootstrap/js/bootstrap.js"
     }
 }

@@ -8,22 +8,13 @@ require('./index.css');
 var Store = require('Store');
 var Events = require('Events');
 var Page = {
-	push: 0,
-	Apis: {
-		msgs: '/apis/msgs.json',
-		detail: '/apis/msgDetail.json'
-	},
+	input: null,
+	output: null,
 	init: function(){
-		function getMsgs() {
-			return $.ajax({
-				url: Page.Apis.msgs,
-				type: 'GET',
-				dataType: 'JSON',
-				data: {}
-			})
-		}
+		Page.Render.init();
+		/**
 		function firstRequest(callback){
-			$.when(getMsgs()).done(function(data){
+			$.when(Page.APIS.getMsgs()).done(function(data){
 				callback(data.records);
 			})
 		}
@@ -32,58 +23,59 @@ var Page = {
 			store.dispatch(Page.Action.index(record));
 			Page.Render.init();
 		})
+		**/
 	}
 }
+
+Page.APIS = (function(){
+	/**
+	var Apis = {
+		msgs: '/apis/msgs.json'
+	}
+	return {
+		getMsgs: function() {
+			return $.ajax({
+				url: Page.Apis.msgs,
+				type: 'GET',
+				dataType: 'JSON',
+				data: {}
+			})
+		}
+	}
+	**/
+}());
 
 Page.UI = (function(){
 	return {
 		indexView: function() {
 			return require('./tmpl/index.jade');
-		},
-		detailView: function() {
-			return require('./tmpl/detail.jade');
 		}
 	}
 }());
 
 Page.Store = (function(){
-	var store = new Store({
-		msgs: {
-			tabs:[],
-			content:[]
-		},
-		tab: {
-			index: 0
-		}
-	});
+	var store = new Store();
 	return store;
 }());
 
 Page.Render = (function(){
-	var $msgPlus = $('.msg-plus');
+	var $container = $('.container');
 	function index() {
 		var template = Page.UI.indexView();
 		//console.log(state.msgs);
 		var html = template(Page.Store.getState());
-		$msgPlus.html(html);
+		$container.html(html);
 		Page.HandleEvents.init();
-	}
-	function detail() {
-		var template = Page.UI.detailView();
-		var html = template(Page.Store.getState());
-		$msgPlus.html(html);
 	}
 	return {
 		init: function() {
 			index();
-		},
-		detail: function() {
-			detail();
-		} 
+		}
 	}
 }());
 
 Page.HandleEvents = (function(){
+	/**
 	var events = new Events({
 		'.content-item@click': 'showDetail',
 	}) 
@@ -104,9 +96,11 @@ Page.HandleEvents = (function(){
 			})
 		}
 	}
+	**/
 }());
 
 Page.Action = (function() {
+	/**
 	return {
 		index: function(record){
 			var tabs=[],content=[];
@@ -131,6 +125,7 @@ Page.Action = (function() {
 			}
 		}
 	}
+	**/
 }());
 
 Page.init();

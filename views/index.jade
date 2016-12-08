@@ -3,14 +3,16 @@ block content
 	div.wrapper
 		div.swiper-container
 			div.swiper-wrapper
-				div.swiper-slide.blue-slide slider1
-				div.swiper-slide.red-slide slider2
-				div.swiper-slide.orange-slide slider3
+				div.swiper-slide.banner1
+				div.swiper-slide.banner2
+				div.swiper-slide.banner3
 			div.pagination
 		div.hot-template
 			div.hot-title
+				span.split-line-left ﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊
 				i.iconfont.split &#xe615;
-				| 热门模版
+				| 最新分享
+				span.split-line-right ﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊
 			-for (var i = 2; i >= 0; i--) {
 				div.template-list
 					div.template-info
@@ -19,15 +21,68 @@ block content
 								td 模版名称：小额贷款客户家庭经济情况调查模版
 								td 所属行业：行业1
 							tr
-								td 上传人：牛志伟
+								td 分享人：牛志伟
 								td 所属机构：机构1
 							tr
-								td 上传时间：2016-08-02 17:00
+								td 分享时间：2016-08-02 17:00
 								td 来源：来源1
 					div.template-tips
 						span.remark
 							| 小额贷款、经济情况调查
+						span
+							i.iconfont.icon-like(title='收藏') &#xe64b;
 						span.fr
-							span.preview 预览
-							span.del 删除
+							span.use-count
+								i.iconfont &#xe69e;
+								| 15人正在使用
+							span.preview 
+								a.btn-link(href='javascript:;') 预览
+							span.del 
+								a.btn-link(href='javascript:;') 删除
 			-}
+		div.hot-template
+			div.hot-title
+				span.split-line-left ﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊
+				i.iconfont.split &#xe60a;
+				| 热门分享
+				span.split-line-right ﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊﹋﹊
+			-for (var i = 2; i >= 0; i--) {
+				div.template-list
+					div.template-info
+						table
+							tr
+								td 模版名称：小额贷款客户家庭经济情况调查模版
+								td 所属行业：行业1
+							tr
+								td 分享人：牛志伟
+								td 所属机构：机构1
+							tr
+								td 分享时间：2016-08-02 17:00
+								td 来源：来源1
+					div.template-tips
+						span.remark
+							| 小额贷款、经济情况调查
+						span
+							i.iconfont.icon-liked(title='取消收藏') &#xe64a;
+						span.fr
+							span.use-count
+								i.iconfont &#xe69e;
+								| 15人正在使用
+							span.preview 
+								a.btn-link(href='javascript:;') 预览
+							span.del 
+								a.btn-link(href='javascript:;') 删除
+			-}
+	div.help-card
+		div.help-card-title
+			i.iconfont.split &#xe601;
+			span 有问题？看这里
+		div.help-card-content
+			li 
+				a.btn-link 如何使用他人分享的模板
+			li 
+				a.btn-link 如何上传模板
+			li 
+				a.btn-link 如何分享模板
+			li 
+				a.btn-link 模板使用注意事项

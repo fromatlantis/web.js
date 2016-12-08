@@ -36,7 +36,7 @@ var publicPath = config.online ? config.publicPath : '/';//虚拟资源路径，
 
 var entries = (function() {
     var jsDir = path.resolve(srcDir, '**')
-    var entryFiles = glob.sync(jsDir + '/*.{js,jsx}')
+    var entryFiles = glob.sync(jsDir + '/**/index.{js,jsx}')
     var map = {}
     entryFiles.forEach((filePath) => {
         var filename = filePath.substring(filePath.lastIndexOf('views') + 6, filePath.lastIndexOf('.'))
@@ -167,7 +167,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
+                test: /\.(jpe?g|png|gif|ico)$/,
                 loaders: [
                      // url-loader更好用，小于10KB的图片会自动转成dataUrl，
                     // 否则则调用file-loader，参数直接传入
@@ -178,7 +178,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
+                test: /\.((ttf|eot|svg|woff)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot|svg|woff)$/,
                 loader: 'url?limit=1&name='+staticPath+'/fonts/[name].[ext]?[hash:8]'//不转换为dataUrl
                 //loader: 'url?limit=10000&name=fonts/[hash:8].[name].[ext]'
             },

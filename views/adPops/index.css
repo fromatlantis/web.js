@@ -34,6 +34,7 @@
 }
 .adPops-content {
 	color:#333 !important;
+	min-height: 325px; 
 }
 .adPops-content > .content-box {
 	padding: 10px;

@@ -25,74 +25,96 @@ div.container
 						i.iconfont &#xe626;
 						|	首页
 			-}
-			-if(nav=='template' || nav=='upload1'){
+			-if(nav=='market'){
 				li.current
-					a(href='javascript:;')
+					a(href='/template/?type=market')
 						i.iconfont &#xe614; 
 						|	模版中心
+			-}else{
+				li
+					a(href='/template/?type=market')
+						i.iconfont &#xe614;
+						|	模版中心
+			-}
+			-if(nav=='industry'){
+				li.current
+					a(href='/industry/')
+						i.iconfont &#xe62b;
+						|	行业管理
+			-}else{
+				li
+					a(href='/industry/')
+						i.iconfont &#xe62b;
+						|	行业管理
+			-}
+			-if(nav=='template' || nav=='templateLiked'){
+				li.current
+					a(href='javascript:;')
+						i.iconfont &#xe617;
+						|	我的模板
 					ul.sub-nav
 						-if(nav=='template'){
 							li.current
-								a(href='/template')
-									i.iconfont &#xe61a;
-									|	模版列表
+								a(href='/template/')
+									i.iconfont &#xe61a;  
+									|	发布的模板
 						-}else{
 							li
-								a(href='/template')
+								a(href='/template/')
 									i.iconfont &#xe61a;
-									|	模版列表
+									|	发布的模板
 						-}
-						-if(nav=='upload1'){
+						-if(nav=='templateLiked'){
 							li.current
-								a(href='/upload?type=1')
+								a(href='/template/?type=liked')
 									i.iconfont &#xe61e;
-									|	上传模版
+									|	收藏的模板
 						-}else{
 							li
-								a(href='/upload?type=1')
+								a(href='/template/?type=liked')
 									i.iconfont &#xe61e;
-									|	上传模版
+									|	收藏的模板
 						-}
 			-}else{
 				li
 					a(href='javascript:;')
-						i.iconfont &#xe614;
-						|	模版中心
+						i.iconfont &#xe617;
+						|	我的模板
 					ul.sub-nav
 						li
-							a(href='/template')
-								i.iconfont &#xe61a;
-								|	模版列表
+							a(href='/template/')
+								i.iconfont &#xe61a;  
+								|	发布的模板
 						li
-							a(href='/upload?type=1')
+							a(href='/template/?type=liked')
 								i.iconfont &#xe61e;
-								|	上传模版
+								|	收藏的模板
 			-}
 			-if(nav=='report' || nav=='upload2'){
 				li.current
 					a(href='javascript:;')
 						i.iconfont &#xe620;
-						|	报告管理
+						|	我的报告
 					ul.sub-nav
 						-if(nav=='report'){
 							li.current
-								a(href='/report')
+								a(href='/report/')
 									i.iconfont &#xe61a;  
-									|	报告列表
+									|	历史报告
 						-}else{
 							li
-								a(href='/report')
+								a(href='/report/')
 									i.iconfont &#xe61a;
-									|	报告列表
+									|	历史报告
 						-}
 						-if(nav=='upload2'){
 							li.current
-								a(href='/upload?type=2')
+								a(href='/upload/?type=2')
 									i.iconfont &#xe61e;
 									|	上传报告
 						-}else{
 							li
-								a(href='/upload?type=2')
+								a(href='/upload/?type=2')
 									i.iconfont &#xe61e;
 									|	上传报告
 						-}
@@ -100,30 +122,21 @@ div.container
 				li
 					a(href='javascript:;')
 						i.iconfont &#xe620;
-						|	报告管理
+						|	我的报告
 					ul.sub-nav
 						li
-							a(href='/report')
+							a(href='/report/')
 								i.iconfont &#xe61a;  
-								|	报告列表
+								|	历史报告
 						li
-							a(href='/upload?type=2')
+							a(href='/upload/?type=2')
 								i.iconfont &#xe61e;
 								|	上传报告
 			-}
 			li
-				a(href='javascript:;')
-					i.iconfont &#xe61b;
-					|	个人中心
-				ul.sub-nav
-					li
-						a(href='/template')
-							i.iconfont &#xe617; 
-							|	我的模版
-					li
-						a(href='/login')
-							i.iconfont &#xe619;
-							|	退出系统
+				a(href='/login/')
+					i.iconfont &#xe619;
+					|	退出系统
 			li
 				a(href='javascript:;')
 					i.iconfont &#xe621;

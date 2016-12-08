@@ -1,6 +1,29 @@
 div.msg-content
 	div.serach-chip
+		i.iconfont.plus-helper(title='温馨小提示') &#xe601;
 		个贷助手
+		div.plus-helper-box
+			p 为了更好的跳转业务体验，我们建议您使用以下等现代浏览器。
+			table
+				tr
+					td
+						img(src=require('../../../public/images/chrome.png'))
+					td
+						| 复杂交互及展示效果体验最佳，支持XP SP3及以上系统	
+					td
+						a(href='http://21.32.3.70/download/chromeV41_installer.zip') 版本：41.0.2272.89
+				tr
+					td
+						img(src=require('../../../public/images/firefox.png'))
+					td
+						| 页面展示效果好，支持win7及以上系统	
+					td
+						a(href='http://21.32.3.70/download/Mozilla_Firefox_38.0.5.zip') 版本：38.0.5
+	div.search-chip-input
+		i.iconfont &#xe627;
+		div.input-group
+			input(type='text',err-msg='身份证号无效')
+			span 输入身份证查询用户信息
 	div.plus-wrapper
 div.msg-tabs
 	table
@@ -12,5 +35,5 @@ div.msg-tabs
 				i.iconfont &#xe634;
 				span 新闻
 			td.showhide 
-				i.iconfont &#xe635;
-				span 收起
+				i.iconfont &#xe636;
+				span 展开

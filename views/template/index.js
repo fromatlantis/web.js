@@ -11,16 +11,34 @@ var Apis = {
 }
 var pageParams={
 	select:util.urlParam('select'),
-	router:['模版中心','模版列表']
+	//router:['模版中心'],
+	type:util.urlParam('type')
 }
+var nav;
+if(pageParams.type =='market'){
+	pageParams.router=['模板中心'];
+	nav = 'market';
+}else if(pageParams.type == 'liked') {
+	pageParams.router=['我的模板','收藏的模板'];
+	nav = 'templateLiked';
+}else {
+	pageParams.router=['我的模板','发布的模板'];
+	nav = 'template';
+}
+/**
+var nav = 'market';
 if(pageParams.select){
-	pageParams.router=['报告管理','报告列表','选择模版']
+	pageParams.router=['我的报告','报告列表','选择模版']
+}else if(pageParams.type!='market'){
+	pageParams.router=['我的模板','模板列表']
+	nav = 'template';
 }
+**/
 var template = require("./tmpl/index.jade"); //返回一个函数
 
 var html = template({
 	'router': pageParams.router,
-	'nav':'template'
+	'nav': nav
 });
 $('body').html(html);
 var postData={};
@@ -28,11 +46,14 @@ postData.id='';
 bindEvents();
 function bindEvents(){
 	$('.template-list').click(function(){
+		window.location.href='/template/preview?type=' + pageParams.type + '&nav=' + nav;
+		/**
 		if(pageParams.select){
 			window.location.href='/template/preview?select=1';
 		}else{
 			window.location.href='/template/preview';
 		}
+		**/
 	})
 	$('.class').click(function(){
 		var $tab=$(this);

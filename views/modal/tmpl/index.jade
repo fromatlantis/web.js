@@ -1,7 +1,9 @@
 div.__modal-header
-	= opts.title
-	i.iconfont.__modal-close &#xe639;
+    = opts.title
+    i.iconfont.__modal-close &#xe639;
 div.__modal-body
-	!= opts.content
 div.__modal-footer
-	button.btn.btn-default 关闭
+    -if(opts.footer)
+        != opts.footer
+    -else
+        button.btn.btn-primary.__modal-close 我知道了

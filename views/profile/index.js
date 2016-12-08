@@ -3,7 +3,8 @@ require('./index.css');
 //require('./index2.css');
 var Store = require('Store');
 var Events = require('Events');
-
+var Cookie = require('Cookie');
+var cookie = new Cookie();
 //swiper轮播插件
 //require('swiper2Css');
 //var Swiper = require('swiper2');
@@ -15,6 +16,7 @@ var Page = {
 	ajaxDataType: typeof CVal == "undefined" ? 'jsonp' : 'jsonp',
 	init: function(options){
 		var opts = options || {};
+		Page.loadOnceByDay = opts.loadOnceByDay;	//今日不再提示参数
 		function firstRequest(callback){
 			var store = Page.Store;
 			$.when(
@@ -44,10 +46,13 @@ var Page = {
 		}
 		if(Page.isFirstLoad){
 			//程序一定要严谨，考虑全面
-			firstRequest(function(store){
-				$(document.body).append('<div class="profile"></div>');//一定要放在回调里，防止多次执行
-				Page.Render.init();//不能放在外面，防止dom未加载的情况
-			})
+			var loadOnceByDay = cookie.getCookie('loadOnceByDay');
+			if(!loadOnceByDay | !Page.loadOnceByDay){	//cookie为空或者没有配置loadOnceByDay参数
+				firstRequest(function(store){
+					$(document.body).append('<div class="profile"></div>');//一定要放在回调里，防止多次执行
+					Page.Render.init();//不能放在外面，防止dom未加载的情况
+				})
+			}
 		}
 	},
 	destroy: function(){
@@ -169,7 +174,10 @@ Page.HandleEvents = (function(){
 	**/
 	var events = new Events({
 		'.profile .title-item@click': 'moveTo',
-		'.profile .profile-close@click': 'close'
+		'.profile .profile-close@click': 'close',
+		'.ignore@click': 'ignore',
+		'.ignore@mouseover': 'showTips',
+		'.ignore@mouseout': 'hideTips'
 	}) 
 	return {
 		init: function() {
@@ -199,19 +207,55 @@ Page.HandleEvents = (function(){
 		},
 		close: function(event){
 			Page.destroy();
+		},
+		ignore: function() {
+			var loadOnceByDay = cookie.getCookie('loadOnceByDay');
+			var ignoreCount = cookie.getCookie('ignoreCount');
+			if(!ignoreCount){
+				ignoreCount = 1;
+			}else {
+				ignoreCount++;
+			}
+			cookie.setCookie('ignoreCount',ignoreCount,'');
+			if(Page.loadOnceByDay && !loadOnceByDay){
+				var curDate = new Date();
+				var curTamp = curDate.getTime();
+				//console.log(moment().format('L'));
+				//昨天晚上23:59:59
+				var curWeeHours = new Date(moment().format('L')).getTime() - 1;
+				//当日已经过去的时间
+				var passedTamp = curTamp - curWeeHours;
+				//当日剩余时间
+				var leftTamp = 24 * 60 * 60 * 1000 - passedTamp;
+				var leftTime  = new Date();
+				leftTime.setTime(leftTamp + curTamp);
+				cookie.setCookie('loadOnceByDay','1',leftTime.toGMTString());
+				$(this).attr('disabled','disabled');
+				var $tips = $(this).parents('.header-fr').find('.load-tips');
+				$tips.hide();
+			}
+		},
+		showTips: function() {
+			var $tips = $(this).parents('.header-fr').find('.load-tips');
+			$tips.show();
+		},
+		hideTips: function() {
+			var $tips = $(this).parents('.header-fr').find('.load-tips');
+			$tips.hide();
 		}
 	}
 }());
 
 Page.Action = (function() {
 	function sortMonthly(a,b){
-		return a.tb_ml_cpv_assets_monthly_stat.summ_mon - b.tb_ml_cpv_assets_monthly_stat.summ_mon;
+		return b.tb_ml_cpv_assets_monthly_stat.summ_mon - a.tb_ml_cpv_assets_monthly_stat.summ_mon;
 	}
 	function sortCredit(a,b){
-		return a.tb_ml_cpv_credit_monthly_trans_stat.summ_mon - b.tb_ml_cpv_credit_monthly_trans_stat.summ_mon;
+		return b.tb_ml_cpv_credit_monthly_trans_stat.summ_mon - a.tb_ml_cpv_credit_monthly_trans_stat.summ_mon;
 	}
 	return {
 		index: function(record){
+			record.loadOnceByDay = Page.loadOnceByDay	//今日不再提示按钮是否显示
 			var telArr = [];
 			if(record.mobile_phone){
 				telArr = record.mobile_phone.split(' ');

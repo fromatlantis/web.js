@@ -6,14 +6,14 @@
 }
 body {
 	font-size: 12px;
-	font-family: "微软雅黑";
+	font-family: "Microsoft YaHei";
 }
 .select2-drop {
 	font-size: 12px;
 }
 .fraud-search-container {
 	font-size: 12px;
-	font-family: "微软雅黑";
+	font-family: "Microsoft YaHei";
 	color: #555;2
 	margin: 0;
 	padding: 15px 15px 15px 50px;
@@ -113,7 +113,7 @@ body {
 	color: #555;
 	width: 250px;
 	font-size: 12px;
-	font-family: "微软雅黑";
+	font-family: "Microsoft YaHei";
 }
 .fraud-search-container > .serach-conditions > .conditions-body > .conditions-row > .conditions-item > .alarm-type-label {
 	width: auto;

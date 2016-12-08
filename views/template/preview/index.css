@@ -1,12 +1,28 @@
 .template-info {
-	min-height: 450px;
-	border:1px solid #ebebeb;
+    min-height: 450px;
+    border: 1px solid #ebebeb;
+    text-align: center;
+    background: #fff;
+    padding-top: 50px;
 }
 .tips {
 	font-size: 16px;
 	margin-bottom: 20px;
-	text-align: center;
 }
 .tips span {
 	margin:0 10px;
+}
+.tips-left {
+    margin-left: 120px;
+    margin-bottom: 10px;
+}
+.tips-right {
+    margin-right: 120px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+.generate-report {
+    text-align: center;
+    padding: 50px;
+    font-size: 16px;
 }

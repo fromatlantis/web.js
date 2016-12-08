@@ -14,6 +14,49 @@
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
 }
+.btn-danger {
+    background-color: #f68484;
+    border: 1px solid #f68484;
+    color: #fff;
+}
+.btn-danger:hover {
+    background-color: #f35e5e;
+    border-color: #f24b4b;
+    outline: none;
+}
+.btn-danger.disabled, .btn-danger[disabled], .btn-danger.disabled:hover, .btn-danger[disabled]:hover {
+    background-color: #f68484;
+    border-color: #f68484;
+}
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    box-shadow: none;
+}
+.__arrow {
+    left: 50%;
+    margin-left: -11px !important;
+    top: -11px;
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 11px solid #ccc;
+}
+.__arrow-after {
+    top: 1px;
+    margin-left: -10px !important;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #daecf9;
+}
 .profile {
 	font-size: 14px;
 	font-family: 'Microsoft YaHei';
@@ -24,6 +67,8 @@
 	z-index: 9999;
 	left: 50%;
 	margin-left: -400px;
+	top: 50%;
+	margin-top: -300px;
 }
 .profile * {
 	margin: 0;
@@ -45,6 +90,8 @@
 	position: absolute;
 	right: 10px;
 	top: 10px;
+    *top: 5px;
+    z-index: 1;
 }
 .profile > .profile-header > .header-fr > .profile-close {
 	cursor: pointer;
@@ -54,6 +101,27 @@
 	color: #fff;
 	font-family: "Microsoft YaHei";
 	margin-right: 15px;
+}
+.profile > .profile-header > .header-fr > .ignore {
+    margin-right: 10px;
+    padding: 2px 5px;
+}
+.profile > .profile-header > .header-fr > .load-tips {
+    position: absolute;
+    top: 33px;
+    z-index: 1;
+    right: -10px;
+    width: 200px;
+    background: #daecf9;
+    color: #555;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 10px;
+    border: 1px solid #ccc;
+    display: none;
+}
+.profile > .profile-header > .header-fr > .load-tips p {
+    line-height: 20px;
 }
 .profile > .left-box {
     width: 150px;
@@ -152,7 +220,7 @@
 	display: inline-block;
 }
 .detail-slide > .info-detail {
-  	margin: 10px 40px;
+  	margin: 5px 30px;
 }
 .detail-slide > .info-detail.first-info {
   	margin-top:40px;
@@ -176,6 +244,7 @@
 }
 .detail-slide > .info-detail .info-table {
 	width: 100%;
+	border-collapse: separate;
 }
 .detail-slide > .info-detail .info-table tr.even{
 	background-color:#DAECF9;
@@ -187,8 +256,14 @@
 	line-height: 20px;
 	color:#555;
 }
+.detail-slide > .info-detail .info-table td > span {
+	font-size: 13px;
+	font-family: "Microsoft YaHei";
+	color:#555;
+}
 .detail-slide > .info-detail  > .detail-items .info-table td{
-	padding: 3px 8px;
+	padding: 3px;
+	line-height: 24px;
 }
 .right-box .info-detail > .info-item {
 	margin-right: 5px;
@@ -266,4 +341,44 @@
 }
 #slide-base .base-tel-arr {
 	margin-left: 65px;
+  	font-size: 13px;
+  	font-family: "Microsoft YaHei";
+	line-height: 20px;
+  	color: #555;
+}
+/*---------------------------------------------------增加流水的流入流出------------------------------------------------------------*/
+.monthly-stat-header > td {
+	color: #03a9f4 !important;
+	font-weight: 600;
+	text-align: left;
+}
+.tips-sub-nav {
+	text-align: right !important;
+	font-weight: 600;
+}
+.monthly-stat-detail.no1 > td {
+	color: #e51c23 !important;
+}
+.monthly-stat-counts > span {
+	margin-right: 15px;
+}
+.profile > .right-box .finance-slide .detail-body {
+	padding: 5px;
+}
+.profile > .right-box .finance-slide .detail-title > p {
+	line-height: 20px;
+	font-size: 13px;
+	font-family: 'Microsoft YaHei';
+}
+.profile > .right-box .finance-slide .detail-title > p > span {
+	line-height: 20px;
+	font-size: 13px;
+	font-family: 'Microsoft YaHei';
+}
+.monthly-stat-detail > td {
+	padding: 0 3px !important;	
+	line-height: 20px !important;
+}
+.monthly-stat td {
+	text-align: right !important;
 }

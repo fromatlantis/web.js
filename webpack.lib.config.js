@@ -12,21 +12,21 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var extractCSS
 var cssLoader
 var sassLoader
-var debug = true;
+var debug = false;
 var plugins = [];
 
 module.exports = (options) =>{
     let opts = options || {};
     var libraryName = opts.name;
     var serverMap = {
-        local:'/library/'+libraryName+'/',
+        local:'/library/dist/'+libraryName+'/',
         test:'http://21.32.95.248:8088/bhoserver/resources/static/js/bho/'+libraryName+'/',
         online:'http://21.32.3.162:80/bhoserver/resources/static/js/bho/'+libraryName+'/',
     }
-    var libraryPath =  path.resolve(config.libPath, libraryName);//绝对路径
-    var outputFile = libraryName + '.js';
-    var CVal = {};
-    var publicPath = typeof CVal == "undefined" ?  serverMap['local'] : serverMap['online'];//虚拟资源路径，跟线上环境路径一致。
+    var librarySrc =  path.resolve(config.libPath + '/src', libraryName);//绝对路径
+    var libraryPath =  path.resolve(config.libPath + '/dist', libraryName);//绝对路径
+    var outputFile = libraryName + '.js?[hash:8]';
+    var publicPath = serverMap['online'];//虚拟资源路径，跟线上环境路径一致。
 
     if(debug) {
         extractCSS = new ExtractTextPlugin(libraryName+'.css?[contenthash:8]')
@@ -72,11 +72,11 @@ module.exports = (options) =>{
     }
 
     let packConfig = {
-        entry: './views/'+libraryName+'/index.js',
+        entry: librarySrc + '/index.js',
         output: {
             path: libraryPath,//打包文件存放的绝对路径
             filename: outputFile,
-            chunkFilename:'[name].chunk.js',
+            chunkFilename:'[name].chunk.js?[hash:8]',
             library: libraryName,
             libraryTarget: 'umd',
             umdNamedDefine: true,
@@ -88,14 +88,10 @@ module.exports = (options) =>{
             extensions: ['', '.js', '.css', '.scss', '.tpl', '.png', '.jpg']
         },
         plugins: [new webpack.ProvidePlugin({
-                    $: "jquery",//适配各种写法
-                    jQuery: "jquery",
-                    "window.jQuery": "jquery",
-                    "moment": "moment",
-                    //"CVal":"CVal"
+                    "moment": "moment"
                 })].concat(plugins),
         externals: {
-            'jquery':'$'//以<script>的形式挂在到页面上来加载，key值要和ProvidePlugin的value值（全局变量）对应
+            'jquery':'$'//以<script>的形式挂在到页面上来加载
         },
         module: {
             loaders: [

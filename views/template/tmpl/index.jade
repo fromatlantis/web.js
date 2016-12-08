@@ -41,15 +41,39 @@ block content
 							td 模版名称：小额贷款客户家庭经济情况调查模版
 							td 所属行业：行业1
 						tr
-							td 上传人：牛志伟
+							td 分享人：牛志伟
 							td 所属机构：机构1
 						tr
-							td 上传时间：2016-08-02 17:00
+							td 分享时间：2016-08-02 17:00
 							td 来源：来源1
 				div.template-tips
 					span.remark
 						| 小额贷款、经济情况调查
+					if(nav == 'templateLiked')
+						span
+							i.iconfont.icon-liked(title='取消收藏') &#xe64a;
+					else
+						span
+							i.iconfont.icon-like(title='收藏') &#xe64b;
 					span.fr
-						span.preview 预览
-						span.del 删除
+						span.use-count
+							i.iconfont &#xe69e;
+							| 15人正在使用
+						span.preview 
+							a.btn-link(href='javascript:;') 预览
+						span.del 
+							a.btn-link(href='javascript:;') 删除
 		-}
+	div.help-card
+		div.help-card-title
+			i.iconfont.split &#xe601;
+			span 有问题？看这里
+		div.help-card-content
+			li 
+				a.btn-link 如何使用他人分享的模板
+			li 
+				a.btn-link 如何上传模板
+			li 
+				a.btn-link 如何分享模板
+			li 
+				a.btn-link 模板使用注意事项

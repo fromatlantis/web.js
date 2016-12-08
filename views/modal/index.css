@@ -1,24 +1,17 @@
-body {
-	background: #ccc;
-}
 .__modal {
 	background: #fff;
 	border-radius: 5px;
 	box-shadow: 0 3px 9px rgba(0,0,0,0.5);
-	border:1px solid rgba(0,0,0,.2);
-	*border: 1px solid #999;
+	border: 1px solid #ccc;
 	font-family: 'Microsoft Yahei';
 	position: fixed;
 	left: 50%;
 	top: 25%;
-	z-index: 999;
-	filter: progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=0),
-	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=90),
- 	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=180),
- 	progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=270);
+	z-index: 10000;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Color=#BCBCBC, Strength=10, Direction=135);
 }
 .__modal > .__modal-header {
-	font-size: 18px;
+	font-size: 16px;
 	padding: 15px;
 	font-weight: bold;
 	border-bottom: 1px solid #e5e5e5;
@@ -26,21 +19,23 @@ body {
 	background-image: url('../../public/images/bg.png');
 	background-position: 80% 70%;
 	color: #fff;
-	text-align: center;
+	text-align: left;
 }
 .__modal > .__modal-header > .__modal-close {
-	float: right;
-  	font-size: 20px;
+	position: absolute;
+	right: 15px;
+  	font-size: 16px;
   	cursor: pointer;
 }
 .__modal > .__modal-body {
 	padding: 15px;
 	border-bottom: 1px solid #e5e5e5;
 	line-height: 20px;
+	overflow-y:auto; 
 }
 .__modal > .__modal-footer {
 	padding: 10px;
-	text-align: right;
+	text-align: center;
 }
 /*---------------------bootstrap-------------------------*/
 .btn {
@@ -58,6 +53,18 @@ body {
 }
 .btn-default:hover{
 	background: #ccc;
+}
+.btn-primary {
+	background-color: #75b9e6;
+	border: 1px solid #75b9e6;
+	color: #fff;
+}
+.btn-primary:hover {
+	background-color: #52a7e0;
+  	border-color: #419fdd;
+}
+.btn-feedback-more {
+	margin-right: 15px;
 }
 .clearfix:after {
 	display: block;
@@ -82,9 +89,15 @@ body {
 	text-align: left;
   	font-family: 'Microsoft Yahei';
 }
+.industyr-info td.industry-name {
+	font-size: 15px;
+  	font-weight: bold;
+}
 .tips-holder {
 	position: relative;
-	display: inline-block;
+	 display: inline-block;
+  	*+display: inline;
+  	*+zoom: 1;
 }
 .tips-info {
 	position: absolute;
@@ -96,6 +109,11 @@ body {
 	display: none;
 	width: 270px;
 }
+.tips-info li {
+	font-size: 14px;
+	line-height: 20px;
+	padding-left: 10px;
+}
 .lvl-tips {
 	margin-left: 5px;
 }
@@ -106,4 +124,16 @@ body {
 .__unstar {
 	color: #e0e0e0;
   	margin: 0 3px;
+}
+.industry-feedback {
+	width: 100%;
+  	padding: 6px 0;
+  	font-size: 14px;
+  	font-family: 'Microsoft Yahei';
+}
+.btn-feedback-table {
+	width: 100%;
+}
+.btn-feedback-box {
+	width: 65px;
 }

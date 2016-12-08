@@ -11,12 +11,18 @@ var Apis={
 	preview:'/apis/preview.json'
 }
 var pageParams={
-	select:util.urlParam('select')?1:0,
-	router:['模版中心','模版列表','模版预览']
+	//select:util.urlParam('select')?1:0,
+	//router:['模版中心','模版列表','模版预览']
+	type: util.urlParam('type'),
+	nav: util.urlParam('nav')
 }
-
-if(pageParams.select){
-	pageParams.router=['报告管理','报告列表','选择模版','模版预览']
+var router;
+if(pageParams.type == 'market') {
+	router = ['模板中心','模板预览'];
+}else if(pageParams.type == 'liked') {
+	router = ['我的模板','收藏的模板','模板预览'];
+}else {
+	router = ['我的模板','发布的模板','模板预览'];
 }
 var template = require("./tmpl/index.jade"); //返回一个函数
 var postData={};
@@ -32,9 +38,8 @@ var preview=new FetchApi({
 })
 function render(data){
 	var html = template({
-		'nav':'template',
-		'select':pageParams.select,
-		'router': pageParams.router,
+		'nav': pageParams.nav,
+		'router': router,
 		'data':data
 	});
 	$('body').html(html);
@@ -53,5 +58,8 @@ function bindEvents() {
 				params:{'filename':'商户.doc'}
 			});
 		}
+	})
+	$('.generate-report .btn').click(function() {
+		window.location.href = '/report/'
 	})
 }

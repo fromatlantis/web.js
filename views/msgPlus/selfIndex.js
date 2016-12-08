@@ -52,11 +52,13 @@ Page.APIS = (function(){
 		postData.posId = CVal.getPostId();
 		postData.orgId  = CVal.getOrgId();
 	}
+	/**
 	else{
 		postData.userId = "20091206140";
 		postData.posId ="E02";
 		postData.orgId  ="13011576";
 	}
+	**/
 	var Apis = {
 		msgs: apiPath + '/portals/getDataClosed',                                           //已经结清
 		msgs2: apiPath + '/portals/getCloseDataSoon',                                       //即将结清
@@ -67,7 +69,8 @@ Page.APIS = (function(){
 		dealShowData: apiPath + '/portals/dealShowData',                                    //处理是否续贷及显示
 		loanRemindAlteraction: apiPath + '/portals/loanRemindAlteraction',                  //贷后提醒详细修改
 		loanRemindStat: apiPath + '/portals/loanRemindStat',                  				//贷后提醒详细修改
-		bulletinInfo: apiPath + '/portals/getBulletinInformDetail'                          //查询信贷员业务通报明细 20081802220
+		bulletinInfo: apiPath + '/portals/getBulletinInformDetail',                         //查询信贷员业务通报明细 20081802220
+		getLoanGoal: apiPath + '/portals/getLoanMonthGoal'                                  //信贷员月目标
 	}
 	return {
 		getMsgs: function() {
@@ -128,6 +131,12 @@ Page.APIS = (function(){
 			postData.loanId=loanId;
 			postData.isLoaning=isLoaning;
 			postData.isShow=isShow;
+			var tabIndex = $('.content-tabs .active').index();
+			if(tabIndex == 0) {
+				postData.isClose = 1;
+			}else if(tabIndex == 1) {
+				postData.isClose = 0;
+			}
 			return $.ajax({
 				url: Apis.dealShowData,
 				type: 'GET',
@@ -159,6 +168,15 @@ Page.APIS = (function(){
 		bulletinInfo: function() {
 			return $.ajax({
 				url: Apis.bulletinInfo,
+				type: 'GET',
+				dataType: Page.ajaxDataType,
+				data: postData,
+				jsonp: '_callback'
+			})
+		},
+		getLoanGoal: function() {
+			return $.ajax({
+				url: Apis.getLoanGoal,
 				type: 'GET',
 				dataType: Page.ajaxDataType,
 				data: postData,
@@ -199,12 +217,14 @@ Page.Render = (function(){
 Page.HandleEvents = (function(){
 	var events = new Events({
 		'.content-item .item-title@click': 'showItemMore',
-		'.item-deal .no-more@click': 'noMore',
-		'.item-deal .can-next@click': 'showFlag',
+		'.item-deal .no-more@click': 'noMore',					//不再展示
+		'.item-deal .can-next@click': 'showFlag',				//有续贷意愿 or 已调查
 		'.content-tabs td@click': 'changeMsgTabs',
-		'.content-tabs@change.tabs':'changeTabs',//自定义事件
+		'.content-tabs@change.tabs':'changeTabs',				//自定义事件
 		'.text-ellipsis@mouseover':'showTips',
-		'.text-ellipsis@mouseout':'hideTips'
+		'.text-ellipsis@mouseout':'hideTips',
+		'.content-tabs td span@mouseover': 'showTabsTips',
+		'.content-tabs td span@mouseout': 'hideTabsTips'
 	})
 	return {
 		init: function() {
@@ -287,10 +307,15 @@ Page.HandleEvents = (function(){
 						}
 					})
 				}
+				//业务通报
 				else if(tabIndex==3 && !state.tab4) {
-					$.when(Page.APIS.bulletinInfo()).done(function(data){
-						if(data.code == 1000){
-							Page.Store.dispatch(Page.Action.tab4(data.data));
+					$.when(
+						Page.APIS.bulletinInfo(),
+						Page.APIS.getLoanGoal()
+					).done(function(data,goal){
+						if(data[0].code == 1000 && goal[0].code == 1000){
+							data[0].data.goal = goal[0].data;
+							Page.Store.dispatch(Page.Action.tab4(data[0].data));
 							Page.Render.init();
 							Page.HandleEvents.changeTabs('change.tabs',3);
 						}
@@ -311,6 +336,14 @@ Page.HandleEvents = (function(){
 		hideTips:function(e){
 			var $tips = $(this).next('.text-tooltip');
 			$tips.hide();
+		},
+		showTabsTips:function(){
+			var $tips = $(this).next('.tabs-tips');
+			$tips.show();
+		},
+		hideTabsTips:function(){
+			var $tips = $(this).next('.tabs-tips');
+			$tips.hide();
 		}
 	}
 }());
@@ -318,7 +351,12 @@ Page.HandleEvents = (function(){
 Page.Action = (function() {
 	return {
 		index: function(){
-			var tabs=['已经结清','即将结清','贷后助手','业务通报'];
+			var tabs=[
+				{title:'结清未贷',des:'展示15天内未进行小额贷款续贷的客户'},
+				{title:'即将结清',des:'未来30天内办理正常结清的小额贷款客户'},
+				{title:'贷后助手',des:'明天将会进入贷后检查周期的小额客户信息'},
+				{title:'业务通报',des:'截止昨天小额信贷业务办理情况'}
+			];
 			return {
 				type: 'tabs',
 				payload : tabs
@@ -360,5 +398,5 @@ Page.Action = (function() {
 }());
 
 //Page.init();
-
-module.exports=Page;//pack-lib打包类库使用
+var selfPage = Page;
+module.exports = selfPage;//pack-lib打包类库使用

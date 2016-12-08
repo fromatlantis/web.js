@@ -21,7 +21,22 @@ var Page = {
 		var store = Page.Store;
 		store.dispatch(Page.Action.index());
 		Page.Render.init();
-		$('.content-tabs').trigger('change.tabs',0); 
+		$('.content-tabs').trigger('change.tabs',0);
+		
+		function firstRequest(callback){
+			$.when(
+				Page.APIS.getLoanManagerInform()
+			).done(function(inform){
+				if(inform.code == 1000 ){
+					Page.Store.dispatch(Page.Action.records(inform.data));
+					callback();
+				}
+			})
+		}
+		firstRequest(function(){
+			Page.Render.init();
+			$('.content-tabs').trigger('change.tabs',0); 
+		})
 	}
 }
 
@@ -33,18 +48,20 @@ Page.APIS = (function(){
 		postData.posId = CVal.getPostId();
 		postData.orgId  = CVal.getOrgId();
 	}
+	/**
 	else{
-		postData.userId = "20091206140";
-		postData.posId ="E02";
-		postData.orgId  ="13011576";
+		postData.userId = "20080689860";
+		postData.posId ="E21";
+		postData.orgId  ="13007263";
 	}
+	**/
 	var Apis = {           
-		news: apiPath + '/portals/indNewsList',                                             //行业新闻推荐 20081802220
+		inform: apiPath + '/portals/getLoanManagerInform'                                //信贷主管通报
 	}
 	return {
-		getNews: function() {
+		getLoanManagerInform: function() {
 			return $.ajax({
-				url: Apis.news,
+				url: Apis.inform,
 				type: 'GET',
 				dataType: Page.ajaxDataType,
 				data: postData,
@@ -84,7 +101,9 @@ Page.Render = (function(){
 
 Page.HandleEvents = (function(){
 	var events = new Events({
-		'.content-tabs@change.tabs':'changeTabs'
+		'.content-tabs@change.tabs':'changeTabs',
+		'.item-tabs span@click':'swicthCheckList',
+		'.item-title@click':'showMore'
 	})
 	return {
 		init: function() {
@@ -94,6 +113,33 @@ Page.HandleEvents = (function(){
 			var tabIndex = index;
 			$('.content-tabs td[data-tab-index='+index+']').addClass('active').siblings('.active').removeClass('active');
 			$('ul.content[data-tab-index='+index+']').addClass('active').siblings('.active').removeClass('active');
+		},
+		swicthCheckList: function() {
+			var me = $(this);
+			if(!me.hasClass('current')){
+				me.addClass('current').siblings('.current').removeClass('current');
+				var type = me.data('type');
+				var $checked = me.parents('.content-item').find('.checked-list');
+				var $checking = me.parents('.content-item').find('.checking-list');
+				if(type == 'checking'){
+					$checking.show();
+					$checked.hide();
+				}else{
+					$checking.hide();
+					$checked.show();
+				}
+			}
+		},
+		showMore: function() {
+			var $tabs = $(this).next('.item-tabs');
+			var $more = $tabs.next('.item-more');
+			if($tabs.is(':visible')){
+				$tabs.hide();
+				$more.hide();
+			}else{
+				$tabs.show();
+				$more.show();
+			}
 		}
 	}
 }());
@@ -106,10 +152,16 @@ Page.Action = (function() {
 				type: 'tabs',
 				payload : tabs
 			}
+		},
+		records: function(records) {
+			return {
+				type: 'records',
+				payload: records
+			}
 		}
 	}
 }());
 
 //Page.init();
-
-module.exports=Page;//pack-lib打包类库使用
+var  ICPage = Page;
+module.exports = ICPage;//pack-lib打包类库使用

@@ -8,8 +8,11 @@ require('./index.css');
 require('select2');
 var Store = require('Store');
 var Events = require('Events');
-require('datapicker');
+require('datepicker');
+require('datepickerCss');
 require('pagination');
+require('paginationCss');
+require('bootstrap');
 //静态数据
 //var list = require('./data/list.json');
 
@@ -354,7 +357,7 @@ Page.Action = (function() {
 	}
 }());
 
-//Page.init();
+Page.init();
 //console.timeEnd('time');
 
 module.exports = Page;

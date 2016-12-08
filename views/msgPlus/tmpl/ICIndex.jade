@@ -1,29 +1,112 @@
-table.content-tabs
+table.content-tabs.ic-content-tabs
 	tr
 		each item, index in tabs
 			-if(index==0)
-				td(class='active',data-tab-index='#{index}')= item
+				td(class='active',data-tab-index='#{index}')
+					span= item
 			-else
-				td(data-tab-index='#{index}')= item
-ul.content(data-tab-index=0)
-	li.content-item
-		div.item-title
-			span.item-no 1
-			span 张亚坤
-			span.end-day 月放款145万
-		div.item-more
-			table.item-more-table
-				tr
-					td
-						span 农户联保贷款
-						span 20万
-					td.address-map(rowspan='2')
-						img.map-icon(src=require('../../../public/images/map-icon.png'),title='石家庄长安区')
-				tr
-					td(colspan='2')
-						span 批发零售行业
-				tr
-					td(colspan='2')
-						p.text-ellipsis
-							b 业务最新：
-							span 09-08 申请贷款20万
+				td(data-tab-index='#{index}')
+					span= item
+ul.content.ic-content(data-tab-index=0)
+	-if(records)
+		-if(records.length > 0)
+			each record,index in records
+				li.content-item
+					div.item-title
+						span.item-no= index+1 + '.'
+						span #{record.userName}
+						span.text-small 月放款 
+							span.text-red #{record.monCashAmount/10000}
+							| 万 
+						-if(record.monMinus)
+							| 月目标差距
+							span.text-red #{record.monMinus/10000}
+							| 万
+					div.item-tabs
+						span.current(data-type='checking') 待调查#{record.checkingQuantity}笔 #{record.checkingAmount/10000}万
+						span(data-type='checked') 已调查#{record.checkedQuantity}笔 #{record.checkedAmount/10000}万 
+					div.item-more
+						each item,index in record.checkingDetails
+							-if(index == record.checkingDetails.length-1)
+								table.item-more-table.more-last.checking-list
+									tr
+										td
+											span.ic-name #{item.customerName}
+											span 待调查#{item.informSurveyCount}笔
+											span #{item.actionStatus}
+									tr
+										td
+											span #{item.appOpName}
+											span #{item.amount/10000}万
+									//-
+										tr
+											td
+												span #{item.workCorpType}
+									tr
+										td
+											p.text-ellipsis
+												b 最新进展：
+												span.text-red #{item.informLastAction}
+							-else
+								table.item-more-table.checking-list
+									tr
+										td
+											span.ic-name #{item.customerName}
+											span 待调查#{item.informSurveyCount}笔
+											span #{item.actionStatus}
+									tr
+										td
+											span #{item.appOpName}
+											span #{item.amount/10000}万
+									//-
+										tr
+											td
+												span #{item.workCorpType}
+									tr
+										td
+											p.text-ellipsis
+												b 最新进展：
+												span.text-red #{item.informLastAction}
+						each item in record.checkedDetails
+							-if(index == record.checkedDetails.length-1)
+								table.item-more-table.more-last.checked-list
+									tr
+										td
+											span.ic-name #{item.customerName}
+											span 已调查#{item.informSurveyCount}笔
+											span #{item.actionStatus}
+									tr
+										td
+											span #{item.appOpName}
+											span #{item.amount/10000}万
+									//-
+										tr
+											td
+												span #{item.workCorpType}
+									tr
+										td
+											p.text-ellipsis
+												最新进展：
+												span.text-red #{item.informLastAction}
+							-else
+								table.item-more-table.checked-list
+									tr
+										td
+											span.ic-name #{item.customerName}
+											span 已调查#{item.informSurveyCount}笔
+											span #{item.actionStatus}
+									tr
+										td
+											span #{item.appOpName}
+											span #{item.amount/10000}万
+									//-
+										tr
+											td
+												span #{item.workCorpType}
+									tr
+										td
+											p.text-ellipsis
+												最新进展：
+												span.text-red #{item.informLastAction}
+		-else
+			p.none-data 暂无数据。

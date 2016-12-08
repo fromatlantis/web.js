@@ -27,40 +27,15 @@
 - }
 table.industyr-info
 	tr
-		td(colspan='2')
-			b 市行名称：
+		td.industry-name
+			b 行业名称：
+			= util.fixedEmpty(record.industry_name)
+		td.industry-name
+			b 机构名称：
 			= util.fixedEmpty(record.city_name)
 	tr
-		td
-			b 贷款总笔数：
-			= util.fixedEmpty(record.loan_cnt)
-		td
-			b 贷款总金额：
-			| #{util.formatMoney(record.loan_amt/10000)} 万元
-	tr
-		td
-			b 在途贷款笔数：
-			= util.fixedEmpty(record.loan_cnt_curr)
-		td
-			b 在途贷款金额：
-			| #{util.formatMoney(record.loan_amt_curr/10000)} 万元
-	tr
-		td
-			b 在途贷款余额：
-			| #{util.formatMoney(record.loan_bal_curr/10000)} 万元
-		td
-			b 不良贷款笔数：
-			= util.fixedEmpty(record.nonp_loan_cnt)
-	tr
-		td
-			b 不良贷款余额：
-			| #{util.formatMoney(record.nonp_loan_bal/10000)} 万元
-		td
-			b 不良率：
-			| #{util.formatMoney(record.nonp_loan_bal_rate*100)} %
-	tr
-		td.nonp-lvl(colspan="2")
-			b 优良等级：
+		td.nonp-lvl
+			b 资产质量等级：
 			-if(record.nonp_loan_lvl == 'unknown'){
 				#{util.fixedEmpty(record.nonp_loan_lvl)}
 			-}else{
@@ -73,15 +48,48 @@ table.industyr-info
 					i.iconfont.__unstar &#xe63c;
 				-}
 			-}
-			div.tips-holder
-				i.iconfont.lvl-tips &#xe621;
-				div.tips-info
-					li 5颗星对应不良率区间[0,0.5%]
-					li 4颗星对应不良率区间(0.5%,2%]
-					li 3颗星对应不良率区间(2%,3%]
-					li 2颗星对应不良率区间(3%,5%]
-					li 1颗星对应不良率区间(5%,1]
-					li 'unknown'代表数据异常，无法判断星级
+			i= record.starTitle
+			//-
+				div.tips-holder
+					i.iconfont.lvl-tips &#xe621;
+					div.tips-info
+						li 5颗星对应不良率区间 (0,0.5%]
+						li 4颗星对应不良率区间 (0.5%,2%]
+						li 3颗星对应不良率区间 (2%,3%]
+						li 2颗星对应不良率区间 (3%,5%]
+						li 1颗星对应不良率区间 (5%,100%]
+		td
+			b 贷款总笔数：
+			= util.fixedEmpty(record.loan_cnt)
+	tr
+		td
+			b 不良率：
+			| #{util.fixedEmpty(record.nonp_loan_bal_rate)} 
+		td
+			b 贷款总金额：
+			| #{util.formatMoney(record.loan_amt/10000)} 万元
+	tr
+		td
+			b 不良贷款笔数：
+			= util.fixedEmpty(record.nonp_loan_cnt)
+		td
+			b 结存贷款笔数：
+			= util.fixedEmpty(record.loan_cnt_curr)
+	tr
+		td
+			b 不良贷款余额：
+			| #{util.formatMoney(record.nonp_loan_bal/10000)} 万元	
+		td
+			b 结存贷款金额：
+			| #{util.formatMoney(record.loan_amt_curr/10000)} 万元
+	tr
+		td
+			b 逾期率：
+			| #{util.fixedEmpty(record.overdue_loan_bal_rate)}
+		td
+			b 结存贷款余额：
+			| #{util.formatMoney(record.loan_bal_curr/10000)} 万元
+
 
 
 	

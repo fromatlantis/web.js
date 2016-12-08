@@ -28,7 +28,13 @@
 div.profile-header
 	| 客户综合信息 — #{database.cus_name}
 	div.header-fr
+		-if(database.loadOnceByDay)
+			button.btn.btn-danger.ignore 今日不再提示
 		i.iconfont.profile-close &#xe639;
+		div.load-tips
+			p 点击后今日将不再弹出客户信息弹窗，如果您还想查看客户信息，可以从微门户顶部检索栏查询。
+			div.__arrow
+				div.__arrow-after
 div.left-box
 	div.title-top
 		img.user-icon(src=require('../../../public/images/yc_logo.png'))
@@ -329,7 +335,7 @@ div.right-box
 								td 
 									b 历史逾期本金：
 									| #{util.formatMoney(database.overdue_capital_his)}
-			div.swiper-slide.detail-slide
+			div.swiper-slide.detail-slide.finance-slide
 				div.info-detail
 					div.detail-title
 						strong 合计：#{util.fixedEmpty(database.media_cnt)}
@@ -392,33 +398,72 @@ div.right-box
 									| #{util.formatMoney(database.insurance_amt)}
 				div.info-detail
 					div.detail-title
-						strong 近一年月均交易金额：#{util.formatMoney(database.avg_amt_yearly)}
-					div.detail-body.detail-items(style="height:170px;")
-						table.info-table
+						p
+							b 年月均交易：
+							| #{util.fixedEmpty(database.avg_cnt_yearly)}次，共#{util.formatMoney(database.avg_amt_yearly)} 
+						p.monthly-stat-counts
+							span 
+								b 年月均出账：
+								| #{util.fixedEmpty(database.avg_cnt_yearly_out)}次，共#{util.formatMoney(database.avg_amt_yearly_out)}
+							span 
+								b 年月均进账：
+								| #{util.fixedEmpty(database.avg_cnt_yearly_in)}次，共#{util.formatMoney(database.avg_amt_yearly_in)}
+					div.detail-body.detail-items(style="height:190px;")
+						table.info-table.monthly-stat
+							tr.monthly-stat-header
+								td 交易日期
+								td 交易金额
+								td 次数
+								td 交易金额均值
+								td 单笔最大金额
+								td 单笔最小金额
 							-if(assetsMonthlyStat){			
 								each assetStat,index in assetsMonthlyStat						
-									if(index%2==0)
-										tr
-											td
-												b 交易日期：
-												span= assetStat.tb_ml_cpv_assets_monthly_stat.summ_mon
-											td 
-												b 交易金额：
-												span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt)}
-											td 
-												b 交易次数：
-												span= assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt
-									else
-										tr.even
-											td
-												b 交易日期：
-												span= assetStat.tb_ml_cpv_assets_monthly_stat.summ_mon
-											td 
-												b 交易金额：
-												span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt)}
-											td 
-												b 交易次数：
-												span= assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt
+									tr.even
+										td
+											span= assetStat.tb_ml_cpv_assets_monthly_stat.summ_mon
+										td 
+											span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt)}
+										td 
+											span= assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt
+										td
+											span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_avg)}
+										td 
+											span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_max)}
+										td
+											span #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_min)}
+									-if(assetStat.tb_ml_cpv_assets_monthly_stat.rank_mon_trans_amt_in==1)
+										tr.monthly-stat-detail.no1
+											td.tips-sub-nav 进账
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_in)}
+											td #{util.fixedEmpty(assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt_in)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_avg_in)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_max_in)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_min_in)}
+									-else
+										tr.monthly-stat-detail
+											td.tips-sub-nav 进账
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_in)}
+											td #{util.fixedEmpty(assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt_in)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_avg_in)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_max_in)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_min_in)}
+									-if(assetStat.tb_ml_cpv_assets_monthly_stat.rank_mon_trans_amt_out==1)
+										tr.monthly-stat-detail.no1
+											td.tips-sub-nav 出账
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_out)}
+											td #{util.fixedEmpty(assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt_out)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_avg_out)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_max_out)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_min_out)}
+									-else
+										tr.monthly-stat-detail
+											td.tips-sub-nav 出账
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_out)}
+											td #{util.fixedEmpty(assetStat.tb_ml_cpv_assets_monthly_stat.trans_cnt_out)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_avg_out)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_max_out)}
+											td #{util.formatMoney(assetStat.tb_ml_cpv_assets_monthly_stat.trans_amt_min_out)}
 							-}
 			div.swiper-slide.detail-slide
 				div.info-detail.first-info
