@@ -12,7 +12,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var extractCSS
 var cssLoader
 var sassLoader
-var debug = false;
+var debug = true;
 var plugins = [];
 
 module.exports = (options) =>{

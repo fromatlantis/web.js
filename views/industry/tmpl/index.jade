@@ -1,3 +1,51 @@
 extends ../../layout
 block content
-    p i'am jade
+    div.template-class
+        div.input-group.search-chip
+            i.iconfont.split &#xe627;
+            input(type='text',placeholder='行业查询') 
+    div
+        div.template-list.new
+            div.template-info
+                i.iconfont.new-report &#xe618;
+                p.new-report-title 新建
+            div.template-tips
+                span.remark.new-remark
+                    |   您将创建一个行业
+        -for (var i = 5; i >= 0; i--) {
+            div.template-list
+                div.template-info
+                    table
+                        tr
+                            td 行业名称：
+                                span.text-danger 水果、坚果的种植
+                            td 所属机构：机构1
+                        tr
+                            td 创建时间：2016-08-02 17:00
+                            td 来源：来源1
+                div.template-tips
+                    span.remark
+                        | 使用热度：
+                        -for(var j = 0;j< 4;j++){
+                            i.iconfont.__star &#xe63c;
+                        -}
+                        -for(var k = 0;k< 1;k++){
+                            i.iconfont.__unstar &#xe63c;
+                        -}
+                    span.fr
+                        span.preview.btn-link 编辑
+                        span.btn-link.del 删除
+        -}
+    div.help-card
+        div.help-card-title
+            i.iconfont.split &#xe601;
+            span 有问题？看这里
+        div.help-card-content
+            li 
+                a.btn-link 如何使用他人分享的模板
+            li 
+                a.btn-link 如何上传模板
+            li 
+                a.btn-link 如何分享模板
+            li 
+                a.btn-link 模板使用注意事项

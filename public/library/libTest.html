@@ -25,16 +25,9 @@
 			posId  : "E02",
 			orgId  : "13011576"
 		});
-		haloPlugins.modal.init({
-			width:550,
-			footer: ['<button class="btn btn-primary btn-feedback-more">需要更多信息</button>',
-				'<button class="btn btn-primary btn-feedback-good">很好用，我知道了</button>'].join(''),
-			ajaxUrl:'/bhoApi/industryNormInfo',
-			data: {
-				cityId: "13000181",
-  				industryId: "0131"
-			},
-			starLvl: 6
+		haloPlugins.industryWarn.init({
+			cityId: "13000181",
+			industryId: "0131"
 		});
 		//console.timeEnd('time');
 		haloPlugins.profile.init({

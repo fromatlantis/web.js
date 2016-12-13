@@ -65,7 +65,7 @@ Page.Render = (function(){
 		//console.log(state.msgs);
 		var html = template(Page.Store.getState());
 		$container.html(html);
-		Page.HandleEvents.init();
+		//Page.HandleEvents.init();
 	}
 	return {
 		init: function() {

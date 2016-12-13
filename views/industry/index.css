@@ -1,3 +1,133 @@
+/*----------------------------可提取部分Start----------------------------*/
 body {
 	font-size: 14px;
+}
+li {
+    list-style: none;
+}
+.input-group {
+    padding: 10px;
+}
+.input-group > i {
+    margin-right: 5px;
+}
+.input-group > input {
+    padding: 5px;
+}
+.search-chip {
+    text-align: center;
+}
+.__star {
+    color: #ffd740;
+    margin: 0 3px;
+}
+.__unstar {
+    color: #e0e0e0;
+    margin: 0 3px;
+}
+    /* ------------------ Contextual colors --------------------*/
+.text-muted {
+  color: #999999;
+}
+.text-primary {
+  color: #75b9e6;
+}
+a.text-primary:hover {
+  color: #4aa3de;
+}
+.text-success {
+  color: #71d398;
+}
+a.text-success:hover {
+  color: #4ac77c;
+}
+.text-info {
+  color: #97d3c5;
+}
+a.text-info:hover {
+  color: #73c4b1;
+}
+.text-warning {
+  color: #f4b162;
+}
+a.text-warning:hover {
+  color: #f19932;
+}
+.text-danger {
+  color: #f68484;
+}
+a.text-danger:hover {
+  color: #f35454;
+}
+.text-yellow {
+  color: #ffcc66;
+}
+a.text-yellow:hover {
+  color: #ffbb33;
+}
+.text-orange {
+  color: #f4b162;
+}
+a.text-orange:hover {
+  color: #f19932;
+}
+.text-dark {
+  color: #79859b;
+}
+a.text-dark:hover {
+  color: #606c81;
+}
+.text-brown {
+  color: #d1b993;
+}
+a.text-brown:hover {
+  color: #c2a26f;
+}
+.text-pink {
+  color: #f78db8;
+}
+a.text-pink:hover {
+  color: #f45d9a;
+}
+.text-magenta {
+  color: #e65097;
+}
+a.text-magenta:hover {
+  color: #e0237c;
+}
+.text-lime {
+  color: #a8db43;
+}
+a.text-lime:hover {
+  color: #90c526;
+}
+/*----------------------------可提取部分End----------------------------*/
+/*--------------------------this page--------------------------------*/
+.new-report {
+    font-size: 36px;
+    margin-bottom: 5px;
+}
+.new-report-title {
+    margin-top: 10px;
+}
+.save-industry {
+    margin: 0;
+}
+.add-property, .del-property {
+    margin-left: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.property-title, .industry-property {
+    float: left;
+}
+.industry-property li {
+    margin-bottom: 5px;
+}
+.industry-property input {
+    width: 150px;
+}
+.property-name {
+    display: inline-block;
+    width: 154px;
 }

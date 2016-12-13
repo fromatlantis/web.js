@@ -18,11 +18,11 @@ var config = require('./config.json')
 var src = path.resolve(process.cwd(), config.devPath);
 var assets = path.resolve(process.cwd(), config.buildPath);
 
-gulp.task('copy', () => {
-    var name=gulp.env.name;
-    if(name){
+gulp.task('new', () => {
+    var page=gulp.env.page;
+    if(page){
         var _elements=path.resolve(process.cwd()+'/public','_elements');
-        var targetPath=path.resolve(src,name);
+        var targetPath=path.resolve(src,page);
         var html=path.resolve(targetPath, 'index.html');
         fs.exists(html, function (exists) {
             if(exists){
@@ -33,7 +33,7 @@ gulp.task('copy', () => {
             }
         })
     }else{
-        console.log('请输入--path参数');   
+        console.log('请输入--page参数');   
     }
 })
 // js check

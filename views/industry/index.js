@@ -5,9 +5,12 @@
 //console.time('time');
 //console.profile();
 require('commonCss');
+require('../template/index.css');
 require('./index.css');
 var Store = require('Store');
 var Events = require('Events');
+//var Modal = require('../modal/index.js');	//dependency to an entry point is not allowed
+var Modal = require('../modal/page.js');
 var Page = {
 	input: null,
 	output: null,
@@ -50,6 +53,9 @@ Page.UI = (function(){
 	return {
 		indexView: function() {
 			return require('./tmpl/index.jade');
+		},
+		modal: function() {
+			return require('./tmpl/modal.jade');
 		}
 	}
 }());
@@ -79,28 +85,30 @@ Page.Render = (function(){
 }());
 
 Page.HandleEvents = (function(){
-	/**
 	var events = new Events({
-		'.content-item@click': 'showDetail',
+		'.btn-link.del@click': 'delete',
+		'.preview@click': 'edit'
 	}) 
 	return {
 		init: function() {
 			events.dispatch(this);
 		},
-		showDetail: function() {
-			$.ajax({
-				url: Page.Apis.detail,
-				type: 'GET',
-				dataType: 'JSON',
-				data: {},
-				success:function(res) {
-					Page.Store.dispatch(Page.Action.detail(res.records));
-					Page.Render.detail();
-				}
-			})
+		delete: function() {
+			var $card = $(this).parents('.template-list');
+			$card.hide(500);
+		},
+		edit: function() {
+			var template = Page.UI.modal();
+			var html = template(Page.Store.getState());
+			Page.modal = new Modal({
+				width:500,
+				overlay: true,
+				title: '行业编辑',
+				content: html,
+				footer: '<button class="btn btn-primary save-industry">提交</button>'
+			});
 		}
 	}
-	**/
 }());
 
 Page.Action = (function() {

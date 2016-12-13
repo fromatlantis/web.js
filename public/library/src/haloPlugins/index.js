@@ -3,6 +3,7 @@ var Events = require('Events');
 var profile = require('../../../../views/profile/index.js');
 var msgPlus = require('../../../../views/msgPlus/index.js');
 var modal = require('../../../../views/modal/index.js');
+var industryWarn = require('../../../../views/industryWarn/index.js');
 /**IE8不支持
 function haloPlugins(options) {
 	var opts = options || {};
@@ -15,6 +16,7 @@ var haloPlugins = {};
 haloPlugins.profile = profile;
 haloPlugins.msgPlus = msgPlus;
 haloPlugins.modal = modal;
+haloPlugins.industryWarn = industryWarn;
 
 haloPlugins.HandleEvents = (function(){
     var isIDCard2 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
